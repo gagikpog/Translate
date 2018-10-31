@@ -2,7 +2,7 @@
 #define EASY_OPENGL_CPP_
 #include "EasyOpenGL.h"
 
-namespace easyGL
+namespace UIGL
 {
 #pragma region Function
 float rotate_x(float x, float y, float alpha)
@@ -34,7 +34,7 @@ float rotate_y(float x, float y, float alpha)
 	return y;
 }
 //ïðÿìîóãîëüíèê ñ çàêðóãëåííûìè êðàÿìè êîíòóð
-inline void Gl_Print_Roundrect_Contour(float X, float Y, float W, float H, float R, Glui_Color Outline_color, float _angle,float line_width)
+inline void Gl_Print_Roundrect_Contour(float X, float Y, float W, float H, float R, UiglColor Outline_color, float _angle,float line_width)
 {
 	float fx, fy, RX, RY;
 	float R1 = R;
@@ -95,7 +95,7 @@ inline void Gl_Print_Roundrect_Contour(float X, float Y, float W, float H, float
 	glLineWidth(1);
 }
 //ïðÿìîóãîëüíèê ñ çàêðóãëåííûìè êðàÿìè
-inline void Gl_Print_Roundrect(float X, float Y, float W, float H, float R, Glui_Color Color, Glui_Color Outline_color, float _angle, bool glossy,float line_width)
+inline void Gl_Print_Roundrect(float X, float Y, float W, float H, float R, UiglColor Color, UiglColor Outline_color, float _angle, bool glossy,float line_width)
 {
 	float fx, fy, RX, RY;
 	float R1 = R;
@@ -155,7 +155,7 @@ inline void Gl_Print_Roundrect(float X, float Y, float W, float H, float R, Glui
 	Gl_Print_Roundrect_Contour(X, Y, W, H, R, Outline_color, _angle, line_width);
 }
 //îêðóæíîñòü êîíòóð
-inline void Gl_Print_Circle_Contour(float X, float Y, float R, Glui_Color Outline_color, float line_width)
+inline void Gl_Print_Circle_Contour(float X, float Y, float R, UiglColor Outline_color, float line_width)
 {
 	glLineWidth(line_width);
 	glBegin(GL_LINE_LOOP);
@@ -168,7 +168,7 @@ inline void Gl_Print_Circle_Contour(float X, float Y, float R, Glui_Color Outlin
 	glLineWidth(1);
 }
 //îêðóæíîñòü
-inline void Gl_Print_Circle(float X, float Y, float R, Glui_Color Color, Glui_Color Outline_color, float line_width)
+inline void Gl_Print_Circle(float X, float Y, float R, UiglColor Color, UiglColor Outline_color, float line_width)
 {
 	glBegin(GL_POLYGON);
 	Color.Init();
@@ -180,7 +180,7 @@ inline void Gl_Print_Circle(float X, float Y, float R, Glui_Color Color, Glui_Co
 	Gl_Print_Circle_Contour(X, Y, R, Outline_color, line_width);
 }
 //ïðÿìîóãîëüíèê êîíòóð
-inline void Gl_Print_Rectangle_Contour(float X, float Y, float W, float H, Glui_Color Outline_color, float _angle, float line_width)
+inline void Gl_Print_Rectangle_Contour(float X, float Y, float W, float H, UiglColor Outline_color, float _angle, float line_width)
 {
 	glLineWidth(line_width);
 	glBegin(GL_LINE_LOOP);
@@ -193,7 +193,7 @@ inline void Gl_Print_Rectangle_Contour(float X, float Y, float W, float H, Glui_
 	glLineWidth(1);
 }
 //ïðÿìîóãîëüíèê 
-inline void Gl_Print_Rectangle(float X, float Y, float W, float H, Glui_Color Color, Glui_Color Outline_color, float _angle, bool glossy, float line_width)
+inline void Gl_Print_Rectangle(float X, float Y, float W, float H, UiglColor Color, UiglColor Outline_color, float _angle, bool glossy, float line_width)
 {
 	Color.Init();
 	glBegin(GL_POLYGON);
@@ -213,7 +213,7 @@ inline void Gl_Print_Rectangle(float X, float Y, float W, float H, Glui_Color Co
 	Gl_Print_Rectangle_Contour(X,Y,W,H,Outline_color,_angle,line_width);
 }
 //êðóã êîíòóð
-inline void Gl_Print_Circle_Contour(float X, float Y, float r, float R, Glui_Color Color, Glui_Color Outline_color)
+inline void Gl_Print_Circle_Contour(float X, float Y, float r, float R, UiglColor Color, UiglColor Outline_color)
 {
 	glBegin(GL_TRIANGLE_STRIP);
 	Color.Init();
@@ -235,7 +235,7 @@ inline void Gl_Print_Circle_Contour(float X, float Y, float r, float R, Glui_Col
 	glEnd();
 }
 //ìíîãîóãîëüíèê êîíòóð
-inline void Gl_Print_Polygon_Contour(float X, float Y, float R, int Sides, Glui_Color Outline_color , float initial_angle, float line_width)
+inline void Gl_Print_Polygon_Contour(float X, float Y, float R, int Sides, UiglColor Outline_color , float initial_angle, float line_width)
 {
 	glLineWidth(line_width);
 	Outline_color.Init();
@@ -246,7 +246,7 @@ inline void Gl_Print_Polygon_Contour(float X, float Y, float R, int Sides, Glui_
 	glLineWidth(1);
 }
 //ìíîãîóãîëüíèê
-inline void Gl_Print_Polygon(float X, float Y, float R, int Sides, Glui_Color Color, Glui_Color Outline_color , float initial_angle,float line_width)
+inline void Gl_Print_Polygon(float X, float Y, float R, int Sides, UiglColor Color, UiglColor Outline_color , float initial_angle,float line_width)
 {
 	Color.Init();
 	glBegin(GL_POLYGON);
@@ -299,242 +299,6 @@ void Glui_Size::SetSize(float width, float height, float depth)
 }
 #pragma endregion
 
-#pragma region Glui_Color
-	Glui_Color::Glui_Color(BYTE red, BYTE green, BYTE blue, BYTE alpha)
-	{
-		R = red;
-		G = green;
-		B = blue;
-		A = alpha;
-	}
-	Glui_Color::Glui_Color(const Glui_Colornum& _color)
-	{
-		this->Set_color(Bild_color(_color));
-	}
-	Glui_Color::Glui_Color(const Glui_Color& _color)
-	{
-		R = _color.R;
-		G = _color.G;
-		B = _color.B;
-		A = _color.A;
-	}
-	Glui_Color& Glui_Color::Set_color(const Glui_Colornum& _color)
-	{
-		Set_color(Bild_color(_color));
-		return *this;
-	}
-	Glui_Color& Glui_Color::Set_color(const Glui_Color& _color)
-	{
-		R = _color.R;
-		G = _color.G;
-		B = _color.B;
-		A = _color.A;
-		return *this;
-	}
-	Glui_Color& Glui_Color::Set_color(BYTE _red, BYTE _green, BYTE _blue, BYTE _alpha)
-	{
-		R = _red;
-		G = _green;
-		B = _blue;
-		A = _alpha;
-		return *this;
-	}
-	Glui_Color& Glui_Color::Set_alpha(const BYTE& _alpha)
-	{
-		A = _alpha;
-		return *this;
-	}
-	void Glui_Color::Init(short bright, BYTE _alpha)const
-	{
-		int _r, _g, _b;
-		_r = R + bright;
-		_g = G + bright;
-		_b = B + bright;
-
-		if (_r > 255)		_r = 255;
-		if (_r < 0)			_r = 0;
-		if (_g > 255)		_g = 255;
-		if (_g < 0)			_g = 0;
-		if (_b > 255)		_b = 255;
-		if (_b < 0)			_b = 0;
-
-		if (_alpha == 0)
-			glColor4ub(_r, _g, _b, A);
-		else glColor4ub(_r, _g, _b, _alpha);
-	}
-	Glui_Color Glui_Color::operator+(int _c)const
-	{
-		short _r, _g, _b;
-		_r = R + _c;
-		_g = G + _c;
-		_b = B + _c;
-		if (_r > 255)
-			_r = 255;
-		if (_g > 255)
-			_g = 255;
-		if (_b > 255)
-			_b = 255;
-
-		if (_r < 0)
-			_r = 0;
-		if (_g < 0)
-			_g = 0;
-		if (_b < 0)
-			_b = 0;
-		return Glui_Color((BYTE)_r, (BYTE)_g, (BYTE)_b, A);
-	}
-	Glui_Color Glui_Color::operator-(int _c)const
-	{
-		short _r, _g, _b;
-		_r = R - _c;
-		_g = G - _c;
-		_b = B - _c;
-		if (_r > 255)
-			_r = 255;
-		if (_g > 255)
-			_g = 255;
-		if (_b > 255)
-			_b = 255;
-
-		if (_r < 0)
-			_r = 0;
-		if (_g < 0)
-			_g = 0;
-		if (_b < 0)
-			_b = 0;
-		return Glui_Color((BYTE)_r, (BYTE)_g, (BYTE)_b, A);
-	}
-	bool Glui_Color::operator==(const Glui_Colornum& _col)const
-	{
-		return this->operator==(Bild_color(_col));
-	}
-	bool Glui_Color::operator==(const Glui_Color& _col)const
-	{
-		return (_col.R == R && _col.G == G && _col.B == B && _col.A == A);
-	}
-	unsigned int Glui_Color::Get_uint()const
-	{
-		unsigned int t;
-		t = R;
-		t <<= 8;
-		t += G;
-		t <<= 8;
-		t += B;
-		t <<= 8;
-		t += A;
-		return t;
-	}
-	Glui_Color& Glui_Color::Set_uint(unsigned int count)
-	{
-		A = (count % 256);
-		count >>= 8;
-		B = (count % 256);
-		count >>= 8;
-		G = (count % 256);
-		count >>= 8;
-		R = (count % 256);
-		return *this;
-	}
-	Glui_Color Glui_Color::Get_negative()const
-	{
-		return Glui_Color(255 - R, 255 - G, 255 - B, A);
-	}
-	Glui_Color Glui_Color::operator+(const Glui_Color& operator2)const
-	{
-		short _r(R), _g(G), _b(B), _a(A);
-
-		_r = (_r + operator2.R) / 2;
-		_g = (_g + operator2.G) / 2;
-		_b = (_b + operator2.B) / 2;
-		_a = (_a + operator2.A) / 2;
-
-		if (_r > 255)		_r = 255;
-		if (_r < 0)			_r = 0;
-		if (_g > 255)		_g = 255;
-		if (_g < 0)			_g = 0;
-		if (_b > 255)		_b = 255;
-		if (_b < 0)			_b = 0;
-		if (_a > 255)		_a = 255;
-		if (_a < 0)			_a = 0;
-
-		return Glui_Color(_r,_g,_b,_a);
-	}
-	Glui_Color Glui_Color::operator-(const Glui_Color& operator2)const
-	{
-		short _r(R), _g(G), _b(B), _a(A);
-
-		_r = 2 * _r - operator2.R;
-		_g = 2 * _g - operator2.G;
-		_b = 2 * _b - operator2.B;
-		_a = 2 * _a - operator2.A;
-
-		if (_r > 255)		_r = 255;
-		if (_r < 0)			_r = 0;
-		if (_g > 255)		_g = 255;
-		if (_g < 0)			_g = 0;
-		if (_b > 255)		_b = 255;
-		if (_b < 0)			_b = 0;
-		if (_a > 255)		_a = 255;
-		if (_a < 0)			_a = 0;
-
-		return Glui_Color(_r,_g,_b,_a);
-	}
-	Glui_Color Glui_Color::Bild_color(Glui_Colornum _Color)const
-	{
-		BYTE r, g, b;
-		switch (_Color)
-		{
-		case Black:				r = 0;		g = 0;		b = 0;		break;
-		case White:				r = 255;	g = 255;	b = 255;	break;
-		case Red:				r = 255;	g = 0;		b = 0;		break;
-		case Green:				r = 0;		g = 255;	b = 0;		break;
-		case Blue:				r = 0;		g = 0;		b = 255;	break;
-		case Cyan:				r = 0;		g = 255;	b = 255;	break;
-		case Magenta:			r = 255;	g = 0;		b = 255;	break;
-		case Yellow:			r = 255;	g = 255;	b = 0;		break;
-		case Lime:				r = 0;		g = 128;	b = 0;		break;
-		case Water:				r = 64;		g = 164;	b = 223;	break;
-		case Plastic:			r = 129;	g = 129;	b = 126;	break;
-		case Glass:				r = 156;	g = 229;	b = 227;	break;
-		case Diamond:			r = 241;	g = 247;	b = 251;	break;
-		case Iron:				r = 90;		g = 98;		b = 102;	break;
-		case Copper:			r = 191;	g = 105;	b = 53;		break;
-		case Gold:				r = 255;	g = 215;	b = 0;		break;
-		case Aluminum:			r = 132;	g = 135;	b = 137;	break;
-		case Silver:			r = 192;	g = 192;	b = 192;	break;
-		case Deepskyblue:		r = 0;		g = 191;	b = 255;	break;
-		case Lightskyblue:		r = 135;	g = 206;	b = 255;	break;
-		case Mistyrose:			r = 255;	g = 228;	b = 225;	break;
-		case Burlywood:			r = 222;	g = 184;	b = 135;	break;
-		case Violet:			r = 238;	g = 130;	b = 238;	break;
-		case Whitesmoke:		r = 245;	g = 245;	b = 245;	break;
-		case Tan:				r = 210;	g = 180;	b = 140;	break;
-		case Lightgray:			r = 211;	g = 211;	b = 211;	break;
-		case Lightsteelblue:	r = 176;	g = 196;	b = 222;	break;
-		case Yellowgreen:		r = 154;	g = 205;	b = 50;		break;
-		case Orange:			r = 255;	g = 165;	b = 0;		break;
-		case Coral:				r = 255;	g = 127;	b = 80;		break;
-		case Fuchsia:			r = 255;	g = 0;		b = 128;	break;
-		case Dodgerblue:		r = 30;		g = 144;	b = 255;	break;
-		case Plum:				r = 142;	g = 69;		b = 133;	break;
-		case Limegreen:			r = 50;		g = 205;	b = 50;		break;
-		case Olive:				r = 128;	g = 128;	b = 0;		break;
-		case Darkmagenta:		r = 139;	g = 0;		b = 139;	break;
-		case Gray:				r = 128;	g = 128;	b = 128;	break;
-		case Dimgray:			r = 0;		g = 105;	b = 105;	break;
-		case Brown:				r = 165;	g = 42;		b = 42;		break;
-		case Darkslategray:		r = 47;		g = 79;		b = 79;		break;
-		case Firebrick:			r = 178;	g = 34;		b = 34;		break;
-		case Sienna:			r = 160;	g = 82;		b = 45;		break;
-		case Maroon:			r = 128;	g = 0;		b = 0;		break;
-		case Darkblue:			r = 0;		g = 0;		b = 139;	break;
-		case Navy:				r = 0;		g = 0;		b = 128;	break;
-		default: r = g = b = 0;
-		}
-		return Glui_Color(r, g, b, 255);
-	}
-#pragma endregion
-
 #pragma region Glui_Forms
 	std::vector<Glui_Forms*> Glui_Forms::Forms;
 	Glui_Forms::Glui_Forms()
@@ -554,7 +318,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	{
 		if (1 != Enabled)
 			return;
-		gleventstruct msg;
+		UiglEvent msg;
 		if (Wnd_proc == NULL) {
 			std::cout << "Function Win_proc not found\n";
 			return;
@@ -562,7 +326,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (Focus.size())
 		{
 			msg = Focus[Focus.size() - 1]->MouseWheelFunc(button, state, ax, ay);
-			if (msg.Event == Gl_EraseMsg)
+			if (msg.Event == uiglEraseMsg)
 				Focus.pop_back();
 			if (msg.Name != "") 
 				Wnd_proc(msg.Event, msg.Name);
@@ -571,7 +335,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			for (std::list<Glui_IForms*>::iterator it = Stec.begin(); it != Stec.end(); it++, i++)
 			{
 				msg = (*it)->MouseWheelFunc(button, state, ax, ay);
-				if (msg.Event == Gl_EraseMsg) {
+				if (msg.Event == uiglEraseMsg) {
 					Stec.erase(it);
 					if (i <= in_focus)
 						in_focus--;
@@ -588,7 +352,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	{
 		if (1 != Enabled)
 			return;
-		gleventstruct msg;
+		UiglEvent msg;
 		if (Wnd_proc == NULL) 
 		{
 			std::cout << "Function Win_proc not found\n";
@@ -597,7 +361,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (Focus.size())
 		{
 			msg = Focus[Focus.size() - 1]->PassiveMotionFunc(ax, ay);
-			if (msg.Event == Gl_EraseMsg)
+			if (msg.Event == uiglEraseMsg)
 				Focus.pop_back();
 			if (msg.Name != "") {
 				Wnd_proc(msg.Event, msg.Name);
@@ -607,7 +371,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			for (std::list<Glui_IForms*>::iterator it = Stec.begin(); it != Stec.end(); i++)
 			{
 				msg = (*it)->PassiveMotionFunc(ax, ay);
-				if (msg.Event == Gl_EraseMsg)
+				if (msg.Event == uiglEraseMsg)
 				{
 					Stec.erase(it);
 					it = Stec.begin();
@@ -625,7 +389,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	{
 		if (1 != Enabled)
 			return;
-		gleventstruct msg;
+		UiglEvent msg;
 		if (Wnd_proc == NULL) 
 		{
 			std::cout << "Function Win_proc not found\n";
@@ -634,7 +398,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (Focus.size())
 		{
 			msg = Focus[Focus.size() - 1]->MotionFunc(ax, ay);
-			if (msg.Event == Gl_EraseMsg)
+			if (msg.Event == uiglEraseMsg)
 				Focus.pop_back();
 			if (msg.Name != "")
 				Wnd_proc(msg.Event, msg.Name);
@@ -643,7 +407,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			for (std::list<Glui_IForms*>::iterator it = Stec.begin() ; it != Stec.end(); it++, i++)
 			{
 				msg = (*it)->MotionFunc( ax, ay);
-				if (msg.Event == Gl_EraseMsg) 
+				if (msg.Event == uiglEraseMsg) 
 				{
 					Stec.erase(it);
 					if (i <= in_focus)
@@ -661,7 +425,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	{
 		if (1 != Enabled)
 			return;
-		gleventstruct msg;
+		UiglEvent msg;
 		if (Wnd_proc == NULL) 
 		{
 			std::cout << "Function Win_proc not found\n";
@@ -670,7 +434,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (Focus.size())
 		{
 			msg = Focus[Focus.size() - 1]->MouseFunc(button, state, ax, ay);
-			if (msg.Event == Gl_EraseMsg)
+			if (msg.Event == uiglEraseMsg)
 				Focus.pop_back();
 			if (msg.Name != "") 
 				Wnd_proc(msg.Event, msg.Name);
@@ -680,7 +444,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			for (std::list<Glui_IForms*>::iterator it = Stec.begin(); it != Stec.end(); it++, i++)
 			{
 				msg = (*it)->MouseFunc(button, state, ax, ay);
-				if (msg.Event == Gl_EraseMsg) 
+				if (msg.Event == uiglEraseMsg) 
 				{
 					Stec.erase(it);
 					if (i <= in_focus)
@@ -705,7 +469,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	{
 		if (1 != Enabled)
 			return;
-		gleventstruct msg;
+		UiglEvent msg;
 		if (Wnd_proc == NULL) 
 		{
 			std::cout << "Function Win_proc not found\n";
@@ -714,7 +478,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (Focus.size())
 		{
 			msg = Focus[Focus.size() - 1]->KeyboardFunc(key, ax, ay);
-			if (msg.Event == Gl_EraseMsg)
+			if (msg.Event == uiglEraseMsg)
 				Focus.pop_back();
 			if (msg.Name != "")
 			{
@@ -738,7 +502,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			std::list<Glui_IForms*>::iterator it = Stec.begin();
 			std::advance(it, in_focus);
 			msg = (*it)->KeyboardFunc(key, ax, ay);
-			if (msg.Event == Gl_EraseMsg) 
+			if (msg.Event == uiglEraseMsg) 
 			{
 				Stec.erase(it);
 				in_focus--;
@@ -752,7 +516,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	{
 		if (1 != Enabled)
 			return;
-		gleventstruct msg;
+		UiglEvent msg;
 		if (Wnd_proc == NULL) 
 		{
 			std::cout << "Function Win_proc not found\n";
@@ -763,7 +527,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (Focus.size())
 		{
 			msg = Focus[Focus.size() - 1]->SpecialFunc(key, ax, ay);
-			if (msg.Event == Gl_EraseMsg)
+			if (msg.Event == uiglEraseMsg)
 				Focus.pop_back();
 			if (msg.Name != "")
 			{
@@ -773,7 +537,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			std::list<Glui_IForms*>::iterator it = Stec.begin();
 			std::advance(it, in_focus);
 			msg = (*it)->SpecialFunc(key, ax, ay);
-			if (msg.Event == Gl_EraseMsg)
+			if (msg.Event == uiglEraseMsg)
 			{
 				Stec.erase(it);
 				in_focus--;
@@ -786,7 +550,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	{
 		if (1 != Enabled)
 			return;
-		gleventstruct msg;
+		UiglEvent msg;
 		if (Wnd_proc == NULL) {
 			std::cout << "Function Win_proc not found\n";
 			return;
@@ -794,7 +558,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (Focus.size())
 		{
 			msg = Focus[Focus.size() - 1]->KeyboardUpFunc(key, ax, ay);
-			if (msg.Event == Gl_EraseMsg)
+			if (msg.Event == uiglEraseMsg)
 				Focus.pop_back();
 			if (msg.Name != "")
 			{
@@ -804,7 +568,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			std::list<Glui_IForms*>::iterator it = Stec.begin();
 			std::advance(it, in_focus);
 			msg = (*it)->KeyboardUpFunc(key, ax, ay);
-			if (msg.Event == Gl_EraseMsg)
+			if (msg.Event == uiglEraseMsg)
 			{
 				Stec.erase(it);
 				in_focus--;
@@ -819,7 +583,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			Shift_press = 0;
 		if (1 != Enabled)
 			return;
-		gleventstruct msg;
+		UiglEvent msg;
 		if (Wnd_proc == NULL)
 		{
 			std::cout << "Function Win_proc not found\n";
@@ -828,7 +592,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (Focus.size())
 		{
 			msg = Focus[Focus.size() - 1]->SpecialUpFunc(key, ax, ay);
-			if (msg.Event == Gl_EraseMsg)
+			if (msg.Event == uiglEraseMsg)
 				Focus.pop_back();
 			if (msg.Name != "")
 				Wnd_proc(msg.Event, msg.Name);
@@ -836,7 +600,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			std::list<Glui_IForms*>::iterator it = Stec.begin();
 			std::advance(it, in_focus);
 			msg = (*it)->SpecialUpFunc(key, ax, ay);
-			if (msg.Event == Gl_EraseMsg)
+			if (msg.Event == uiglEraseMsg)
 			{
 				Stec.erase(it);
 				in_focus--;
@@ -920,7 +684,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 
 #pragma region  Glui_MainForm
 	///Glui_MainForm 
-	void(*Glui_MainForm::WinProc)(Glui_Event, std::string);
+	void(*Glui_MainForm::WinProc)(uiglEvents, std::string);
 	void(*Glui_MainForm::KeyboardFunc_ptr)(unsigned char, int, int) = NULL;
 	void(*Glui_MainForm::SpecialFunc_ptr)(int, int, int) = NULL;
 	void(*Glui_MainForm::MouseFunc_ptr)(int, int, int, int) = NULL;
@@ -941,7 +705,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	HDC Glui_MainForm::hDC = NULL;
 	HWND Glui_MainForm::hWnd = NULL;
 	int Glui_MainForm::argc = 0;
-	Glui_Language Glui_MainForm::Language = Gl_LanguageEN;
+	uiglLanguages Glui_MainForm::Language = uiglLanguageEN;
 	Glui_Text Glui_MainForm::_t;
 	std::vector<std::string> Glui_MainForm::argv;
 	std::string Glui_MainForm::Name;
@@ -1032,9 +796,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (KeyboardFunc_ptr != nullptr)
 				KeyboardFunc_ptr(key, ax, WndH - ay);
 		}else { 
-			gleventstruct ev;
+			UiglEvent ev;
 			ev = MsgBox.KeyboardFunc(key, ax, WndH - ay); 
-			if (ev.Event != Glui_Event::Gl_EventEmpty && ev.Name != "" && WinProc != nullptr)
+			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc != nullptr)
 				WinProc(ev.Event, ev.Name);
 		}
 	}
@@ -1042,7 +806,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	{
 		if (key == GLUT_KEY_F1)
 		{
-			if (Language == Gl_LanguageRU)
+			if (Language == uiglLanguageRU)
 				MsgBox.Show("Ãàãèê Ïîãîñÿí", "Àâòîð"); 
 			else MsgBox.Show("Gagik Pogosyan", "Author");
 			MsgBox.Name = "Author"; 
@@ -1060,9 +824,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (SpecialFunc_ptr != nullptr)
 				SpecialFunc_ptr(key, ax, WndH - ay);
 		}else {
-			gleventstruct ev;
+			UiglEvent ev;
 			ev = MsgBox.SpecialFunc(key, ax, WndH - ay);
-			if (ev.Event != Glui_Event::Gl_EventEmpty && ev.Name != "" && WinProc != nullptr)
+			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc != nullptr)
 				WinProc(ev.Event, ev.Name);
 		} 
 	//	ColDial.SpecialFunc(key, ax, WndH - ay);
@@ -1081,9 +845,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (MouseFunc_ptr != nullptr)
 				MouseFunc_ptr(button, state, ax, WndH - ay);
 		}else {
-			gleventstruct ev;
+			UiglEvent ev;
 			ev =  MsgBox.MouseFunc(button, state, ax, WndH - ay);
-			if (ev.Event != Glui_Event::Gl_EventEmpty && ev.Name != "" && WinProc != nullptr)
+			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc != nullptr)
 				WinProc(ev.Event, ev.Name);
 		}
 	//	ColDial.MouseFunc(button,state, ax, WndH - ay);
@@ -1102,9 +866,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (MotionFunc_ptr != nullptr)
 				MotionFunc_ptr(ax, WndH - ay);
 		}else {
-			gleventstruct ev;
+			UiglEvent ev;
 			ev = MsgBox.MotionFunc(ax, WndH - ay);
-			if (ev.Event != Glui_Event::Gl_EventEmpty && ev.Name != "" && WinProc != nullptr)
+			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc != nullptr)
 				WinProc(ev.Event, ev.Name);
 		} 
 	//	ColDial.MotionFunc(ax, WndH - ay);
@@ -1123,9 +887,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (PassiveMotionFunc_ptr != nullptr)
 				PassiveMotionFunc_ptr(ax, WndH - ay);
 		}else {
-			gleventstruct ev;
+			UiglEvent ev;
 			ev = MsgBox.PassiveMotionFunc(ax, WndH - ay);
-				if (ev.Event != Glui_Event::Gl_EventEmpty && ev.Name != "" && WinProc != nullptr)
+				if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc != nullptr)
 					WinProc(ev.Event, ev.Name);
 		} 
 	//	ColDial.PassiveMotionFunc(ax, WndH - ay);
@@ -1144,9 +908,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (MouseWheelFunc_ptr != nullptr)
 				MouseWheelFunc_ptr(button, state, ax, WndH - ay);
 		}else {
-			gleventstruct ev;
+			UiglEvent ev;
 			ev = MsgBox.MouseWheelFunc(button, state, ax, WndH - ay);
-				if (ev.Event != Glui_Event::Gl_EventEmpty && ev.Name != "" && WinProc != nullptr)
+				if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc != nullptr)
 					WinProc(ev.Event, ev.Name);
 		}
 	//	ColDial.MouseWheelFunc(button, state, ax, WndH - ay);
@@ -1165,9 +929,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (KeyboardUpFunc_ptr != nullptr)
 				KeyboardUpFunc_ptr(key, ax, WndH - ay);
 		}else {
-			gleventstruct ev;
+			UiglEvent ev;
 			ev = MsgBox.KeyboardUpFunc(key, ax, WndH - ay);
-				if (ev.Event != Glui_Event::Gl_EventEmpty && ev.Name != "" && WinProc != nullptr)
+				if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc != nullptr)
 					WinProc(ev.Event, ev.Name);
 		}
 	//	ColDial.KeyboardUpFunc(key, ax, WndH - ay);
@@ -1186,9 +950,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (SpecialUpFunc_ptr != nullptr)
 				SpecialUpFunc_ptr(key, ax, WndH - ay);
 		}else {
-			gleventstruct ev;
+			UiglEvent ev;
 			ev = MsgBox.SpecialFunc(key, ax, WndH - ay);
-				if (ev.Event != Glui_Event::Gl_EventEmpty && ev.Name != "" && WinProc != nullptr)
+				if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc != nullptr)
 					WinProc(ev.Event, ev.Name);
 		}
 	//	ColDial.SpecialFunc(key, ax, WndH - ay);
@@ -1237,7 +1001,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	{
 		W = _w;
 	}
-	void Glui_Text::glText(float x, float y, const std::string txt, Glui_Color col)
+	void Glui_Text::glText(float x, float y, const std::string txt, UiglColor col)
 	{
 		col.Init();
 		if (H > 0)
@@ -1436,14 +1200,14 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		R = 20;
 		Color = Silver;
 	}
-	gleventstruct Glui_Roundrect::MouseFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Roundrect::MouseFunc(int button, int state, int ax, int ay)
 	{
-		if (!Visible) return gleventstruct();
+		if (!Visible) return UiglEvent();
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
 
-		gleventstruct result;
+		UiglEvent result;
 		bool lu, ld, ru, rd, B1, B2;
 		B1 = ((ax > X) && (ax < X + W) && (ay>Y + R) && (ay < Y + H - R));
 		B2 = (ax > X + R && ax < X + W - R && ay>Y     && ay < Y + H);
@@ -1458,7 +1222,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			result.Name = Name;
 			if (state == 0 && button == 0)
 			{
-				result.Event = Gl_MouseLeftDown;
+				result.Event = uiglMouseLeftDown;
 				moved = true;
 				mx = ax - X;
 				my = ay - Y;
@@ -1466,7 +1230,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				if (clock() - double_ckick < 350)
 				{
 					double_ckick = clock();
-					result.Event = Gl_DoubleClick;
+					result.Event = uiglDoubleClick;
 				}
 				else double_ckick = clock();
 
@@ -1474,36 +1238,36 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			}
 			if (state == 1 && button == 0)
 			{
-				result.Event = Gl_MouseLeftUp;
+				result.Event = uiglMouseLeftUp;
 				moved = false;
 				return result;
 			}
 			if (state == 0 && button == 1)
 			{
-				result.Event = Gl_MouseCenterDown;
+				result.Event = uiglMouseCenterDown;
 				return result;
 			}
 			if (state == 1 && button == 1)
 			{
-				result.Event = Gl_MouseCenterUp;
+				result.Event = uiglMouseCenterUp;
 				return result;
 			}
 			if (state == 0 && button == 2)
 			{
-				result.Event = Gl_MouseRightDown;
+				result.Event = uiglMouseRightDown;
 				return result;
 			}
 			if (state == 1 && button == 2)
 			{
-				result.Event = Gl_MouseRightUp;
+				result.Event = uiglMouseRightUp;
 				return result;
 			}
 		}
 		return result;
 	}
-	gleventstruct Glui_Roundrect::PassiveMotionFunc(int ax, int ay)
+	UiglEvent Glui_Roundrect::PassiveMotionFunc(int ax, int ay)
 	{
-		if (!Visible) return gleventstruct();
+		if (!Visible) return UiglEvent();
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
@@ -1514,7 +1278,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				R = H / 2;
 			else R = W / 2;
 		}
-		gleventstruct result;
+		UiglEvent result;
 		bool lu, ld, ru, rd, B1, B2;
 		B1 = ((ax > X) && (ax < X + W) && (ay>Y + R) && (ay < Y + H - R));
 		B2 = (ax > X + R && ax < X + W - R && ay>Y     && ay < Y + H);
@@ -1530,13 +1294,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			{
 				Mouse_in_button = true;
 				result.Name = Name;
-				result.Event = Gl_MouseOver;
+				result.Event = uiglMouseOver;
 				return result;
 			}
 			else {
 
 				result.Name = Name;
-				result.Event = Gl_Mousemove;
+				result.Event = uiglMousemove;
 				return result;
 			}
 		}
@@ -1545,21 +1309,21 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (Mouse_in_button)
 			{
 				result.Name = Name;
-				result.Event = Gl_MouseOut;
+				result.Event = uiglMouseOut;
 				Mouse_in_button = false;
 				return result;
 			}
 		}
 		return result;
 	}
-	gleventstruct Glui_Roundrect::MotionFunc(float ax, float ay)
+	UiglEvent Glui_Roundrect::MotionFunc(float ax, float ay)
 	{
-		if (!Visible) return gleventstruct();
+		if (!Visible) return UiglEvent();
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
 
-		gleventstruct result;
+		UiglEvent result;
 		if (is_move&&moved)
 		{
 			X = ax - mx;
@@ -1569,13 +1333,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		return result;
 	}
-	gleventstruct Glui_Roundrect::MouseWheelFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Roundrect::MouseWheelFunc(int button, int state, int ax, int ay)
 	{
-		if (!Visible) return gleventstruct();
+		if (!Visible) return UiglEvent();
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
-		gleventstruct result;
+		UiglEvent result;
 		bool lu, ld, ru, rd, B1, B2;
 		B1 = ((ax > X) && (ax < X + W) && (ay>Y + R) && (ay < Y + H - R));
 		B2 = (ax > X + R && ax < X + W - R && ay>Y     && ay < Y + H);
@@ -1588,51 +1352,51 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		{
 			result.Name = Name;
 			if (state == -1)
-				result.Event = Gl_WheelDown;
+				result.Event = uiglWheelDown;
 			if (state == 1)
-				result.Event = Gl_wheelup;
+				result.Event = uiglWheelUp;
 		}
 		return result;
 	}
-	gleventstruct Glui_Roundrect::KeyboardFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Roundrect::KeyboardFunc(unsigned char key, int ax, int ay)
 	{
-		if (!Visible) return gleventstruct();
+		if (!Visible) return UiglEvent();
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
-		gleventstruct result;
+		UiglEvent result;
 		if (in_focus && key == 13)
 		{
-			result.Event = Gl_Enter;
+			result.Event = uiglEnter;
 			result.Name = Name;
 		}
 		return result;
 	}
-	gleventstruct Glui_Roundrect::SpecialFunc(int key, int ax, int ay) 
+	UiglEvent Glui_Roundrect::SpecialFunc(int key, int ax, int ay) 
 	{
-		if (!Visible) return gleventstruct();
+		if (!Visible) return UiglEvent();
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
-	gleventstruct Glui_Roundrect::KeyboardUpFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Roundrect::KeyboardUpFunc(unsigned char key, int ax, int ay)
 	{
-		if (!Visible) return gleventstruct();
+		if (!Visible) return UiglEvent();
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
-	gleventstruct Glui_Roundrect::SpecialUpFunc(int key, int ax, int ay)
+	UiglEvent Glui_Roundrect::SpecialUpFunc(int key, int ax, int ay)
 	{
-		if (!Visible) return gleventstruct();
+		if (!Visible) return UiglEvent();
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
 	void Glui_Roundrect::Init()
@@ -1643,9 +1407,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (Mouse_in_button&&IsHover)
 			_n = 80;
 
-		Glui_Color Outline_color_temp = Outline_color;
+		UiglColor Outline_color_temp = Outline_color;
 		if (in_focus)
-			Outline_color_temp = Outline_color.Get_negative();
+			Outline_color_temp = Outline_color.getNegative();
 
 		Gl_Print_Roundrect(X, Y, W, H, R, Color + _n, Outline_color_temp,Angle);
 	}
@@ -1658,10 +1422,10 @@ void Glui_Size::SetSize(float width, float height, float depth)
 //		Size.UpdatePtr = this;
 		R = 10;
 	}
-	gleventstruct Glui_Circle::MouseFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Circle::MouseFunc(int button, int state, int ax, int ay)
 	{
-		if (!Visible) return gleventstruct();
-		gleventstruct result;
+		if (!Visible) return UiglEvent();
+		UiglEvent result;
 
 		if (sqrt((X + R - ax)*(X + R - ax) + (Y + R - ay)*(Y + R - ay)) < R)
 		{
@@ -1669,7 +1433,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			result.Name = Name;
 			if (state == 0 && button == 0)
 			{
-				result.Event = Gl_MouseLeftDown;
+				result.Event = uiglMouseLeftDown;
 				moved = true;
 				mx = ax - X;
 				my = ay - Y;
@@ -1677,7 +1441,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				if (clock() - double_ckick < 350)
 				{
 					double_ckick = clock();
-					result.Event = Gl_DoubleClick;
+					result.Event = uiglDoubleClick;
 				}
 				else double_ckick = clock();
 
@@ -1685,37 +1449,37 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			}
 			if (state == 1 && button == 0)
 			{
-				result.Event = Gl_MouseLeftUp;
+				result.Event = uiglMouseLeftUp;
 				moved = false;
 				return result;
 			}
 			if (state == 0 && button == 1)
 			{
-				result.Event = Gl_MouseCenterDown;
+				result.Event = uiglMouseCenterDown;
 				return result;
 			}
 			if (state == 1 && button == 1)
 			{
-				result.Event = Gl_MouseCenterUp;
+				result.Event = uiglMouseCenterUp;
 				return result;
 			}
 			if (state == 0 && button == 2)
 			{
-				result.Event = Gl_MouseRightDown;
+				result.Event = uiglMouseRightDown;
 				return result;
 			}
 			if (state == 1 && button == 2)
 			{
-				result.Event = Gl_MouseRightUp;
+				result.Event = uiglMouseRightUp;
 				return result;
 			}
 		}
 		return result;
 	}
-	gleventstruct Glui_Circle::PassiveMotionFunc(int ax, int ay)
+	UiglEvent Glui_Circle::PassiveMotionFunc(int ax, int ay)
 	{
-		if (!Visible) return gleventstruct();
-		gleventstruct result;
+		if (!Visible) return UiglEvent();
+		UiglEvent result;
 		if (sqrt((X + R - ax)*(X + R - ax) + (Y + R - ay)*(Y + R - ay)) < R)
 		{
 
@@ -1723,13 +1487,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			{
 				Mouse_in_button = true;
 				result.Name = Name;
-				result.Event = Gl_MouseOver;
+				result.Event = uiglMouseOver;
 				return result;
 			}
 			else {
 
 				result.Name = Name;
-				result.Event = Gl_Mousemove;
+				result.Event = uiglMousemove;
 				return result;
 			}
 		}
@@ -1738,17 +1502,17 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (Mouse_in_button)
 			{
 				result.Name = Name;
-				result.Event = Gl_MouseOut;
+				result.Event = uiglMouseOut;
 				Mouse_in_button = false;
 				return result;
 			}
 		}
 		return result;
 	}
-	gleventstruct Glui_Circle::MotionFunc(float ax, float ay) 
+	UiglEvent Glui_Circle::MotionFunc(float ax, float ay) 
 	{
-		if (!Visible) return gleventstruct();
-		gleventstruct result;
+		if (!Visible) return UiglEvent();
+		UiglEvent result;
 		if (is_move&&moved)
 		{
 			X = ax - mx;
@@ -1758,43 +1522,43 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		return result;
 	}
-	gleventstruct Glui_Circle::MouseWheelFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Circle::MouseWheelFunc(int button, int state, int ax, int ay)
 	{
-		if (!Visible) return gleventstruct();
-		gleventstruct result;
+		if (!Visible) return UiglEvent();
+		UiglEvent result;
 		if (sqrt((X + R - ax)*(X + R - ax) + (Y + R - ay)*(Y + R - ay)) < R)
 		{
 			result.Name = Name;
 			if (state == -1)
-				result.Event = Gl_WheelDown;
+				result.Event = uiglWheelDown;
 			if (state == 1)
-				result.Event = Gl_wheelup;
+				result.Event = uiglWheelUp;
 		}
 		return result;
 	}
-	gleventstruct Glui_Circle::KeyboardFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Circle::KeyboardFunc(unsigned char key, int ax, int ay)
 	{
-		if (!Visible) return gleventstruct();
-		gleventstruct result;
+		if (!Visible) return UiglEvent();
+		UiglEvent result;
 		return result;
 	}
-	gleventstruct Glui_Circle::SpecialFunc(int key, int ax, int ay) 
+	UiglEvent Glui_Circle::SpecialFunc(int key, int ax, int ay) 
 	{
-		if (!Visible) return gleventstruct();
-		gleventstruct result;
+		if (!Visible) return UiglEvent();
+		UiglEvent result;
 		return result;
 	}
-	gleventstruct Glui_Circle::KeyboardUpFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Circle::KeyboardUpFunc(unsigned char key, int ax, int ay)
 	{
-		if (!Visible) return gleventstruct();
-		gleventstruct result;
+		if (!Visible) return UiglEvent();
+		UiglEvent result;
 		return result;
 
 	}
-	gleventstruct Glui_Circle::SpecialUpFunc(int key, int ax, int ay)
+	UiglEvent Glui_Circle::SpecialUpFunc(int key, int ax, int ay)
 	{
-		if (!Visible) return gleventstruct();
-		gleventstruct result;
+		if (!Visible) return UiglEvent();
+		UiglEvent result;
 		return result;
 	}
 	void Glui_Circle::Init()
@@ -1808,9 +1572,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (Mouse_in_button&&IsHover)
 			_n = 80;
 
-		Glui_Color Outline_color_temp = Outline_color;
+		UiglColor Outline_color_temp = Outline_color;
 		if (in_focus)
-			Outline_color_temp = Outline_color.Get_negative();
+			Outline_color_temp = Outline_color.getNegative();
 
 		Gl_Print_Circle(X, Y, R, Color + _n, Outline_color_temp);
 	}
@@ -1832,13 +1596,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		H = W = 20;
 		Color = White;
 	}
-	gleventstruct Glui_Rectangle::MouseFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Rectangle::MouseFunc(int button, int state, int ax, int ay)
 	{
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
 
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible) return result;
 		if ((ax > X) && (ax < X + W) && (ay>Y) && (ay < Y + H))
 		{
@@ -1846,7 +1610,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			result.Name = Name;
 			if (state == 0 && button == 0)
 			{
-				result.Event = Gl_MouseLeftDown;
+				result.Event = uiglMouseLeftDown;
 				moved = true;
 				mx = ax - X;
 				my = ay - Y;
@@ -1854,7 +1618,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				if (clock() - double_ckick < 350)
 				{
 					double_ckick = clock();
-					result.Event = Gl_DoubleClick;
+					result.Event = uiglDoubleClick;
 				}
 				else double_ckick = clock();
 
@@ -1862,39 +1626,39 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			}
 			if (state == 1 && button == 0)
 			{
-				result.Event = Gl_MouseLeftUp;
+				result.Event = uiglMouseLeftUp;
 				moved = false;
 				return result;
 			}
 			if (state == 0 && button == 1)
 			{
-				result.Event = Gl_MouseCenterDown;
+				result.Event = uiglMouseCenterDown;
 				return result;
 			}
 			if (state == 1 && button == 1)
 			{
-				result.Event = Gl_MouseCenterUp;
+				result.Event = uiglMouseCenterUp;
 				return result;
 			}
 			if (state == 0 && button == 2)
 			{
-				result.Event = Gl_MouseRightDown;
+				result.Event = uiglMouseRightDown;
 				return result;
 			}
 			if (state == 1 && button == 2)
 			{
-				result.Event = Gl_MouseRightUp;
+				result.Event = uiglMouseRightUp;
 				return result;
 			}
 		}
 		return result;
 	}
-	gleventstruct Glui_Rectangle::PassiveMotionFunc(int ax, int ay)
+	UiglEvent Glui_Rectangle::PassiveMotionFunc(int ax, int ay)
 	{
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible) return result;
 		if ((ax > X) && (ax < X + W) && (ay>Y) && (ay < Y + H))
 		{
@@ -1903,13 +1667,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			{
 				Mouse_in_button = true;
 				result.Name = Name;
-				result.Event = Gl_MouseOver;
+				result.Event = uiglMouseOver;
 				return result;
 			}
 			else {
 
 				result.Name = Name;
-				result.Event = Gl_Mousemove;
+				result.Event = uiglMousemove;
 				return result;
 			}
 		}
@@ -1918,19 +1682,19 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (Mouse_in_button)
 			{
 				result.Name = Name;
-				result.Event = Gl_MouseOut;
+				result.Event = uiglMouseOut;
 				Mouse_in_button = false;
 				return result;
 			}
 		}
 		return result;
 	}
-	gleventstruct Glui_Rectangle::MotionFunc(float ax, float ay)
+	UiglEvent Glui_Rectangle::MotionFunc(float ax, float ay)
 	{
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible) return result;
 		if (is_move&&moved)
 		{
@@ -1941,58 +1705,58 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		return result;
 	}
-	gleventstruct Glui_Rectangle::MouseWheelFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Rectangle::MouseWheelFunc(int button, int state, int ax, int ay)
 	{
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible) return result;
 		if ((ax > X) && (ax < X + W) && (ay>Y) && (ay < Y + H))
 		{
 			result.Name = Name;
 			if (state == -1)
-				result.Event = Gl_WheelDown;
+				result.Event = uiglWheelDown;
 			if (state == 1)
-				result.Event = Gl_wheelup;
+				result.Event = uiglWheelUp;
 		}
 		return result;
 	}
-	gleventstruct Glui_Rectangle::KeyboardFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Rectangle::KeyboardFunc(unsigned char key, int ax, int ay)
 	{
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible) return result;
 		if (in_focus && key == 13)
 		{
-			result.Event = Gl_Enter;
+			result.Event = uiglEnter;
 			result.Name = Name;
 		}
 		return result;
 	}
-	gleventstruct Glui_Rectangle::SpecialFunc(int key, int ax, int ay)
+	UiglEvent Glui_Rectangle::SpecialFunc(int key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 		if (!Visible) return result;
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
 	}
-	gleventstruct Glui_Rectangle::KeyboardUpFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Rectangle::KeyboardUpFunc(unsigned char key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 		if (!Visible) return result;
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
 	}
-	gleventstruct Glui_Rectangle::SpecialUpFunc(int key, int ax, int ay)
+	UiglEvent Glui_Rectangle::SpecialUpFunc(int key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 		if (!Visible) return result;
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
@@ -2007,27 +1771,27 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (Mouse_in_button&&IsHover)
 			_n = 80;
 
-		Glui_Color Outline_color_temp = Outline_color;
+		UiglColor Outline_color_temp = Outline_color;
 		if (in_focus)
-			Outline_color_temp = Outline_color.Get_negative();
+			Outline_color_temp = Outline_color.getNegative();
 
 		Gl_Print_Rectangle(X, Y, W, H, Color + _n, Outline_color_temp,Angle);
 		float align_h = 0;
 		switch (Text_align)
 		{
-		case easyGL::Top_left:
-		case easyGL::Top_center:
-		case easyGL::Top_right:
+		case UIGL::uiglTopLeft:
+		case UIGL::uiglTopCenter:
+		case UIGL::uiglTopRight:
 			align_h = H*0.9f - Text_size;
 			break;
-		case easyGL::Middle_left:
-		case easyGL::Middle_center:
-		case easyGL::Middle_right:
+		case UIGL::uiglMiddleLeft:
+		case UIGL::uiglMiddleCenter:
+		case UIGL::uiglMiddleRight:
 			align_h = H*0.5f - Text_size / 2.0f;
 			break;
-		case easyGL::Bottom_left:
-		case easyGL::Bottom_center:
-		case easyGL::Bottom_right:
+		case UIGL::uiglBottomLeft:
+		case UIGL::uiglBottomCenter:
+		case UIGL::uiglBottomRight:
 			align_h = H*0.1f;
 			break;
 		}
@@ -2060,12 +1824,12 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		Position_p = Min;
 		Px = H + Slider_length;
 		Step = 1;
-		Color_slider.Set_color(Silver);
+		Color_slider.setColor(Silver);
 		Color = White;
 	}
-	gleventstruct Glui_Skrollbar::MouseFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Skrollbar::MouseFunc(int button, int state, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible) return result;
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
@@ -2086,7 +1850,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 					Move_slider = 0;
 					Position_p = (Px - H - Slider_length)*(Max - Min) / (W - 2 * H - 2 * Slider_length) + Min;
 					result.Name = Name;
-					result.Event = Gl_Changed;
+					result.Event = uiglChanged;
 				}
 			}
 			else { Move_slider = 0; }
@@ -2095,9 +1859,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	
 		return result;
 	}
-	gleventstruct Glui_Skrollbar::PassiveMotionFunc(int ax, int ay)
+	UiglEvent Glui_Skrollbar::PassiveMotionFunc(int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible) return result;
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
@@ -2127,12 +1891,12 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			{
 				Mouse_in_button = true;
 				result.Name = Name;
-				result.Event = Gl_MouseOver;
+				result.Event = uiglMouseOver;
 				return result;
 			}else {
 
 				result.Name = Name;
-				result.Event = Gl_Mousemove;
+				result.Event = uiglMousemove;
 				return result;
 			}
 		}
@@ -2142,15 +1906,15 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (Mouse_in_button)
 			{
 				result.Name = Name;
-				result.Event = Gl_MouseOut;
+				result.Event = uiglMouseOut;
 				Mouse_in_button = false;
 				return result;
 			}
 		}
 		return result;
 	}
-	gleventstruct Glui_Skrollbar::MotionFunc(float ax, float ay) {
-		gleventstruct result;
+	UiglEvent Glui_Skrollbar::MotionFunc(float ax, float ay) {
+		UiglEvent result;
 		if (!Visible) return result;
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
@@ -2172,13 +1936,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				Px = W - H - Slider_length;
 			Position_p = (Px - H - Slider_length)*(Max - Min) / (W - 2 * H - 2 * Slider_length) + Min;
 			result.Name = Name;
-			result.Event = Gl_Changed;
+			result.Event = uiglChanged;
 		}
 		return result;
 	}
-	gleventstruct Glui_Skrollbar::MouseWheelFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Skrollbar::MouseWheelFunc(int button, int state, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible) return result;
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
@@ -2193,38 +1957,38 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			
 			Position_p = (Px - H - Slider_length)*(Max - Min) / (W - 2 * H - 2 * Slider_length) + Min;
 			result.Name = Name;
-			result.Event = Gl_Changed;
+			result.Event = uiglChanged;
 		}
 		return result;
 	}
-	gleventstruct Glui_Skrollbar::KeyboardFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Skrollbar::KeyboardFunc(unsigned char key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible) return result;
 		return result;
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
 	}
-	gleventstruct Glui_Skrollbar::SpecialFunc(int key, int ax, int ay)
+	UiglEvent Glui_Skrollbar::SpecialFunc(int key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
 	}
-	gleventstruct Glui_Skrollbar::KeyboardUpFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Skrollbar::KeyboardUpFunc(unsigned char key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
 	}
-	gleventstruct Glui_Skrollbar::SpecialUpFunc(int key, int ax, int ay)
+	UiglEvent Glui_Skrollbar::SpecialUpFunc(int key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
@@ -2235,7 +1999,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (!Visible) return;
 
 		Gl_Print_Rectangle(X, Y, W, H, Color, Outline_color, Angle);
-		Glui_Color _col = Color;
+		UiglColor _col = Color;
 		if (passiv_hover == 1 && IsHover)
 			_col = _col + 70;
 		Gl_Print_Rectangle(X, Y, H*0.9f, H, _col, Outline_color, Angle);
@@ -2332,9 +2096,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		Color = White;
 		//	textprint.SetHDC(hdc);
 	}
-	gleventstruct Glui_Checkbox::MouseFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Checkbox::MouseFunc(int button, int state, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (button == 0 && state == 0)
 			if ((ax > X) && (ax < X + W) && (ay>Y) && (ay < Y + W))
 			{
@@ -2344,13 +2108,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				}
 				else Checked = 1;
 				result.Name = Name;
-				result.Event = Gl_Changed;
+				result.Event = uiglChanged;
 			}
 		return result;
 	}
-	gleventstruct Glui_Checkbox::PassiveMotionFunc(int ax, int ay)
+	UiglEvent Glui_Checkbox::PassiveMotionFunc(int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible) return result;
 
 		if ((ax > X) && (ax < X + W) && (ay > Y) && (ay < Y + W))
@@ -2359,13 +2123,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			{
 				Mouse_in_button = true;
 				result.Name = Name;
-				result.Event = Gl_MouseOver;
+				result.Event = uiglMouseOver;
 				return result;
 			}
 			else {
 
 				result.Name = Name;
-				result.Event = Gl_Mousemove;
+				result.Event = uiglMousemove;
 				return result;
 			}
 		}
@@ -2374,16 +2138,16 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (Mouse_in_button)
 			{
 				result.Name = Name;
-				result.Event = Gl_MouseOut;
+				result.Event = uiglMouseOut;
 				Mouse_in_button = false;
 				return result;
 			}
 		}
 		return result;
 	}
-	gleventstruct Glui_Checkbox::MotionFunc(float ax, float ay)
+	UiglEvent Glui_Checkbox::MotionFunc(float ax, float ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (is_move&&moved)
 		{
 			X = ax - mx;
@@ -2393,45 +2157,45 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		return result;
 	}
-	gleventstruct Glui_Checkbox::MouseWheelFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Checkbox::MouseWheelFunc(int button, int state, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
-	gleventstruct Glui_Checkbox::KeyboardFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Checkbox::KeyboardFunc(unsigned char key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
-	gleventstruct Glui_Checkbox::SpecialFunc(int key, int ax, int ay)
+	UiglEvent Glui_Checkbox::SpecialFunc(int key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
-	gleventstruct Glui_Checkbox::KeyboardUpFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Checkbox::KeyboardUpFunc(unsigned char key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (in_focus && key == ' ')
 		{
 			Checked = !Checked;
 			result.Name = Name;
-			result.Event = Gl_Changed;
+			result.Event = uiglChanged;
 		}
 
 		return result;
 	}
-	gleventstruct Glui_Checkbox::SpecialUpFunc(int key, int ax, int ay)
+	UiglEvent Glui_Checkbox::SpecialUpFunc(int key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
 	void Glui_Checkbox::Init()
 	{
-		Glui_Color _col = Color,_col1 = Outline_color;
+		UiglColor _col = Color,_col1 = Outline_color;
 		if (Mouse_in_button)
 			_col = _col + 72;
 		if (in_focus)
-			_col1 = _col1.Get_negative();
+			_col1 = _col1.getNegative();
 		Gl_Print_Rectangle(X, Y, W, W, _col, _col1);
 		Gl_Print_Rectangle_Contour(X, Y, W, W, Outline_color,0, Line_length);
 		textprint.glText(X + W*1.1, Y + (W*1.3 - Text_size) / 2, Text.c_str());
@@ -2473,9 +2237,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		Size.UpdatePtr = this;
 		Color = White;
 	}
-	gleventstruct Glui_Progressbar::MouseFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Progressbar::MouseFunc(int button, int state, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 
 		if ((ax > X) && (ax < X + W) && (ay>Y) && (ay < Y + H))
 		{
@@ -2483,7 +2247,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			result.Name = Name;
 			if (state == 0 && button == 0)
 			{
-				result.Event = Gl_MouseLeftDown;
+				result.Event = uiglMouseLeftDown;
 				moved = true;
 				mx = ax - X;
 				my = ay - Y;
@@ -2491,7 +2255,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				if (clock() - double_ckick < 350)
 				{
 					double_ckick = clock();
-					result.Event = Gl_DoubleClick;
+					result.Event = uiglDoubleClick;
 				}
 				else double_ckick = clock();
 
@@ -2499,36 +2263,36 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			}
 			if (state == 1 && button == 0)
 			{
-				result.Event = Gl_MouseLeftUp;
+				result.Event = uiglMouseLeftUp;
 				moved = false;
 				return result;
 			}
 			if (state == 0 && button == 1)
 			{
-				result.Event = Gl_MouseCenterDown;
+				result.Event = uiglMouseCenterDown;
 				return result;
 			}
 			if (state == 1 && button == 1)
 			{
-				result.Event = Gl_MouseCenterUp;
+				result.Event = uiglMouseCenterUp;
 				return result;
 			}
 			if (state == 0 && button == 2)
 			{
-				result.Event = Gl_MouseRightDown;
+				result.Event = uiglMouseRightDown;
 				return result;
 			}
 			if (state == 1 && button == 2)
 			{
-				result.Event = Gl_MouseRightUp;
+				result.Event = uiglMouseRightUp;
 				return result;
 			}
 		}
 		return result;
 	}
-	gleventstruct Glui_Progressbar::PassiveMotionFunc(int ax, int ay)
+	UiglEvent Glui_Progressbar::PassiveMotionFunc(int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 
 		if ((ax > X) && (ax < X + W) && (ay>Y) && (ay < Y + H))
 		{
@@ -2537,13 +2301,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			{
 				Mouse_in_button = true;
 				result.Name = Name;
-				result.Event = Gl_MouseOver;
+				result.Event = uiglMouseOver;
 				return result;
 			}
 			else {
 
 				result.Name = Name;
-				result.Event = Gl_Mousemove;
+				result.Event = uiglMousemove;
 				return result;
 			}
 		}
@@ -2552,16 +2316,16 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (Mouse_in_button)
 			{
 				result.Name = Name;
-				result.Event = Gl_MouseOut;
+				result.Event = uiglMouseOut;
 				Mouse_in_button = false;
 				return result;
 			}
 		}
 		return result;
 	}
-	gleventstruct Glui_Progressbar::MotionFunc(float ax, float ay) 
+	UiglEvent Glui_Progressbar::MotionFunc(float ax, float ay) 
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (is_move&&moved)
 		{
 			X = ax - mx;
@@ -2571,38 +2335,38 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		return result;
 	}
-	gleventstruct Glui_Progressbar::MouseWheelFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Progressbar::MouseWheelFunc(int button, int state, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 
 		if ((ax > X) && (ax < X + W) && (ay>Y) && (ay < Y + H))
 		{
 			result.Name = Name;
 			if (state == -1)
-				result.Event = Gl_WheelDown;
+				result.Event = uiglWheelDown;
 			if (state == 1)
-				result.Event = Gl_wheelup;
+				result.Event = uiglWheelUp;
 		}
 		return result;
 	}
-	gleventstruct Glui_Progressbar::KeyboardFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Progressbar::KeyboardFunc(unsigned char key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
-	gleventstruct Glui_Progressbar::SpecialFunc(int key, int ax, int ay)
+	UiglEvent Glui_Progressbar::SpecialFunc(int key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
-	gleventstruct Glui_Progressbar::KeyboardUpFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Progressbar::KeyboardUpFunc(unsigned char key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
-	gleventstruct Glui_Progressbar::SpecialUpFunc(int key, int ax, int ay)
+	UiglEvent Glui_Progressbar::SpecialUpFunc(int key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
 	void Glui_Progressbar::Init()
@@ -2701,19 +2465,19 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		Color = White;
 		Cursor_time = clock();
 		textprint.SetFont("Consolas");
-		Selection_color.Set_alpha(100);
+		Selection_color.setAlpha(100);
 		Text_max_length = Text.max_size();
 	}
-	gleventstruct Glui_Textbox::MouseFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Textbox::MouseFunc(int button, int state, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 
 		if ((ax > X) && (ax < X + W) && (ay>Y) && (ay < Y + H))
 		{
 			result.Name = Name;
 			if (state == 0 && button == 0)
 			{
-				result.Event = Gl_MouseLeftDown;
+				result.Event = uiglMouseLeftDown;
 				moved = true;
 				mx = ax - X;
 				my = ay - Y;
@@ -2729,7 +2493,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				if (clock() - double_ckick < 350)
 				{
 					double_ckick = clock();
-					result.Event = Gl_DoubleClick;
+					result.Event = uiglDoubleClick;
 				}
 				else double_ckick = clock();
 
@@ -2737,37 +2501,37 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			}
 			if (state == 1 && button == 0)
 			{
-				result.Event = Gl_MouseLeftUp;
+				result.Event = uiglMouseLeftUp;
 				moved = false;
 				return result;
 			}
 			if (state == 0 && button == 1)
 			{
-				result.Event = Gl_MouseCenterDown;
+				result.Event = uiglMouseCenterDown;
 				return result;
 			}
 			if (state == 1 && button == 1)
 			{
-				result.Event = Gl_MouseCenterUp;
+				result.Event = uiglMouseCenterUp;
 				return result;
 			}
 			if (state == 0 && button == 2)
 			{
-				result.Event = Gl_MouseRightDown;
+				result.Event = uiglMouseRightDown;
 				return result;
 			}
 			if (state == 1 && button == 2)
 			{
-				result.Event = Gl_MouseRightUp;
+				result.Event = uiglMouseRightUp;
 				return result;
 			}
 		}
 		else if (!in_focus) Cursor_pos = Text.length();
 		return result;
 	}
-	gleventstruct Glui_Textbox::PassiveMotionFunc(int ax, int ay)
+	UiglEvent Glui_Textbox::PassiveMotionFunc(int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 
 		if ((ax > X) && (ax < X + W) && (ay>Y) && (ay < Y + H))
 		{
@@ -2776,13 +2540,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			{
 				Mouse_in_button = true;
 				result.Name = Name;
-				result.Event = Gl_MouseOver;
+				result.Event = uiglMouseOver;
 				return result;
 			}
 			else {
 
 				result.Name = Name;
-				result.Event = Gl_Mousemove;
+				result.Event = uiglMousemove;
 				return result;
 			}
 		}
@@ -2791,16 +2555,16 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (Mouse_in_button)
 			{
 				result.Name = Name;
-				result.Event = Gl_MouseOut;
+				result.Event = uiglMouseOut;
 				Mouse_in_button = false;
 				return result;
 			}
 		}
 		return result;
 	}
-	gleventstruct Glui_Textbox::MotionFunc(float ax, float ay) 
+	UiglEvent Glui_Textbox::MotionFunc(float ax, float ay) 
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (is_move&&moved)
 		{
 			X = ax - mx;
@@ -2819,23 +2583,23 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		return result;
 	}
-	gleventstruct Glui_Textbox::MouseWheelFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Textbox::MouseWheelFunc(int button, int state, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 
 		if ((ax > X) && (ax < X + W) && (ay>Y) && (ay < Y + H))
 		{
 			result.Name = Name;
 			if (state == -1)
-				result.Event = Gl_WheelDown;
+				result.Event = uiglWheelDown;
 			if (state == 1)
-				result.Event = Gl_wheelup;
+				result.Event = uiglWheelUp;
 		}
 		return result;
 	}
-	gleventstruct Glui_Textbox::KeyboardFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Textbox::KeyboardFunc(unsigned char key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (in_focus && !Read_only)
 		{
 			if (key > 31 && key < 176 || key>191 && key < 256)
@@ -3069,17 +2833,17 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			}
 
 			result.Name = Name;
-			result.Event = Gl_Changed;
+			result.Event = uiglChanged;
 			if (key == 13)
 			{
-				result.Event = Gl_Enter;
+				result.Event = uiglEnter;
 			}
 		}
 		return result;
 	}
-	gleventstruct Glui_Textbox::SpecialFunc(int key, int ax, int ay) 
+	UiglEvent Glui_Textbox::SpecialFunc(int key, int ax, int ay) 
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (in_focus && !Read_only)
 		{
 
@@ -3135,14 +2899,14 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		return result;
 	}
-	gleventstruct Glui_Textbox::KeyboardUpFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Textbox::KeyboardUpFunc(unsigned char key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
-	gleventstruct Glui_Textbox::SpecialUpFunc(int key, int ax, int ay)
+	UiglEvent Glui_Textbox::SpecialUpFunc(int key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (key == GLUT_KEY_SHIFT_L || key == GLUT_KEY_SHIFT_R)
 			Shift_press = 0;
 		return result;
@@ -3166,9 +2930,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (Mouse_in_button)
 			_n = 80;
 
-		Glui_Color Outline_color_temp = Outline_color;
+		UiglColor Outline_color_temp = Outline_color;
 		if (in_focus)
-			Outline_color_temp = Outline_color.Get_negative();
+			Outline_color_temp = Outline_color.getNegative();
 
 		Gl_Print_Rectangle(X, Y, W, H, Color + _n, Outline_color_temp);
 
@@ -3264,18 +3028,18 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		MaxDropDownItems = 5;
 		Select_min = 0;
 	}
-	gleventstruct Glui_Combobox::MouseFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Combobox::MouseFunc(int button, int state, int ax, int ay)
 	{
 		tbox.MouseFunc(button, state, ax, ay);
 			
-		gleventstruct result;
+		UiglEvent result;
 		if (button == 0 && state == 0)
 		{
 			if (Position.GetPositionX()<ax && Position.GetPositionX() + Size.GetSizeW()>ax &&
 				Position.GetPositionY()<ay && Position.GetPositionY() + Size.GetSizeH()>ay)
 			{
 				result.Name = Name;
-				result.Event = Gl_MouseLeftDown;
+				result.Event = uiglMouseLeftDown;
 				if (ax > Position.GetPositionX() + Size.GetSizeW() - Size.GetSizeH()*0.8f)
 					open = true;
 			}
@@ -3286,7 +3050,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				Position.GetPositionY()<ay && Position.GetPositionY() + Size.GetSizeH()>ay)
 			{
 				result.Name = Name;
-				result.Event = Gl_MouseLeftUp;
+				result.Event = uiglMouseLeftUp;
 			}
 		}
 		if (button == 1 && state == 0)
@@ -3295,7 +3059,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				Position.GetPositionY()<ay && Position.GetPositionY() + Size.GetSizeH()>ay)
 			{
 				result.Name = Name;
-				result.Event = Gl_MouseCenterDown;
+				result.Event = uiglMouseCenterDown;
 			}
 		}
 		if (button == 1 && state == 1)
@@ -3304,7 +3068,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				Position.GetPositionY()<ay && Position.GetPositionY() + Size.GetSizeH()>ay)
 			{
 				result.Name = Name;
-				result.Event = Gl_MouseCenterUp;
+				result.Event = uiglMouseCenterUp;
 			}
 		}
 		if (button == 2 && state == 0)
@@ -3313,7 +3077,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				Position.GetPositionY()<ay && Position.GetPositionY() + Size.GetSizeH()>ay)
 			{
 				result.Name = Name;
-				result.Event = Gl_MouseRightDown;
+				result.Event = uiglMouseRightDown;
 			}
 		}	
 		if (button == 2 && state == 1)
@@ -3322,7 +3086,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				Position.GetPositionY()<ay && Position.GetPositionY() + Size.GetSizeH()>ay)
 			{
 				result.Name = Name;
-				result.Event = Gl_MouseRightUp;
+				result.Event = uiglMouseRightUp;
 			}
 		}
 
@@ -3332,7 +3096,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (open && (ax > X) && (ax < X + W - H*0.8) && (ay > Y - H*Items.size()) && (ay < Y) && (ay > Y - H*MaxDropDownItems))
 			{
 				result.Name = Name;
-				result.Event = Gl_Changed;
+				result.Event = uiglChanged;
 				Select = (Y - ay) / H + Select_min;
 				open = 0;
 			}
@@ -3363,10 +3127,10 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}*/
 		return result;
 	}
-	gleventstruct Glui_Combobox::PassiveMotionFunc(int ax, int ay)
+	UiglEvent Glui_Combobox::PassiveMotionFunc(int ax, int ay)
 	{
 		tbox.PassiveMotionFunc(ax, ay);
-		gleventstruct result;
+		UiglEvent result;
 
 		if ((ax > X) && (ax < X + W) && (ay>Y) && (ay < Y + H))
 		{
@@ -3378,13 +3142,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			{
 				Mouse_in_button = true;
 				result.Name = Name;
-				result.Event = Gl_MouseOver;
+				result.Event = uiglMouseOver;
 				return result;
 			}
 			else {
 
 				result.Name = Name;
-				result.Event = Gl_Mousemove;
+				result.Event = uiglMousemove;
 				return result;
 			}
 		}
@@ -3394,7 +3158,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (Mouse_in_button)
 			{
 				result.Name = Name;
-				result.Event = Gl_MouseOut;
+				result.Event = uiglMouseOut;
 				Mouse_in_button = false;
 				return result;
 			}
@@ -3409,10 +3173,10 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			//	Skroll.Set_Position(Items.size()-1- Select_temp);
 		//}
 	}
-	gleventstruct Glui_Combobox::MotionFunc(float ax, float ay) 
+	UiglEvent Glui_Combobox::MotionFunc(float ax, float ay) 
 	{
 		tbox.MotionFunc(ax, ay);
-		gleventstruct result;
+		UiglEvent result;
 
 	//	Skroll.MotionFunc(ax, ay);
 	//	Select_min = Items.size() - MaxDropDownItems - Skroll.Get_Position();
@@ -3432,9 +3196,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		//			Select_min++;
 		//}
 	}
-	gleventstruct Glui_Combobox::MouseWheelFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Combobox::MouseWheelFunc(int button, int state, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 
 		return result;
 		if (open)
@@ -3447,7 +3211,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 
 	}
-	gleventstruct Glui_Combobox::KeyboardFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Combobox::KeyboardFunc(unsigned char key, int ax, int ay)
 	{
 		tbox.KeyboardFunc(key, ax, ay);
 		if (key == 27)
@@ -3456,14 +3220,14 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		if (!in_focus)
 			open = 0;
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 		if (key == 13 && in_focus)
 		{
 			Select = Select_temp;
 			open = 0;
 			result.Name = Name;
-			result.Event = Gl_Changed;
+			result.Event = uiglChanged;
 		}
 		/*	if (Select_temp < Select_min) {
 		if (Select_min > 0)
@@ -3478,11 +3242,11 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		//	Skroll.Set_Position(Items.size() - Select_temp - 1);
 
 	}
-	gleventstruct Glui_Combobox::SpecialFunc(int key, int ax, int ay) 
+	UiglEvent Glui_Combobox::SpecialFunc(int key, int ax, int ay) 
 	{
 		tbox.SpecialFunc(key,ax,ay);
 
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 
 		if (!in_focus)
@@ -3535,7 +3299,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 					{
 						Select--;
 						result.Name = Name;
-						result.Event = Gl_Changed;
+						result.Event = uiglChanged;
 						Select_temp = Select;
 					}
 				}
@@ -3545,7 +3309,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 					{
 						Select++;
 						result.Name = Name;
-						result.Event = Gl_Changed;
+						result.Event = uiglChanged;
 						Select_temp = Select;
 					}
 				}
@@ -3554,16 +3318,16 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 
 	}
-	gleventstruct Glui_Combobox::KeyboardUpFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Combobox::KeyboardUpFunc(unsigned char key, int ax, int ay)
 	{
 		tbox.KeyboardUpFunc(key, ax, ay);
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
-	gleventstruct Glui_Combobox::SpecialUpFunc(int key, int ax, int ay)
+	UiglEvent Glui_Combobox::SpecialUpFunc(int key, int ax, int ay)
 	{
 		tbox.SpecialUpFunc(key, ax, ay);
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
 	void Glui_Combobox::Init()
@@ -3574,9 +3338,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			tbox.Text = Items[Select];
 
 		tbox.Init();
-		Glui_Color Outline_Color_Temp = Outline_color, Color_temp = Color;
+		UiglColor Outline_Color_Temp = Outline_color, Color_temp = Color;
 		if (in_focus)
-			Outline_Color_Temp = Outline_color.Get_negative();
+			Outline_Color_Temp = Outline_color.getNegative();
 		if (hover_index == 1)
 			Color_temp = Color + 70;
 		Gl_Print_Rectangle(X + W - H*0.8f, Y, H*0.8f, H, Color_temp, Outline_Color_Temp);
@@ -3655,9 +3419,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		Skrol.SetAngle(90);
 		Skrol.Set_Position(100);
 	}
-	gleventstruct Glui_Listbox::MouseFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Listbox::MouseFunc(int button, int state, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		int _count = ((H - 10.0f) / Text_size);
 		int Skrol_whigth = 20;
 		if (_count >= Items.size())
@@ -3668,7 +3432,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			result.Name = Name;
 			if (state == 0 && button == 0)
 			{
-				//	result.Event = Gl_MouseLeftDown;
+				//	result.Event = uiglMouseLeftDown;
 
 
 				moved = true;
@@ -3676,13 +3440,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				my = ay - Y;
 
 				int n = (Y + H - 5 - ay) / Text_size;
-				result.Event = Gl_Changed;
+				result.Event = uiglChanged;
 				if (_count >n && n + item_up_num<Items.size())
 					Selected = item_up_num + n;
 				if (clock() - double_ckick < 350)
 				{
 					double_ckick = clock();
-					result.Event = Gl_DoubleClick;
+					result.Event = uiglDoubleClick;
 				}
 				else double_ckick = clock();
 
@@ -3690,29 +3454,29 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			}
 			if (state == 1 && button == 0)
 			{
-				result.Event = Gl_MouseLeftUp;
+				result.Event = uiglMouseLeftUp;
 				Skrol.MouseFunc(button, state, ax, ay);
 				moved = false;
 				return result;
 			}
 			if (state == 0 && button == 1)
 			{
-				result.Event = Gl_MouseCenterDown;
+				result.Event = uiglMouseCenterDown;
 				return result;
 			}
 			if (state == 1 && button == 1)
 			{
-				result.Event = Gl_MouseCenterUp;
+				result.Event = uiglMouseCenterUp;
 				return result;
 			}
 			if (state == 0 && button == 2)
 			{
-				result.Event = Gl_MouseRightDown;
+				result.Event = uiglMouseRightDown;
 				return result;
 			}
 			if (state == 1 && button == 2)
 			{
-				result.Event = Gl_MouseRightUp;
+				result.Event = uiglMouseRightUp;
 				return result;
 			}
 		}
@@ -3729,9 +3493,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		return result;
 	}
-	gleventstruct Glui_Listbox::PassiveMotionFunc(int ax, int ay)
+	UiglEvent Glui_Listbox::PassiveMotionFunc(int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 
 		if ((ax > X) && (ax < X + W) && (ay>Y) && (ay < Y + H))
 		{
@@ -3741,12 +3505,12 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			{
 				Mouse_in_button = true;
 				result.Name = Name;
-				result.Event = Gl_MouseOver;
+				result.Event = uiglMouseOver;
 				return result;
 			}
 			else {
 				result.Name = Name;
-				result.Event = Gl_Mousemove;
+				result.Event = uiglMousemove;
 				return result;
 			}
 		}
@@ -3755,7 +3519,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (Mouse_in_button)
 			{
 				result.Name = Name;
-				result.Event = Gl_MouseOut;
+				result.Event = uiglMouseOut;
 				Mouse_in_button = false;
 				return result;
 			}
@@ -3763,9 +3527,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 
 		return result;
 	}
-	gleventstruct Glui_Listbox::MotionFunc(float ax, float ay)
+	UiglEvent Glui_Listbox::MotionFunc(float ax, float ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (is_move&&moved)
 		{
 			X = ax - mx;
@@ -3773,7 +3537,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			Position.SetPosition(X, Y);
 			double_ckick = 0;
 		}
-		if (Skrol.MotionFunc(ax, ay).Event == Gl_Changed)
+		if (Skrol.MotionFunc(ax, ay).Event == uiglChanged)
 		{
 			int _count = ((H - 10) / Text_size);
 			item_up_num = Items.size() - _count - Skrol.Get_Position();
@@ -3783,9 +3547,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 
 		return result;
 	}
-	gleventstruct Glui_Listbox::MouseWheelFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Listbox::MouseWheelFunc(int button, int state, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		int _count = ((H - 10.0f) / Text_size);
 		if (Mouse_in_button && _count<Items.size())
 		{
@@ -3794,31 +3558,31 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			{
 				Skrol.Step_ago();
 				item_up_num = Skrol.Max - Skrol.Get_Position();
-				result.Event = Gl_WheelDown;
+				result.Event = uiglWheelDown;
 			}
 			if (state == 1)
 			{
-				result.Event = Gl_wheelup;
+				result.Event = uiglWheelUp;
 				Skrol.Step_forward();
 				item_up_num = Skrol.Max - Skrol.Get_Position();
 			}
 		}
 		return result;
 	}
-	gleventstruct Glui_Listbox::KeyboardFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Listbox::KeyboardFunc(unsigned char key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 
 		if (key == 13 && in_focus)
 		{
 			result.Name = Name;
-			result.Event = Gl_Enter;
+			result.Event = uiglEnter;
 		}
 		return result;
 	}
-	gleventstruct Glui_Listbox::SpecialFunc(int key, int ax, int ay)
+	UiglEvent Glui_Listbox::SpecialFunc(int key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (in_focus)
 		{
 			switch (key)
@@ -3828,7 +3592,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				if (Items.size() >Selected + 1)
 				{
 					Selected++;
-					result.Event = Gl_Changed;
+					result.Event = uiglChanged;
 					result.Name = Name;
 					int _count = ((H - 10.0f) / Text_size);
 					if (Selected - item_up_num > _count - 1)
@@ -3846,7 +3610,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				if (Selected > 0)
 				{
 					Selected--;
-					result.Event = Gl_Changed;
+					result.Event = uiglChanged;
 					result.Name = Name;
 					int _count = ((H - 10.0f) / Text_size);
 					if (Selected - item_up_num < 0)
@@ -3864,14 +3628,14 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		return result;
 	}
-	gleventstruct Glui_Listbox::KeyboardUpFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Listbox::KeyboardUpFunc(unsigned char key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
-	gleventstruct Glui_Listbox::SpecialUpFunc(int key, int ax, int ay)
+	UiglEvent Glui_Listbox::SpecialUpFunc(int key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
 	void Glui_Listbox::Init()
@@ -3928,9 +3692,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		Size.UpdatePtr = this;
 		NumbersOnly = 1;
 	}
-	gleventstruct Glui_Numericupdown::MouseFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Numericupdown::MouseFunc(int button, int state, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 
 		if ((ax > X) && (ax < X + W) && (ay>Y) && (ay < Y + H))
 		{
@@ -3960,12 +3724,12 @@ void Glui_Size::SetSize(float width, float height, float depth)
 						}
 						Text = std::to_string(nom);
 						Cursor_pos = Text.length();
-						result.Event = Gl_Changed;
+						result.Event = uiglChanged;
 						return result;
 					}
 				}
 
-				result.Event = Gl_MouseLeftDown;
+				result.Event = uiglMouseLeftDown;
 				moved = true;
 				mx = ax - X;
 				my = ay - Y;
@@ -3981,7 +3745,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				if (clock() - double_ckick < 350)
 				{
 					double_ckick = clock();
-					result.Event = Gl_DoubleClick;
+					result.Event = uiglDoubleClick;
 				}
 				else double_ckick = clock();
 
@@ -3989,28 +3753,28 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			}
 			if (state == 1 && button == 0)
 			{
-				result.Event = Gl_MouseLeftUp;
+				result.Event = uiglMouseLeftUp;
 				moved = false;
 				return result;
 			}
 			if (state == 0 && button == 1)
 			{
-				result.Event = Gl_MouseCenterDown;
+				result.Event = uiglMouseCenterDown;
 				return result;
 			}
 			if (state == 1 && button == 1)
 			{
-				result.Event = Gl_MouseCenterUp;
+				result.Event = uiglMouseCenterUp;
 				return result;
 			}
 			if (state == 0 && button == 2)
 			{
-				result.Event = Gl_MouseRightDown;
+				result.Event = uiglMouseRightDown;
 				return result;
 			}
 			if (state == 1 && button == 2)
 			{
-				result.Event = Gl_MouseRightUp;
+				result.Event = uiglMouseRightUp;
 				return result;
 			}
 		}
@@ -4021,17 +3785,17 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (Text != "")
 				nom = stoi(Text);
 			else nom = Min;
-			if (nom < Min) { result.Name = Name; result.Event = Gl_Changed; nom = Min; }
-			if (nom > Max) { result.Name = Name; result.Event = Gl_Changed; nom = Max; }
+			if (nom < Min) { result.Name = Name; result.Event = uiglChanged; nom = Min; }
+			if (nom > Max) { result.Name = Name; result.Event = uiglChanged; nom = Max; }
 			Text = std::to_string(nom);
 			if (!in_focus)
 				Cursor_pos = Text.length();
 		}
 		return result;
 	}
-	gleventstruct Glui_Numericupdown::PassiveMotionFunc(int ax, int ay)
+	UiglEvent Glui_Numericupdown::PassiveMotionFunc(int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 
 		if ((ax > X) && (ax < X + W - H*0.8f) && (ay>Y) && (ay < Y + H))
 		{
@@ -4039,13 +3803,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			{
 				Mouse_in_button = true;
 				result.Name = Name;
-				result.Event = Gl_MouseOver;
+				result.Event = uiglMouseOver;
 				return result;
 			}
 			else {
 
 				result.Name = Name;
-				result.Event = Gl_Mousemove;
+				result.Event = uiglMousemove;
 				return result;
 			}
 		}
@@ -4075,16 +3839,16 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (Mouse_in_button)
 			{
 				result.Name = Name;
-				result.Event = Gl_MouseOut;
+				result.Event = uiglMouseOut;
 				Mouse_in_button = false;
 				return result;
 			}
 		}
 		return result;
 	}
-	gleventstruct Glui_Numericupdown::KeyboardFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Numericupdown::KeyboardFunc(unsigned char key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (in_focus && !Read_only)
 		{
 			if (key > 31 && key < 176 || key>191 && key < 256)
@@ -4292,17 +4056,17 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			}
 
 			result.Name = Name;
-			result.Event = Gl_Changed;
+			result.Event = uiglChanged;
 			if (key == 13)
 			{
-				result.Event = Gl_Enter;
+				result.Event = uiglEnter;
 			}
 		}
 		return result;
 	}
-	gleventstruct Glui_Numericupdown::SpecialFunc(int key, int ax, int ay) 
+	UiglEvent Glui_Numericupdown::SpecialFunc(int key, int ax, int ay) 
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (in_focus && !Read_only)
 		{
 			int _nom;
@@ -4379,9 +4143,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	void Glui_Numericupdown::Init()
 	{
 		Glui_Textbox::Init();
-		Glui_Color Outline_color_temp = Outline_color;
+		UiglColor Outline_color_temp = Outline_color;
 		if (in_focus)
-			Outline_color_temp = Outline_color.Get_negative();
+			Outline_color_temp = Outline_color.getNegative();
 		int _n_up = 0, _n_down = 0;
 		if (Mouse_in_button_up)
 			_n_up = 80;
@@ -4460,13 +4224,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		return false;
 	}
-	bool Glui_Config::Get_color(std::string name, Glui_Color & col)
+	bool Glui_Config::Get_color(std::string name, UiglColor & col)
 	{
 		for (int i = 0; i < Data.size(); i++)
 		{
 			if (name == Data[i].Text)
 			{
-				col.Set_uint(Data[i].Count);
+				col.setUInt(Data[i].Count);
 				return true;
 			}
 		}
@@ -4490,7 +4254,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			return true;
 		return false;
 	}
-	bool Glui_Config::Set_color(std::string name, Glui_Color col, bool _save)
+	bool Glui_Config::setColor(std::string name, UiglColor col, bool _save)
 	{
 		bool a(0);
 		for (int i = 0; i < Data.size(); i++)
@@ -4498,7 +4262,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (name == Data[i].Text)
 			{
 
-				Data[i].Count = col.Get_uint();
+				Data[i].Count = col.getUInt();
 				a = 1;
 				break;
 			}
@@ -4614,18 +4378,18 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (!in.is_open())
 			return 0;
 		Layer _L;
-		Point _P;
+		UiglPoint _P;
 		int n(0);
 		in >> W >> H;
 		in.get();
 		w_p = W;
 		h_p = H;
-		std::vector<Point> pp;
+		std::vector<UiglPoint> pp;
 		while (!in.eof())
 		{
 			in.read((char*)&_L, sizeof(_L));
 			layers.push_back(_L);
-			points.push_back(std::vector<Point>());
+			points.push_back(std::vector<UiglPoint>());
 			for (int i = 0; i < _L.count && !in.eof(); i++)
 			{
 				in.read((char*)&_P, sizeof(_P));
@@ -4635,16 +4399,16 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		return 1;
 	}
-	gleventstruct Glui_Picture::MouseFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Picture::MouseFunc(int button, int state, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 
 		if ((ax > X) && (ax < X + W) && (ay>Y) && (ay < Y + H))
 		{
 			result.Name = Name;
 			if (state == 0 && button == 0)
 			{
-				result.Event = Gl_MouseLeftDown;
+				result.Event = uiglMouseLeftDown;
 				moved = true;
 				mx = ax - X;
 				my = ay - Y;
@@ -4652,7 +4416,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				if (clock() - double_ckick < 350)
 				{
 					double_ckick = clock();
-					result.Event = Gl_DoubleClick;
+					result.Event = uiglDoubleClick;
 				}
 				else double_ckick = clock();
 
@@ -4660,36 +4424,36 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			}
 			if (state == 1 && button == 0)
 			{
-				result.Event = Gl_MouseLeftUp;
+				result.Event = uiglMouseLeftUp;
 				moved = false;
 				return result;
 			}
 			if (state == 0 && button == 1)
 			{
-				result.Event = Gl_MouseCenterDown;
+				result.Event = uiglMouseCenterDown;
 				return result;
 			}
 			if (state == 1 && button == 1)
 			{
-				result.Event = Gl_MouseCenterUp;
+				result.Event = uiglMouseCenterUp;
 				return result;
 			}
 			if (state == 0 && button == 2)
 			{
-				result.Event = Gl_MouseRightDown;
+				result.Event = uiglMouseRightDown;
 				return result;
 			}
 			if (state == 1 && button == 2)
 			{
-				result.Event = Gl_MouseRightUp;
+				result.Event = uiglMouseRightUp;
 				return result;
 			}
 		}
 		return result;
 	}
-	gleventstruct Glui_Picture::PassiveMotionFunc(int ax, int ay)
+	UiglEvent Glui_Picture::PassiveMotionFunc(int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 
 		if ((ax > X) && (ax < X + W) && (ay>Y) && (ay < Y + H))
 		{
@@ -4698,13 +4462,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			{
 				Mouse_in_button = true;
 				result.Name = Name;
-				result.Event = Gl_MouseOver;
+				result.Event = uiglMouseOver;
 				return result;
 			}
 			else {
 
 				result.Name = Name;
-				result.Event = Gl_Mousemove;
+				result.Event = uiglMousemove;
 				return result;
 			}
 		}
@@ -4713,16 +4477,16 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (Mouse_in_button)
 			{
 				result.Name = Name;
-				result.Event = Gl_MouseOut;
+				result.Event = uiglMouseOut;
 				Mouse_in_button = false;
 				return result;
 			}
 		}
 		return result;
 	}
-	gleventstruct Glui_Picture::MotionFunc(float ax, float ay)
+	UiglEvent Glui_Picture::MotionFunc(float ax, float ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (is_move&&moved)
 		{
 			X = ax - mx;
@@ -4732,63 +4496,63 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		return result;
 	}
-	gleventstruct Glui_Picture::MouseWheelFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_Picture::MouseWheelFunc(int button, int state, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 
 		if ((ax > X) && (ax < X + W) && (ay>Y) && (ay < Y + H))
 		{
 			result.Name = Name;
 			if (state == -1)
-				result.Event = Gl_WheelDown;
+				result.Event = uiglWheelDown;
 			if (state == 1)
-				result.Event = Gl_wheelup;
+				result.Event = uiglWheelUp;
 		}
 		return result;
 	}
-	gleventstruct Glui_Picture::KeyboardFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Picture::KeyboardFunc(unsigned char key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (in_focus && key == 13)
 		{
-			result.Event = Gl_Enter;
+			result.Event = uiglEnter;
 			result.Name = Name;
 		}
 		return result;
 	}
-	gleventstruct Glui_Picture::SpecialFunc(int key, int ax, int ay) 
+	UiglEvent Glui_Picture::SpecialFunc(int key, int ax, int ay) 
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
-	gleventstruct Glui_Picture::KeyboardUpFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_Picture::KeyboardUpFunc(unsigned char key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
-	gleventstruct Glui_Picture::SpecialUpFunc(int key, int ax, int ay)
+	UiglEvent Glui_Picture::SpecialUpFunc(int key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
-	void Glui_Picture::Line_init(Guil_Primitives prim, float length)
+	void Glui_Picture::Line_init(uiglPrimitives prim, float length)
 	{
 		switch (prim)
 		{
-		case GP_POINTS:
+		case uiglPOINTS:
 			glPointSize(length);
 			break;
-		case GP_LINES:
-		case GP_LINE_LOOP:
-		case GP_LINE_STRIP:
+		case uiglLINES:
+		case uiglLINE_LOOP:
+		case uiglLINE_STRIP:
 			glLineWidth(length);
 			break;
-		case GP_TRANGLES:
-		case GP_TRIANGLE_STRIP:
-		case GP_TRIANGLE_FAN:
-		case GP_QUADS:
-		case GP_QUAD_STRIP:
-		case GP_POLYGON:
+		case uiglTRIANGLES:
+		case uiglTRIANGLE_STRIP:
+		case uiglTRIANGLE_FAN:
+		case uiglQUADS:
+		case uiglQUAD_STRIP:
+		case uiglPOLYGON:
 			break;
 		}
 	}
@@ -4820,7 +4584,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	{
 		if (l != 0) { if (lp)  l += 2; else l -= 2; }
 		if (l > 6) lp = 0;
-		Gl_Print_Rectangle(X - l, Y - l, W + 2 * l, H + 2 * l, Glui_Color(0, 255, 0, 100), Glui_Color(0, 255, 0, 100));
+		Gl_Print_Rectangle(X - l, Y - l, W + 2 * l, H + 2 * l, UiglColor(0, 255, 0, 100), UiglColor(0, 255, 0, 100));
 
 		Gl_Print_Rectangle(X, Y, W, H, Color, Outline_color);
 		Gl_Print_Rectangle(X, Y + H - Win_fon_H, W, Win_fon_H, Lightsteelblue, Outline_color);
@@ -4875,7 +4639,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		textprint.glText(X + W - 100, Y + H - Win_fon_H*(3 + 2) - 5 * (2) + 12, "B");
 		textprint.glText(X + W - 100, Y + H - Win_fon_H*(3 + 3) - 5 * (3) + 12, "A");
 	}
-	void Glui_ColDiàlog::Diolog(Glui_Color * col, std::string _title)
+	void Glui_ColDiàlog::Diolog(UiglColor * col, std::string _title)
 	{
 		Language = Glui_MainForm::Language;
 		if (_title == "Defoult")
@@ -4890,13 +4654,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		Y = Glui_MainForm::WndH / 2 - H / 2;
 		updatenum();
 		h = (H - Win_fon_H * 2) / 7;
-		//	Color_temp.Set_alpha((cur3_h - 5) / (h * 6 - 10) * 255);
+		//	Color_temp.setAlpha((cur3_h - 5) / (h * 6 - 10) * 255);
 		cur3_h = (float(Color_temp.A) / 255.0f)*(h * 6.0f - 10.0f) + 5.0f;
 	}
-	gleventstruct Glui_ColDiàlog::MouseFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_ColDiàlog::MouseFunc(int button, int state, int ax, int ay)
 	{
 		is_cur_move = false;
-		gleventstruct result;
+		UiglEvent result;
 		if (button == 0 && state == 0)
 		{
 			if(ax<X || ax>X+W || ay<Y || ay>Y+H)if (l == 0) 
@@ -4907,19 +4671,19 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			}
 			if (ax > X + W - 100)
 			{
-				if (num[0].MouseFunc(button, state, ax, ay).Event == Gl_Changed)
+				if (num[0].MouseFunc(button, state, ax, ay).Event == uiglChanged)
 				{
 					Color_temp.R = stoi(num[0].Text);
 				}
-				if (num[1].MouseFunc(button, state, ax, ay).Event == Gl_Changed)
+				if (num[1].MouseFunc(button, state, ax, ay).Event == uiglChanged)
 				{
 					Color_temp.G = stoi(num[1].Text);
 				}
-				if (num[2].MouseFunc(button, state, ax, ay).Event == Gl_Changed)
+				if (num[2].MouseFunc(button, state, ax, ay).Event == uiglChanged)
 				{
 					Color_temp.B = stoi(num[2].Text);
 				}
-				if (num[3].MouseFunc(button, state, ax, ay).Event == Gl_Changed)
+				if (num[3].MouseFunc(button, state, ax, ay).Event == uiglChanged)
 				{
 					Color_temp.A = stoi(num[3].Text);
 					cur3_h = (float(Color_temp.A) / 255.0f)*(h * 6.0f - 10.0f) + 5.0f;
@@ -4929,7 +4693,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			if (ax > X + W - Win_fon_H && ax<X + W&&ay>Y + H - Win_fon_H&& ay < H + Y)
 			{
 				result.Name = Name;
-				result.Event = Gl_EraseMsg;
+				result.Event = uiglEraseMsg;
 				Color_result = NULL;
 			}
 			//colors
@@ -5017,7 +4781,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 					{
 						int i = (ax - (X + 15.0f)) / h;
 						int j = (ay - (Y + 15.0f)) / h;
-						Color_temp = Glui_Colornum(i * 6 + j);
+						Color_temp = uiglColornum(i * 6 + j);
 					}
 				}
 				else
@@ -5045,15 +4809,15 @@ void Glui_Size::SetSize(float width, float height, float depth)
 					Color_temp.B = _b;
 
 				}
-				Color_temp.Set_alpha(a_temp);
+				Color_temp.setAlpha(a_temp);
 				updatenum();
 			}
 			//ok
 			if (ax > X + W - 85 && ax < X + W - 15 && ay > Y + 15 && ay < Y + 15 + Win_fon_H)
 			{
 				Color_result[0] = Color_temp;
-				//	Color_result->Set_color(Color_temp.R, Color_temp.G, Color_temp.B, Color_temp.A);
-				result.Event = Gl_EraseMsg;
+				//	Color_result->setColor(Color_temp.R, Color_temp.G, Color_temp.B, Color_temp.A);
+				result.Event = uiglEraseMsg;
 				result.Name = Name;
 			}
 			//yarkost
@@ -5088,7 +4852,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 					Color_temp.G = _g;
 					Color_temp.B = _b;
 
-					Color_temp.Set_alpha(_alpha_);
+					Color_temp.setAlpha(_alpha_);
 					updatenum();
 				}
 
@@ -5100,7 +4864,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				cur3_h = ay - Y - 10;
 				if (ay > Y + 5 + h * 6)
 					cur3_h = h * 6 - 5;
-				Color_temp.Set_alpha((cur3_h - 5) / (h * 6 - 10) * 255);
+				Color_temp.setAlpha((cur3_h - 5) / (h * 6 - 10) * 255);
 				//	std::cout <<"col_temp_A "<< (int)Color_temp.A<<"\n";
 				num[3].Text = std::to_string((int)Color_temp.A);
 
@@ -5114,9 +4878,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		return result;
 	}
-	gleventstruct Glui_ColDiàlog::PassiveMotionFunc(int ax, int ay)
+	UiglEvent Glui_ColDiàlog::PassiveMotionFunc(int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (ax > X + W - Win_fon_H && ax<X + W && ay>Y + H - Win_fon_H && ay<H + Y)
 			act = 1;
 		else act = 0;
@@ -5126,9 +4890,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 
 		return  result;
 	}
-	gleventstruct Glui_ColDiàlog::MotionFunc(float ax, float ay)
+	UiglEvent Glui_ColDiàlog::MotionFunc(float ax, float ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 
 		if (is_move && moved)//window move
 		{
@@ -5189,7 +4953,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			Color_temp.G = _g;
 			Color_temp.B = _b;
 
-			Color_temp.Set_alpha(a_temp);
+			Color_temp.setAlpha(a_temp);
 			updatenum();
 		}
 		if (is_cur2_move)
@@ -5223,7 +4987,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			Color_temp.G = _g;
 			Color_temp.B = _b;
 
-			Color_temp.Set_alpha(_alpha_);
+			Color_temp.setAlpha(_alpha_);
 			updatenum();
 		}
 		if (is_cur3_move)
@@ -5236,7 +5000,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				ay1 = Y + 5 + h * 6;
 
 			cur3_h = ay1 - Y - 10;
-			Color_temp.Set_alpha((cur3_h - 5) / (h * 6 - 10) * 255);
+			Color_temp.setAlpha((cur3_h - 5) / (h * 6 - 10) * 255);
 			//	std::cout <<"col_temp_A "<< (int)Color_temp.A<<"\n";	
 			updatenum();
 
@@ -5244,41 +5008,41 @@ void Glui_Size::SetSize(float width, float height, float depth)
 
 		return result;
 	}
-	gleventstruct Glui_ColDiàlog::KeyboardFunc(unsigned char key, int x, int y)
+	UiglEvent Glui_ColDiàlog::KeyboardFunc(unsigned char key, int x, int y)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (key == 27)
 		{
 			result.Name = Name;
-			result.Event = Gl_EraseMsg;
+			result.Event = uiglEraseMsg;
 		}
 		if (key == 13)
 		{
 
 			Color_result[0] = Color_temp;
 			result.Name = Name;
-			result.Event = Gl_EraseMsg;
+			result.Event = uiglEraseMsg;
 		}
 		return result;
 	}
-	gleventstruct Glui_ColDiàlog::SpecialFunc(int key, int ax, int ay)
+	UiglEvent Glui_ColDiàlog::SpecialFunc(int key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
-	gleventstruct Glui_ColDiàlog::MouseWheelFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_ColDiàlog::MouseWheelFunc(int button, int state, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
-	gleventstruct Glui_ColDiàlog::KeyboardUpFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_ColDiàlog::KeyboardUpFunc(unsigned char key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
-	gleventstruct Glui_ColDiàlog::SpecialUpFunc(int key, int ax, int ay)
+	UiglEvent Glui_ColDiàlog::SpecialUpFunc(int key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 	}
 	void Glui_ColDiàlog::SetHDC(HDC * _hdc)
@@ -5294,17 +5058,17 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	}
 	void Glui_ColDiàlog::D_color(float x, float y, float _h)
 	{
-		Glui_Color col(Red);
+		UiglColor col(Red);
 		for (int i = 0; i < 7; i++)
 		{
 			for (int j = 0; j < 6; j++)
 			{
-				col.Set_color(Glui_Colornum(i * 6 + j)).Init();
+				col.setColor(uiglColornum(i * 6 + j)).Init();
 				Gl_Print_Rectangle(x + _h*i, y + _h*j, _h, _h, col, Outline_color, 0, 0);
 			}
 		}
 	}
-	Glui_Color Glui_ColDiàlog::Color_spector(float x, float y)
+	UiglColor Glui_ColDiàlog::Color_spector(float x, float y)
 	{
 		glutPostRedisplay();
 		BYTE _col[4];
@@ -5312,7 +5076,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		glutUseLayer(GLUT_NORMAL);
 		glReadPixels(x, y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &_col);
 
-		Glui_Color temp(_col[0], _col[1], _col[2], 255);
+		UiglColor temp(_col[0], _col[1], _col[2], 255);
 		return temp;
 	}
 	void Glui_ColDiàlog::spector_print(float x, float y, float w, float h)
@@ -5396,7 +5160,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 
 		glEnd();
 	}
-	void Glui_ColDiàlog::brightness(float x, float y, float h, float cur_h, Glui_Color col)
+	void Glui_ColDiàlog::brightness(float x, float y, float h, float cur_h, UiglColor col)
 	{
 		glBegin(GL_TRIANGLE_STRIP);
 		glColor3f(0, 0, 0);
@@ -5564,43 +5328,43 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		B_cancel.Name = "cancel";
 		Name = "msgbox";
 	}
-	gleventstruct Glui_MessageBox::MouseFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_MessageBox::MouseFunc(int button, int state, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible)
 			return result;
 		if (ax > X && ax < X + W && ay > Y && ay < Y + H) 
 		{
-			if (exit.MouseFunc(button, state, ax, ay).Event == Gl_MouseLeftDown)
+			if (exit.MouseFunc(button, state, ax, ay).Event == uiglMouseLeftDown)
 			{
 				Visible = 0;
-				result.Event = Gl_MsgCancel;
+				result.Event = uiglMsgCancel;
 				result.Name = Name;
 			}
 			panel.MouseFunc(button, state, ax, ay);
 
 			result = B_ok.MouseFunc(button, state, ax, ay);
-			if (result.Event == Gl_MouseLeftDown && result.Name == "ok")
+			if (result.Event == uiglMouseLeftDown && result.Name == "ok")
 			{
 				Visible = 0;
 				result.Name = Name;
-				result.Event = Gl_MsgYes;
+				result.Event = uiglMsgYes;
 				return result;
 			}
 			result = B_no.MouseFunc(button, state, ax, ay);
-			if (result.Event == Gl_MouseLeftDown && result.Name == "no")
+			if (result.Event == uiglMouseLeftDown && result.Name == "no")
 			{
 				Visible = 0;
 				result.Name = Name;
-				result.Event = Gl_MsgNo;
+				result.Event = uiglMsgNo;
 				return result;
 			}
 			result = B_cancel.MouseFunc(button, state, ax, ay);
-			if (result.Event == Gl_MouseLeftDown && result.Name == "cancel")
+			if (result.Event == uiglMouseLeftDown && result.Name == "cancel")
 			{
 				Visible = 0;
 				result.Name = Name;
-				result.Event = Gl_MsgCancel;
+				result.Event = uiglMsgCancel;
 				return result;
 			}
 		}else{
@@ -5612,9 +5376,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		return result;
 	}
-	gleventstruct Glui_MessageBox::PassiveMotionFunc(int ax, int ay)
+	UiglEvent Glui_MessageBox::PassiveMotionFunc(int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible)
 			return result;
 		panel.PassiveMotionFunc( ax, ay);
@@ -5624,9 +5388,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		B_cancel.PassiveMotionFunc(ax, ay);
 		return result;
 	}
-	gleventstruct Glui_MessageBox::MotionFunc(float ax, float ay)
+	UiglEvent Glui_MessageBox::MotionFunc(float ax, float ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible)
 			return result;
 
@@ -5650,44 +5414,44 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		B_cancel.Position.SetPosition(X + 240, Y + 10);
 		return result;
 	}
-	gleventstruct Glui_MessageBox::MouseWheelFunc(int button, int state, int ax, int ay)
+	UiglEvent Glui_MessageBox::MouseWheelFunc(int button, int state, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible)
 			return result;
 		panel.MouseWheelFunc(button, state, ax, ay);
 		return result;
 	}
-	gleventstruct Glui_MessageBox::KeyboardFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_MessageBox::KeyboardFunc(unsigned char key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible)
 			return result;
 		if (key == 27) 
 		{
 			Visible = false;
-			result.Event = Gl_MsgCancel;
+			result.Event = uiglMsgCancel;
 			result.Name = Name;
 		}
 		return result;
 	}
-	gleventstruct Glui_MessageBox::SpecialFunc(int key, int ax, int ay)
+	UiglEvent Glui_MessageBox::SpecialFunc(int key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible)
 			return result;
 		return result;
 	}
-	gleventstruct Glui_MessageBox::KeyboardUpFunc(unsigned char key, int ax, int ay)
+	UiglEvent Glui_MessageBox::KeyboardUpFunc(unsigned char key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible)
 			return result;
 		return result;
 	}
-	gleventstruct Glui_MessageBox::SpecialUpFunc(int key, int ax, int ay)
+	UiglEvent Glui_MessageBox::SpecialUpFunc(int key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible)
 			return result;
 		return result;
@@ -5698,7 +5462,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			return;
 		if (l != 0) { if (lp)  l += 2; else l -= 2; }
 		if (l > 6) lp = 0;
-		Gl_Print_Rectangle(X-l, Y-l, W+2*l, H+2*l, Glui_Color(0,255,0,100), Glui_Color(0,255,0,100));
+		Gl_Print_Rectangle(X-l, Y-l, W+2*l, H+2*l, UiglColor(0,255,0,100), UiglColor(0,255,0,100));
 		Gl_Print_Rectangle(X, Y, W, H, Color, Outline_color);
 		panel.Init();
 		exit.Init();
@@ -5720,7 +5484,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		glEnd();
 		glLineWidth(1);
 	}
-	void Glui_MessageBox::Show(std::string text, std::string title, Glui_MsgBoxButton _buttons)
+	void Glui_MessageBox::Show(std::string text, std::string title, uiglMsgBoxButtons _buttons)
 	{
 		Base_Text.clear();
 		if (textprint.Get_text_length(text) < Size.GetSizeW())
@@ -5760,13 +5524,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		B_cancel.Text = Text_en_ru[Language][2];
 		switch (_buttons)
 		{
-		case easyGL::Gl_ButtonOK:			B_no.Visible = 0;	B_ok.Visible = 1;	B_cancel.Visible = 0;	break;
-		case easyGL::Gl_ButtonNO:			B_no.Visible = 1;	B_ok.Visible = 0;	B_cancel.Visible = 0;	break;
-		case easyGL::Gl_ButtonCancel:		B_no.Visible = 0;	B_ok.Visible = 0;	B_cancel.Visible = 1;	break;
-		case easyGL::Gl_ButtonOKNO:			B_no.Visible = 1;	B_ok.Visible = 1;	B_cancel.Visible = 0;	break;
-		case easyGL::Gl_ButtonOKCancel:		B_no.Visible = 0;	B_ok.Visible = 1;	B_cancel.Visible = 1;	break;
-		case easyGL::Gl_ButtonNoCancel:		B_no.Visible = 1;	B_ok.Visible = 0;	B_cancel.Visible = 1;	break;
-		case easyGL::Gl_ButtonOKNOCancel:	B_no.Visible = 1;	B_ok.Visible = 1;	B_cancel.Visible = 1;	break;
+		case UIGL::uiglButtonOK:			B_no.Visible = 0;	B_ok.Visible = 1;	B_cancel.Visible = 0;	break;
+		case UIGL::uiglButtonNO:			B_no.Visible = 1;	B_ok.Visible = 0;	B_cancel.Visible = 0;	break;
+		case UIGL::uiglButtonCancel:		B_no.Visible = 0;	B_ok.Visible = 0;	B_cancel.Visible = 1;	break;
+		case UIGL::uiglButtonOKNO:			B_no.Visible = 1;	B_ok.Visible = 1;	B_cancel.Visible = 0;	break;
+		case UIGL::uiglButtonOKCancel:		B_no.Visible = 0;	B_ok.Visible = 1;	B_cancel.Visible = 1;	break;
+		case UIGL::uiglButtonNoCancel:		B_no.Visible = 1;	B_ok.Visible = 0;	B_cancel.Visible = 1;	break;
+		case UIGL::uiglButtonOKNOCancel:	B_no.Visible = 1;	B_ok.Visible = 1;	B_cancel.Visible = 1;	break;
 		}
 	}
 	void Glui_MessageBox::SetHDC(HDC * _hdc)
@@ -5780,5 +5544,5 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	}
 #pragma endregion
 
-}///end of namespace easyGL
+}///end of namespace UIGL
 #endif // !EASY_OPENGL_CPP_

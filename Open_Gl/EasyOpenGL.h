@@ -13,50 +13,22 @@
 #include <algorithm>
 #include <iterator>
 
+///////////////////
+#include "lib/uiglColor.h"
+#include "lib/uigl.h"
+
 const float PI = 3.14159265358979323846f;
 
-namespace easyGL {
-	
-	//перечисление цветов 
-	enum Glui_Colornum {
-		Black, White, Red, Green, Blue, Cyan, Magenta, Yellow, Water, Plastic, Glass, Diamond, Iron, Copper, Gold, Aluminum, Silver, Deepskyblue,
-		Lightskyblue, Mistyrose, Burlywood, Violet, Whitesmoke, Lime, Tan, Lightgray, Lightsteelblue, Yellowgreen, Orange, Coral, Fuchsia, Dodgerblue,
-		Plum, Limegreen, Olive, Darkmagenta, Gray, Dimgray, Brown, Darkslategray, Firebrick, Sienna, Maroon, Darkblue, Navy, Other
-	};
-	enum Glui_Alignment { Top_left, Top_center, Top_right, Middle_left, Middle_center, Middle_right, Bottom_left, Bottom_center, Bottom_right };
-	enum Guil_Primitives { GP_POINTS, GP_LINES, GP_LINE_LOOP, GP_LINE_STRIP, GP_TRANGLES, GP_TRIANGLE_STRIP, GP_TRIANGLE_FAN, GP_QUADS, GP_QUAD_STRIP, GP_POLYGON };
-	//перечисление событий
-	enum Glui_Event {
-		Gl_EventEmpty,Gl_MouseLeftDown, Gl_MouseLeftUp, Gl_MouseRightDown, Gl_MouseRightUp, Gl_MouseCenterDown, Gl_MouseCenterUp,
-		Gl_MouseOver, Gl_MouseOut, Gl_Mousemove, Gl_wheelup, Gl_WheelDown, Gl_DoubleClick, Gl_EraseMsg, Gl_Changed, Gl_Enter,
-		Gl_MsgYes,Gl_MsgNo,Gl_MsgCancel
-	};
-	enum Glui_MsgBoxButton{
-		Gl_ButtonOK, Gl_ButtonNO, Gl_ButtonCancel, Gl_ButtonOKNO, Gl_ButtonOKCancel, Gl_ButtonNoCancel, Gl_ButtonOKNOCancel
-	};
-	enum Glui_Language {Gl_LanguageEN,Gl_LanguageRU};
-	enum Glui_Orientacion {Gl_Vertical,Gl_Horizontal};
+namespace UIGL {
+
 
 	class Glui_Obj;
 	class Glui_Forms;
 	class Glui_Text;
 	class Glui_MessageBox;
-	class Glui_Color;
+	class UiglColor;
 	class Glui_Combobox;
 
-
-	struct gleventstruct
-	{
-		Glui_Event Event = Gl_EventEmpty;
-		std::string Name = "";
-	};
-	struct string_int
-	{
-		std::string Text = "";
-		std::string Text1 = "";
-		unsigned int Count = 0;
-		int Num = 0;
-	};
 	struct Vector2f
 	{
 		Vector2f() {}
@@ -204,76 +176,31 @@ namespace easyGL {
 	struct Layer
 	{
 		int count = 0;
-		Guil_Primitives primitive = GP_LINE_LOOP;
+		uiglPrimitives primitive = uiglLINE_LOOP;
 		float line_length = 1;
 	};
 
-	//глют цвета
-	class Glui_Color
-	{
-	public:
-		Glui_Color(BYTE red, BYTE green, BYTE blue, BYTE alpha = 255);
-		Glui_Color(const Glui_Colornum& _color = Black);
-		Glui_Color(const Glui_Color& _color);
-		~Glui_Color() {}
-		//установка цвета
-		Glui_Color& Set_color(const Glui_Colornum& _color);
-		Glui_Color& Set_color(const Glui_Color& _color);
-		//установка цвета
-		Glui_Color& Set_color(BYTE _red, BYTE _green, BYTE _blue, BYTE _alpha = 255);
-		//установка прозрачности
-		Glui_Color& Set_alpha(const BYTE& _alpha);
-		//определяет цвет отрисовки
-		void Init(short bright = 0, BYTE _alpha = 0)const;
-		//Возвращает цвета в uint
-		unsigned int Get_uint()const;
-		//переобразует uint в цвета RGBA
-		Glui_Color& Set_uint(unsigned int count);
-		//возвращает цвет в негативе
-		Glui_Color Get_negative()const;
-		//не меняет значение
-		Glui_Color operator+(int _c)const;
-		//не меняет значение
-		Glui_Color operator-(int _c)const;
-		bool operator==(const Glui_Colornum& _col)const;
-		bool operator==(const Glui_Color& _col)const;
-		Glui_Color operator+(const Glui_Color& operator2)const;
-		Glui_Color operator-(const Glui_Color& operator2)const;
-		friend class Glui_ColDiаlog;
-	private:
-	protected:
-		Glui_Color Bild_color(Glui_Colornum _Color)const;
-		Glui_Colornum  Color;
-		BYTE R, G, B, A;
-	};
-
-	struct Point
-	{
-		float X = 0;
-		float Y = 0;
-		Glui_Color Color;
-	};
 #pragma region Function
 	float rotate_x(float x, float y, float alpha);
 	float rotate_y(float x, float y, float alpha);
 	//прямоугольник с закругленными краями контур
-	inline void Gl_Print_Roundrect_Contour(float X, float Y, float W, float H, float R, Glui_Color Outline_color = Black, float _angle = 0, float line_width = 1);
+	inline void Gl_Print_Roundrect_Contour(float X, float Y, float W, float H, float R, UiglColor Outline_color = Black, float _angle = 0, float line_width = 1);
 	//прямоугольник с закругленными краями
-	inline void Gl_Print_Roundrect(float X, float Y, float W, float H, float R, Glui_Color Color, Glui_Color Outline_color = Black, float _angle = 0, bool glossy = 1, float line_width = 1);
+	inline void Gl_Print_Roundrect(float X, float Y, float W, float H, float R, UiglColor Color, UiglColor Outline_color = Black, float _angle = 0, bool glossy = 1, float line_width = 1);
 	//окружность контур
-	inline void Gl_Print_Circle_Contour(float X, float Y, float R, Glui_Color Outline_color = Black, float line_width = 1);
+	inline void Gl_Print_Circle_Contour(float X, float Y, float R, UiglColor Outline_color = Black, float line_width = 1);
 	//окружность
-	inline void Gl_Print_Circle(float X, float Y, float R, Glui_Color Color, Glui_Color Outline_color = Black, float line_width = 1);
+	inline void Gl_Print_Circle(float X, float Y, float R, UiglColor Color, UiglColor Outline_color = Black, float line_width = 1);
 	
-	inline void Gl_Print_Rectangle_Contour(float X, float Y, float W, float H, Glui_Color Outline_color = Black, float _angle = 0, float line_width = 1);
+	inline void Gl_Print_Rectangle_Contour(float X, float Y, float W, float H, UiglColor Outline_color = Black, float _angle = 0, float line_width = 1);
 	//прямоугольник 
-	inline void Gl_Print_Rectangle(float X, float Y, float W, float H, Glui_Color Color, Glui_Color Outline_color = Black, float _angle = 0, bool glossy = 1, float line_width = 1);
+	inline void Gl_Print_Rectangle(float X, float Y, float W, float H, UiglColor Color, UiglColor Outline_color = Black, float _angle = 0, bool glossy = 1, float line_width = 1);
 	//круг контур
-	inline void Gl_Print_Circle_Contour(float X, float Y, float r, float R, Glui_Color Color, Glui_Color Outline_color = Black);
+	inline void Gl_Print_Circle_Contour(float X, float Y, float r, float R, UiglColor Color, UiglColor Outline_color = Black);
 	//многоугольник
-	inline void Gl_Print_Polygon_Contour(float X, float Y, float R, int Sides, Glui_Color Outline_color = Black, float initial_angle = 0, float line_width = 1);
+	inline void Gl_Print_Polygon_Contour(float X, float Y, float R, int Sides, UiglColor Outline_color = Black, float initial_angle = 0, float line_width = 1);
 	//многоугольник
-	inline void Gl_Print_Polygon(float X, float Y, float R, int Sides, Glui_Color Color, Glui_Color Outline_color = Black, float initial_angle = 0,float line_width = 1);
+	inline void Gl_Print_Polygon(float X, float Y, float R, int Sides, UiglColor Color, UiglColor Outline_color = Black, float initial_angle = 0,float line_width = 1);
 #pragma endregion
 
 	class Glui_Obj
@@ -312,23 +239,23 @@ namespace easyGL {
 		//имя объекта //передается в функцию Wnd_proc
 		std::string Name = "no_naem";
 		//цвет заливки
-		Glui_Color Color = White;
+		UiglColor Color = White;
 		//цвет контура
-		Glui_Color Outline_color = Glui_Color(70,70,70,255);
+		UiglColor Outline_color = UiglColor(70,70,70,255);
 		bool IsHover = 1;
 		bool Visible = 1;
 		//если истина, то разрешает перетаскивание объекта мышью
 		bool is_move = 0;
-		virtual gleventstruct MouseFunc(int button, int state, int ax, int ay) = 0;
-		virtual gleventstruct PassiveMotionFunc(int ax, int ay) = 0;
-		virtual gleventstruct MotionFunc(float ax, float ay) = 0;
-		virtual gleventstruct MouseWheelFunc(int button, int state, int ax, int ay) = 0;
-		virtual gleventstruct KeyboardFunc(unsigned char key, int ax, int ay) = 0;
-		virtual gleventstruct SpecialFunc(int key, int ax, int ay) = 0;
-		virtual gleventstruct KeyboardUpFunc(unsigned char key, int ax, int ay) = 0;
-		virtual gleventstruct SpecialUpFunc(int key, int ax, int ay) = 0;
-		virtual gleventstruct PositionFunc(int aw, int ah) { return gleventstruct(); }
-		virtual gleventstruct ReshapeFunc(int ax, int ay) { return gleventstruct(); }
+		virtual UiglEvent MouseFunc(int button, int state, int ax, int ay) = 0;
+		virtual UiglEvent PassiveMotionFunc(int ax, int ay) = 0;
+		virtual UiglEvent MotionFunc(float ax, float ay) = 0;
+		virtual UiglEvent MouseWheelFunc(int button, int state, int ax, int ay) = 0;
+		virtual UiglEvent KeyboardFunc(unsigned char key, int ax, int ay) = 0;
+		virtual UiglEvent SpecialFunc(int key, int ax, int ay) = 0;
+		virtual UiglEvent KeyboardUpFunc(unsigned char key, int ax, int ay) = 0;
+		virtual UiglEvent SpecialUpFunc(int key, int ax, int ay) = 0;
+		virtual UiglEvent PositionFunc(int aw, int ah) { return UiglEvent(); }
+		virtual UiglEvent ReshapeFunc(int ax, int ay) { return UiglEvent(); }
 		//выполняет отрисовку объекта
 		virtual void Init() = 0;
 		//устанавливает дескриптор контекста устройства
@@ -374,10 +301,10 @@ namespace easyGL {
 		void Stec_pop_back();
 		//устанавливает дескриптор контекста устройства
 		void SetHDC(HDC* _hdc_);
-		Glui_Color Background_color = White;
+		UiglColor Background_color = White;
 		//0==disable, 1==enable, 2==(disable+(Init==enable))
 		int Enabled = 1;//
-		void(*Wnd_proc)(Glui_Event, std::string);
+		void(*Wnd_proc)(uiglEvents, std::string);
 	private:		
 		void Set_Focus();
 		int in_focus = 0;
@@ -401,14 +328,14 @@ namespace easyGL {
 		static int WndMinX;
 		static int WndMinY;
 		static int argc;
-		static Glui_Language Language;
+		static uiglLanguages Language;
 		static std::vector<std::string>argv;
 		static std::string Name;
 		static HDC hDC;
 		static HWND hWnd;
 		static Glui_ColDiаlog ColDial;
 		static Glui_MessageBox MsgBox;
-		static void(*WinProc)(Glui_Event, std::string);
+		static void(*WinProc)(uiglEvents, std::string);
 		static void(*KeyboardFunc_ptr)(unsigned char, int, int);
 		static void(*SpecialFunc_ptr)(int, int, int);
 		static void(*MouseFunc_ptr)(int, int, int, int);
@@ -449,7 +376,7 @@ namespace easyGL {
 		//установка размера шрифта
 		void SetWidthText(int _w);
 		//печатает текст по заданным координатам
-		void glText(float x, float y, const std::string txt, Glui_Color col = Black);
+		void glText(float x, float y, const std::string txt, UiglColor col = Black);
 		//
 		float Get_text_length(std::string txt);
 		//устанавливает дескриптор контекста устройства
@@ -475,14 +402,14 @@ namespace easyGL {
 		Glui_Roundrect();
 		Glui_Roundrect(std::string name) :Glui_Roundrect() { Name = name; }
 		~Glui_Roundrect() {}
-		virtual gleventstruct MouseFunc(int button, int state, int ax, int ay);
-		virtual gleventstruct PassiveMotionFunc(int ax, int ay);
-		virtual gleventstruct MotionFunc(float ax, float ay);
-		virtual gleventstruct MouseWheelFunc(int button, int state, int ax, int ay);
-		virtual gleventstruct KeyboardFunc(unsigned char key, int ax, int ay);
-		virtual gleventstruct SpecialFunc(int key, int ax, int ay);
-		virtual gleventstruct KeyboardUpFunc(unsigned char key, int ax, int ay);
-		virtual gleventstruct SpecialUpFunc(int key, int ax, int ay);
+		virtual UiglEvent MouseFunc(int button, int state, int ax, int ay);
+		virtual UiglEvent PassiveMotionFunc(int ax, int ay);
+		virtual UiglEvent MotionFunc(float ax, float ay);
+		virtual UiglEvent MouseWheelFunc(int button, int state, int ax, int ay);
+		virtual UiglEvent KeyboardFunc(unsigned char key, int ax, int ay);
+		virtual UiglEvent SpecialFunc(int key, int ax, int ay);
+		virtual UiglEvent KeyboardUpFunc(unsigned char key, int ax, int ay);
+		virtual UiglEvent SpecialUpFunc(int key, int ax, int ay);
 		virtual void Init();
 	//	float angle;
 		//радиус
@@ -495,14 +422,14 @@ namespace easyGL {
 		Glui_Circle();
 		Glui_Circle(std::string name) :Glui_Circle() { Name = name; }
 		~Glui_Circle() {}
-		gleventstruct MouseFunc(int button, int state, int ax, int ay);
-		gleventstruct PassiveMotionFunc(int ax, int ay);
-		gleventstruct MotionFunc(float ax, float ay);
-		gleventstruct MouseWheelFunc(int button, int state, int ax, int ay);
-		gleventstruct KeyboardFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialFunc(int key, int ax, int ay);
-		gleventstruct KeyboardUpFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialUpFunc(int key, int ax, int ay);
+		UiglEvent MouseFunc(int button, int state, int ax, int ay);
+		UiglEvent PassiveMotionFunc(int ax, int ay);
+		UiglEvent MotionFunc(float ax, float ay);
+		UiglEvent MouseWheelFunc(int button, int state, int ax, int ay);
+		UiglEvent KeyboardFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialFunc(int key, int ax, int ay);
+		UiglEvent KeyboardUpFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialUpFunc(int key, int ax, int ay);
 		void Init();
 		void Update();
 		//радиус
@@ -518,19 +445,19 @@ namespace easyGL {
 		Glui_Rectangle();
 		Glui_Rectangle(std::string name) :Glui_Rectangle() { Name = name; }
 		~Glui_Rectangle() {}
-		gleventstruct MouseFunc(int button, int state, int ax, int ay);
-		gleventstruct PassiveMotionFunc(int ax, int ay);
-		gleventstruct MotionFunc(float ax, float ay);
-		gleventstruct MouseWheelFunc(int button, int state, int ax, int ay);
-		gleventstruct KeyboardFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialFunc(int key, int ax, int ay);
-		gleventstruct KeyboardUpFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialUpFunc(int key, int ax, int ay);
+		UiglEvent MouseFunc(int button, int state, int ax, int ay);
+		UiglEvent PassiveMotionFunc(int ax, int ay);
+		UiglEvent MotionFunc(float ax, float ay);
+		UiglEvent MouseWheelFunc(int button, int state, int ax, int ay);
+		UiglEvent KeyboardFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialFunc(int key, int ax, int ay);
+		UiglEvent KeyboardUpFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialUpFunc(int key, int ax, int ay);
 		void Init();
 		void SetHDC(HDC* _hdc);
 		void Set_text_size(float _size);
-		Glui_Color Text_color;
-		Glui_Alignment Text_align = Bottom_center;
+		UiglColor Text_color;
+		uiglAlignments Text_align = uiglBottomCenter;
 		std::string Text;
 	private:
 		float Text_size;
@@ -545,14 +472,14 @@ namespace easyGL {
 		Glui_Skrollbar();
 		Glui_Skrollbar(std::string name) :Glui_Skrollbar() { Name = name; };
 		~Glui_Skrollbar() {}
-		gleventstruct MouseFunc(int button, int state, int ax, int ay);
-		gleventstruct PassiveMotionFunc(int ax, int ay);
-		gleventstruct MotionFunc(float ax, float ay);
-		gleventstruct MouseWheelFunc(int button, int state, int ax, int ay);
-		gleventstruct KeyboardFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialFunc(int key, int ax, int ay);
-		gleventstruct KeyboardUpFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialUpFunc(int key, int ax, int ay);
+		UiglEvent MouseFunc(int button, int state, int ax, int ay);
+		UiglEvent PassiveMotionFunc(int ax, int ay);
+		UiglEvent MotionFunc(float ax, float ay);
+		UiglEvent MouseWheelFunc(int button, int state, int ax, int ay);
+		UiglEvent KeyboardFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialFunc(int key, int ax, int ay);
+		UiglEvent KeyboardUpFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialUpFunc(int key, int ax, int ay);
 		void Init();
 		//шаг вперед
 		float Step_forward();
@@ -565,7 +492,7 @@ namespace easyGL {
 		//размер сдвига 
 		int Step;
 		//цвет ползунка
-		Glui_Color Color_slider;
+		UiglColor Color_slider;
 		//установить длину ползунка
 		void Set_Slider_length(float length);
 		//установить позицию ползунка 
@@ -586,14 +513,14 @@ namespace easyGL {
 		Glui_Checkbox();
 		Glui_Checkbox(std::string name):Glui_Checkbox() { Name = name;}
 		~Glui_Checkbox() {}
-		virtual gleventstruct MouseFunc(int button, int state, int ax, int ay);
-		virtual gleventstruct PassiveMotionFunc(int ax, int ay);
-		virtual gleventstruct MotionFunc(float ax, float ay);
-		virtual gleventstruct MouseWheelFunc(int button, int state, int ax, int ay);
-		virtual gleventstruct KeyboardFunc(unsigned char key, int ax, int ay);
-		virtual gleventstruct SpecialFunc(int key, int ax, int ay);
-		virtual gleventstruct KeyboardUpFunc(unsigned char key, int ax, int ay);
-		virtual gleventstruct SpecialUpFunc(int key, int ax, int ay);
+		virtual UiglEvent MouseFunc(int button, int state, int ax, int ay);
+		virtual UiglEvent PassiveMotionFunc(int ax, int ay);
+		virtual UiglEvent MotionFunc(float ax, float ay);
+		virtual UiglEvent MouseWheelFunc(int button, int state, int ax, int ay);
+		virtual UiglEvent KeyboardFunc(unsigned char key, int ax, int ay);
+		virtual UiglEvent SpecialFunc(int key, int ax, int ay);
+		virtual UiglEvent KeyboardUpFunc(unsigned char key, int ax, int ay);
+		virtual UiglEvent SpecialUpFunc(int key, int ax, int ay);
 		virtual void Init();
 		//ширина линий контура
 		float Line_length;
@@ -612,14 +539,14 @@ namespace easyGL {
 		Glui_Progressbar();
 		Glui_Progressbar(std::string name) :Glui_Progressbar() { Name = name; }
 		~Glui_Progressbar() {}
-		gleventstruct MouseFunc(int button, int state, int ax, int ay);
-		gleventstruct PassiveMotionFunc(int ax, int ay);
-		gleventstruct MotionFunc(float ax, float ay);
-		gleventstruct MouseWheelFunc(int button, int state, int ax, int ay);
-		gleventstruct KeyboardFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialFunc(int key, int ax, int ay);
-		gleventstruct KeyboardUpFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialUpFunc(int key, int ax, int ay);
+		UiglEvent MouseFunc(int button, int state, int ax, int ay);
+		UiglEvent PassiveMotionFunc(int ax, int ay);
+		UiglEvent MotionFunc(float ax, float ay);
+		UiglEvent MouseWheelFunc(int button, int state, int ax, int ay);
+		UiglEvent KeyboardFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialFunc(int key, int ax, int ay);
+		UiglEvent KeyboardUpFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialUpFunc(int key, int ax, int ay);
 		void Init();
 		int Step_forward();
 		//шаг назад
@@ -627,7 +554,7 @@ namespace easyGL {
 		//длина шага
 		int Step = 10;
 		//
-		Glui_Color BorderColor = Green;
+		UiglColor BorderColor = Green;
 		//минимальная позиция
 		int Min = 0;
 		//максимальная позиция
@@ -644,14 +571,14 @@ namespace easyGL {
 		Glui_Textbox();
 		Glui_Textbox(std::string name) :Glui_Textbox() { Name = name; };
 		~Glui_Textbox() {}
-		gleventstruct MouseFunc(int button, int state, int ax, int ay);
-		gleventstruct PassiveMotionFunc(int ax, int ay);
-		gleventstruct MotionFunc(float ax, float ay);
-		gleventstruct MouseWheelFunc(int button, int state, int ax, int ay);
-		gleventstruct KeyboardFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialFunc(int key, int ax, int ay);
-		gleventstruct KeyboardUpFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialUpFunc(int key, int ax, int ay);
+		UiglEvent MouseFunc(int button, int state, int ax, int ay);
+		UiglEvent PassiveMotionFunc(int ax, int ay);
+		UiglEvent MotionFunc(float ax, float ay);
+		UiglEvent MouseWheelFunc(int button, int state, int ax, int ay);
+		UiglEvent KeyboardFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialFunc(int key, int ax, int ay);
+		UiglEvent KeyboardUpFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialUpFunc(int key, int ax, int ay);
 		void Init();
 		void Set_text_size(float _size);
 		void SetHDC(HDC* _hdc);
@@ -659,9 +586,9 @@ namespace easyGL {
 		bool Read_only = false;
 		int Text_max_length = 0;
 		//Цвет текста
-		Glui_Color Text_color = Black;
+		UiglColor Text_color = Black;
 		//Цвет выделенного
-		Glui_Color Selection_color = Iron;
+		UiglColor Selection_color = Iron;
 		//Текст
 		std::string Text;
 		friend class Glui_Combobox;
@@ -683,16 +610,16 @@ namespace easyGL {
 		Glui_Combobox();
 		Glui_Combobox(std::string name) :Glui_Combobox() { Name = name; };
 		~Glui_Combobox() {}
-		gleventstruct MouseFunc(int button, int state, int ax, int ay);
-		gleventstruct PassiveMotionFunc(int ax, int ay);
-		gleventstruct MotionFunc(float ax, float ay);
-		gleventstruct MouseWheelFunc(int button, int state, int ax, int ay);
-		gleventstruct KeyboardFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialFunc(int key, int ax, int ay);
-		gleventstruct KeyboardUpFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialUpFunc(int key, int ax, int ay);
+		UiglEvent MouseFunc(int button, int state, int ax, int ay);
+		UiglEvent PassiveMotionFunc(int ax, int ay);
+		UiglEvent MotionFunc(float ax, float ay);
+		UiglEvent MouseWheelFunc(int button, int state, int ax, int ay);
+		UiglEvent KeyboardFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialFunc(int key, int ax, int ay);
+		UiglEvent KeyboardUpFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialUpFunc(int key, int ax, int ay);
 		void Init();
-		Glui_Color Color_select = Green;
+		UiglColor Color_select = Green;
 		std::vector<std::string> Items;
 		int Select = 0;
 		int MaxDropDownItems;
@@ -716,22 +643,22 @@ namespace easyGL {
 		Glui_Listbox();
 		Glui_Listbox(std::string name) :Glui_Listbox() { Name = name; }
 		~Glui_Listbox() {};
-		gleventstruct MouseFunc(int button, int state, int ax, int ay);
-		gleventstruct PassiveMotionFunc(int ax, int ay);
-		gleventstruct MotionFunc(float ax, float ay);
-		gleventstruct MouseWheelFunc(int button, int state, int ax, int ay);
-		gleventstruct KeyboardFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialFunc(int key, int ax, int ay);
-		gleventstruct KeyboardUpFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialUpFunc(int key, int ax, int ay);
+		UiglEvent MouseFunc(int button, int state, int ax, int ay);
+		UiglEvent PassiveMotionFunc(int ax, int ay);
+		UiglEvent MotionFunc(float ax, float ay);
+		UiglEvent MouseWheelFunc(int button, int state, int ax, int ay);
+		UiglEvent KeyboardFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialFunc(int key, int ax, int ay);
+		UiglEvent KeyboardUpFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialUpFunc(int key, int ax, int ay);
 		void Init();
 		void Set_text_size(float _size);
 		std::string Get_Selected_text();
 		void SetHDC(HDC* _hdc);
-		Glui_Color Text_color;
+		UiglColor Text_color;
 		std::vector<std::string> Items;
 		int Selected = -1;
-		Glui_Color Select_color = Lightsteelblue;
+		UiglColor Select_color = Lightsteelblue;
 	protected:
 		Glui_Skrollbar Skrol;
 		float Text_size = 12;
@@ -745,10 +672,10 @@ namespace easyGL {
 		Glui_Numericupdown();
 		Glui_Numericupdown(std::string name) :Glui_Numericupdown() { Name = name; }
 		~Glui_Numericupdown() {}
-		gleventstruct MouseFunc(int button, int state, int ax, int ay);
-		gleventstruct PassiveMotionFunc(int ax, int ay);
-		gleventstruct KeyboardFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialFunc(int key, int ax, int ay);
+		UiglEvent MouseFunc(int button, int state, int ax, int ay);
+		UiglEvent PassiveMotionFunc(int ax, int ay);
+		UiglEvent KeyboardFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialFunc(int key, int ax, int ay);
 		void Init();
 		int SetMax(int max){ return Max = max; }
 		int SetMin(int min){ return Min = min; }
@@ -769,14 +696,14 @@ namespace easyGL {
 		bool Open(std::string file_name = "");
 		bool is_open() { return _is_open; }
 		bool Get_count(std::string name, int& count);
-		bool Get_color(std::string name, Glui_Color& col);
+		bool Get_color(std::string name, UiglColor& col);
 		bool Set_count(std::string name, int count, bool _save = 0);
-		bool Set_color(std::string name, Glui_Color col, bool _save = 0);
+		bool setColor(std::string name, UiglColor col, bool _save = 0);
 		bool Save(std::string file_name = "");
 		bool Add_item(std::string name, int count);
 		bool Erase_item(std::string name);
 		bool Clear();
-		friend Glui_Color;
+		friend UiglColor;
 	private:
 		std::vector<string_int> Data;
 		bool _is_open;
@@ -789,22 +716,22 @@ namespace easyGL {
 		Glui_Picture();
 		Glui_Picture(std::string name) : Glui_Picture() { Name = name; }
 		~Glui_Picture() {}
-		std::vector<std::vector<Point>> points;
+		std::vector<std::vector<UiglPoint>> points;
 		std::vector<Layer> layers;
 		std::string file_name;
 		void Init();
 		bool Open(std::string _file_name);
-		gleventstruct MouseFunc(int button, int state, int ax, int ay);
-		gleventstruct PassiveMotionFunc(int ax, int ay);
-		gleventstruct MotionFunc(float ax, float ay);
-		gleventstruct MouseWheelFunc(int button, int state, int ax, int ay);
-		gleventstruct KeyboardFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialFunc(int key, int ax, int ay);
-		gleventstruct KeyboardUpFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialUpFunc(int key, int ax, int ay);
+		UiglEvent MouseFunc(int button, int state, int ax, int ay);
+		UiglEvent PassiveMotionFunc(int ax, int ay);
+		UiglEvent MotionFunc(float ax, float ay);
+		UiglEvent MouseWheelFunc(int button, int state, int ax, int ay);
+		UiglEvent KeyboardFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialFunc(int key, int ax, int ay);
+		UiglEvent KeyboardUpFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialUpFunc(int key, int ax, int ay);
 	protected:
 		float w_p = 0, h_p = 0;
-		void Line_init(Guil_Primitives prim, float length = 1);
+		void Line_init(uiglPrimitives prim, float length = 1);
 	};
 	//диалоговое окно выбора цвета
 	class Glui_ColDiаlog : public Glui_IForms
@@ -814,17 +741,17 @@ namespace easyGL {
 		Glui_ColDiаlog(std::string name) :Glui_ColDiаlog() { Name = name; }
 		~Glui_ColDiаlog(){}
 		void Init();
-		void Diolog(Glui_Color* col, std::string _title = "Defoult");
-		gleventstruct MouseFunc(int button, int state, int ax, int ay);
-		gleventstruct PassiveMotionFunc(int ax, int ay);
-		gleventstruct MotionFunc(float ax, float ay);
-		gleventstruct KeyboardFunc(unsigned char key, int x, int y);
-		gleventstruct SpecialFunc(int key, int ax, int ay);
-		gleventstruct MouseWheelFunc(int button, int state, int ax, int ay);
-		gleventstruct KeyboardUpFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialUpFunc(int key, int ax, int ay);
+		void Diolog(UiglColor* col, std::string _title = "Defoult");
+		UiglEvent MouseFunc(int button, int state, int ax, int ay);
+		UiglEvent PassiveMotionFunc(int ax, int ay);
+		UiglEvent MotionFunc(float ax, float ay);
+		UiglEvent KeyboardFunc(unsigned char key, int x, int y);
+		UiglEvent SpecialFunc(int key, int ax, int ay);
+		UiglEvent MouseWheelFunc(int button, int state, int ax, int ay);
+		UiglEvent KeyboardUpFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialUpFunc(int key, int ax, int ay);
 		void SetHDC(HDC* _hdc);
-		Glui_Language Language = Gl_LanguageEN;
+		uiglLanguages Language = uiglLanguageEN;
 	private:
 		bool lp = 0;
 		int l = 0;
@@ -832,16 +759,16 @@ namespace easyGL {
 		Glui_Text textprint;
 		bool Made_color, spector, is_cur_move, is_cur2_move, is_cur3_move;
 		int act = 0;
-		Glui_Color* Color_result = NULL;
-		Glui_Color Color_temp;
+		UiglColor* Color_result = NULL;
+		UiglColor Color_temp;
 		float Win_fon_H = 30.0f, h, cur2_h, cur3_h;
 		float M_x, M_y, c_x, c_y;
 		std::string Title;
 		void D_color(float x, float y, float _h);
-		Glui_Color Color_spector(float x, float y);
+		UiglColor Color_spector(float x, float y);
 		void spector_print(float x, float y, float w, float h);
 		void cursor(float x, float y);
-		void brightness(float x, float y, float h, float cur_h, Glui_Color col);
+		void brightness(float x, float y, float h, float cur_h, UiglColor col);
 		void updatenum();
 		const std::string Text_en_ru_dialog[2][4] = {	"Изменение палитры",	"Основные цвета",	"Палитра",	"ОК",
 														"Change the palette",	"Recen colors",		"Palette",	"OK" };
@@ -896,21 +823,21 @@ namespace easyGL {
 		Glui_MessageBox();
 		Glui_MessageBox(std::string name) :Glui_MessageBox() { Name = name; }
 		~Glui_MessageBox(){}
-		gleventstruct MouseFunc(int button, int state, int ax, int ay);
-		gleventstruct PassiveMotionFunc(int ax, int ay);
-		gleventstruct MotionFunc(float ax, float ay);
-		gleventstruct MouseWheelFunc(int button, int state, int ax, int ay);
-		gleventstruct KeyboardFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialFunc(int key, int ax, int ay);
-		gleventstruct KeyboardUpFunc(unsigned char key, int ax, int ay);
-		gleventstruct SpecialUpFunc(int key, int ax, int ay);
+		UiglEvent MouseFunc(int button, int state, int ax, int ay);
+		UiglEvent PassiveMotionFunc(int ax, int ay);
+		UiglEvent MotionFunc(float ax, float ay);
+		UiglEvent MouseWheelFunc(int button, int state, int ax, int ay);
+		UiglEvent KeyboardFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialFunc(int key, int ax, int ay);
+		UiglEvent KeyboardUpFunc(unsigned char key, int ax, int ay);
+		UiglEvent SpecialUpFunc(int key, int ax, int ay);
 		void Init();
-		void Show(std::string text, std::string title = "", Glui_MsgBoxButton _buttons = Gl_ButtonOK);
+		void Show(std::string text, std::string title = "", uiglMsgBoxButtons _buttons = uiglButtonOK);
 		void SetHDC(HDC* _hdc);
-		Glui_Color Panel_color = Deepskyblue;
-		Glui_Color Button_color = Deepskyblue;
+		UiglColor Panel_color = Deepskyblue;
+		UiglColor Button_color = Deepskyblue;
 		friend class Glui_MainForm;
-		Glui_Language Language = Gl_LanguageEN;
+		uiglLanguages Language = uiglLanguageEN;
 	private:
 		std::vector<std::string> Base_Text;
 		bool lp = 0;

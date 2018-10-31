@@ -2,7 +2,7 @@
 #include "resource.h"
 
 using namespace std;
-using namespace easyGL;
+using namespace UIGL;
 
 ///////////////////////////////////////////////////structures and classes
 struct Mytext
@@ -229,37 +229,37 @@ public:
 		float align_h = 0, align_w = 0;
 		switch (Text_align)
 		{
-		case easyGL::Top_left:
-		case easyGL::Top_center:
-		case easyGL::Top_right:
+		case UIGL::uiglTopLeft:
+		case UIGL::uiglTopCenter:
+		case UIGL::uiglTopRight:
 			align_h = H + 10;
 			break;
-		case easyGL::Middle_left:
-		case easyGL::Middle_center:
-		case easyGL::Middle_right:
+		case UIGL::uiglMiddleLeft:
+		case UIGL::uiglMiddleCenter:
+		case UIGL::uiglMiddleRight:
 			align_h = H*0.1f;
 			break;
-		case easyGL::Bottom_left:
-		case easyGL::Bottom_center:
-		case easyGL::Bottom_right:
+		case UIGL::uiglBottomLeft:
+		case UIGL::uiglBottomCenter:
+		case UIGL::uiglBottomRight:
 			align_h = -Text_size - 5;
 			break;
 		}
 		switch (Text_align)
 		{
-		case easyGL::Top_left:
-		case easyGL::Middle_left:
-		case easyGL::Bottom_left:
+		case UIGL::uiglTopLeft:
+		case UIGL::uiglMiddleLeft:
+		case UIGL::uiglBottomLeft:
 			align_w = -10;
 			break;
-		case easyGL::Middle_center:
-		case easyGL::Top_center:
-		case easyGL::Bottom_center:
+		case UIGL::uiglMiddleCenter:
+		case UIGL::uiglTopCenter:
+		case UIGL::uiglBottomCenter:
 			align_w = 5;
 			break;
-		case easyGL::Bottom_right:
-		case easyGL::Top_right:
-		case easyGL::Middle_right:
+		case UIGL::uiglBottomRight:
+		case UIGL::uiglTopRight:
+		case UIGL::uiglMiddleRight:
 			align_w = W + 10;
 			break;
 		}
@@ -269,7 +269,7 @@ public:
 	}
 
 	string Title;
-	Glui_Alignment Text_align = Glui_Alignment::Middle_right;
+	uiglAlignments Text_align = uiglAlignments::uiglMiddleRight;
 private:
 };
 
@@ -283,37 +283,37 @@ public:
 		float align_h = 0, align_w = 0;
 		switch (Text_align)
 		{
-		case easyGL::Top_left:
-		case easyGL::Top_center:
-		case easyGL::Top_right:
+		case UIGL::uiglTopLeft:
+		case UIGL::uiglTopCenter:
+		case UIGL::uiglTopRight:
 			align_h = H + 10;
 			break;
-		case easyGL::Middle_left:
-		case easyGL::Middle_center:
-		case easyGL::Middle_right:
+		case UIGL::uiglMiddleLeft:
+		case UIGL::uiglMiddleCenter:
+		case UIGL::uiglMiddleRight:
 			align_h = H*0.1f;
 			break;
-		case easyGL::Bottom_left:
-		case easyGL::Bottom_center:
-		case easyGL::Bottom_right:
+		case UIGL::uiglBottomLeft:
+		case UIGL::uiglBottomCenter:
+		case UIGL::uiglBottomRight:
 			align_h = -Text_size - 5;
 			break;
 		}
 		switch (Text_align)
 		{
-		case easyGL::Top_left:
-		case easyGL::Middle_left:
-		case easyGL::Bottom_left:
+		case UIGL::uiglTopLeft:
+		case UIGL::uiglMiddleLeft:
+		case UIGL::uiglBottomLeft:
 			align_w = -10;
 			break;
-		case easyGL::Middle_center:
-		case easyGL::Top_center:
-		case easyGL::Bottom_center:
+		case UIGL::uiglMiddleCenter:
+		case UIGL::uiglTopCenter:
+		case UIGL::uiglBottomCenter:
 			align_w = 5;
 			break;
-		case easyGL::Bottom_right:
-		case easyGL::Top_right:
-		case easyGL::Middle_right:
+		case UIGL::uiglBottomRight:
+		case UIGL::uiglTopRight:
+		case UIGL::uiglMiddleRight:
 			align_w = W + 10;
 			break;
 		}
@@ -322,7 +322,7 @@ public:
 	}
 
 	string Title;
-	Glui_Alignment Text_align = Glui_Alignment::Middle_right;
+	uiglAlignments Text_align = uiglAlignments::uiglMiddleRight;
 private:
 };
 
@@ -363,19 +363,19 @@ public:
 		Set_text_size(Text_size);
 		is_move = true;
 		moved = false;
-		Color = Glui_Colornum::Blue;
+		Color = uiglColornum::Blue;
 		contextmenu.Size.SetSize(75, 20);
 		contextmenu.Set_text_size(15);
 		contextmenu.Visible = false;
 	}
 	~WordObj() {}
-	gleventstruct MouseFunc(int button, int state, int ax, int ay)
+	UiglEvent MouseFunc(int button, int state, int ax, int ay)
 	{ 
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
 
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible) return result;
 		if (LineTranslation)
 			return MouseFunc2(button, state, ax, ay);
@@ -386,7 +386,7 @@ public:
 			result.Name = Name;
 			if (state == 0 && button == 0)
 			{
-				result.Event = Gl_MouseLeftDown;
+				result.Event = uiglMouseLeftDown;
 				moved = true;
 				mx = ax - X;
 				my = ay - Y;
@@ -394,7 +394,7 @@ public:
 				if (clock() - double_ckick < 350)
 				{
 					double_ckick = clock();
-					result.Event = Gl_DoubleClick;
+					result.Event = uiglDoubleClick;
 				}
 				else double_ckick = clock();
 
@@ -402,28 +402,28 @@ public:
 			}
 			if (state == 1 && button == 0)
 			{
-				result.Event = Gl_MouseLeftUp;
+				result.Event = uiglMouseLeftUp;
 				moved = false;
 				return result;
 			}
 			if (state == 0 && button == 1)
 			{
-				result.Event = Gl_MouseCenterDown;
+				result.Event = uiglMouseCenterDown;
 				return result;
 			}
 			if (state == 1 && button == 1)
 			{
-				result.Event = Gl_MouseCenterUp;
+				result.Event = uiglMouseCenterUp;
 				return result;
 			}
 			if (state == 0 && button == 2)
 			{
-				result.Event = Gl_MouseRightDown;
+				result.Event = uiglMouseRightDown;
 				return result;
 			}
 			if (state == 1 && button == 2)
 			{
-				result.Event = Gl_MouseRightUp;
+				result.Event = uiglMouseRightUp;
 				return result;
 			}
 		}else {
@@ -431,10 +431,10 @@ public:
 		}
 		return result;
 	}
-	gleventstruct PassiveMotionFunc(int ax, int ay)
+	UiglEvent PassiveMotionFunc(int ax, int ay)
 	{
 		contextmenu.PassiveMotionFunc(ax, ay);
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible) return result;
 		if (!LineTranslation)
 		{
@@ -444,12 +444,12 @@ public:
 				{
 					Mouse_in_button = true;
 					result.Name = Name;
-					result.Event = Gl_MouseOver;
+					result.Event = uiglMouseOver;
 					return result;
 				}
 				else {
 					result.Name = Name;
-					result.Event = Gl_Mousemove;
+					result.Event = uiglMousemove;
 					return result;
 				}
 			}
@@ -457,7 +457,7 @@ public:
 				if (Mouse_in_button)
 				{
 					result.Name = Name;
-					result.Event = Gl_MouseOut;
+					result.Event = uiglMouseOut;
 				}
 				Mouse_in_button = false;
 				return result;
@@ -475,9 +475,9 @@ public:
 		}
 		return result;
 	}
-	gleventstruct MotionFunc(float ax, float ay)
+	UiglEvent MotionFunc(float ax, float ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible) return result;
 		if (LineTranslation)
 			return MotionFunc2(ax, ay);
@@ -522,58 +522,58 @@ public:
 		}
 		return result;
 	}
-	gleventstruct MouseWheelFunc(int button, int state, int ax, int ay)
+	UiglEvent MouseWheelFunc(int button, int state, int ax, int ay)
 	{
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible) return result;
 		if ((ax > X) && (ax < X + W) && (ay>Y) && (ay < Y + H))
 		{
 			result.Name = Name;
 			if (state == -1)
-				result.Event = Gl_WheelDown;
+				result.Event = uiglWheelDown;
 			if (state == 1)
-				result.Event = Gl_wheelup;
+				result.Event = uiglWheelUp;
 		}
 		return result;
 	}
-	gleventstruct KeyboardFunc(unsigned char key, int ax, int ay)
+	UiglEvent KeyboardFunc(unsigned char key, int ax, int ay)
 	{
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible) return result;
 		if (in_focus && key == 13)
 		{
-			result.Event = Gl_Enter;
+			result.Event = uiglEnter;
 			result.Name = Name;
 		}
 		return result;
 	}
-	gleventstruct SpecialFunc(int key, int ax, int ay)
+	UiglEvent SpecialFunc(int key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 		if (!Visible) return result;
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
 	}
-	gleventstruct KeyboardUpFunc(unsigned char key, int ax, int ay)
+	UiglEvent KeyboardUpFunc(unsigned char key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 		if (!Visible) return result;
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
 		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
 		ax = axt;
 	}
-	gleventstruct SpecialUpFunc(int key, int ax, int ay)
+	UiglEvent SpecialUpFunc(int key, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		return result;
 		if (!Visible) return result;
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
@@ -740,7 +740,7 @@ public:
 		LineTranslation = 0;
 		Visible = 0;
 	}
-	Glui_Color Text_color;
+	UiglColor Text_color;
 	std::string Text;
 	WordObj* Next = NULL;
 	WordObj* Back = NULL;
@@ -851,14 +851,14 @@ private:
 
 		textprint.glText(X + 3.0f*r, Y + H*0.2f, Text, Text_color);
 	}
-	gleventstruct MouseFunc2(int button, int state, int ax, int ay)
+	UiglEvent MouseFunc2(int button, int state, int ax, int ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible) return result;
 		float h = (Text_size + 6);
 		
 		result = contextmenu.MouseFunc(button, state, ax, ay);
-			if (result.Event == Glui_Event::Gl_MouseLeftDown)
+			if (result.Event == uiglEvents::uiglMouseLeftDown)
 			{
 				if (Next != nullptr)
 					Next->Back = NULL;
@@ -877,7 +877,7 @@ private:
 			{
 				contextmenu.Visible = false;
 				_moved = 0;
-				result.Event = Gl_MouseLeftDown;
+				result.Event = uiglMouseLeftDown;
 				moved = true;
 				mx = ax - X;
 				my = ay - Y;
@@ -885,7 +885,7 @@ private:
 				if (clock() - double_ckick < 350)
 				{
 					double_ckick = clock();
-					result.Event = Gl_DoubleClick;
+					result.Event = uiglDoubleClick;
 				}
 				else double_ckick = clock();
 
@@ -894,20 +894,20 @@ private:
 			if (state == 1 && button == 0)
 			{
 				contextmenu.Visible = false;
-				result.Event = Gl_MouseLeftUp;
+				result.Event = uiglMouseLeftUp;
 				moved = false;
 				return result;
 			}
 			if (state == 0 && button == 1)
 			{
 				contextmenu.Visible = false;
-				result.Event = Gl_MouseCenterDown;
+				result.Event = uiglMouseCenterDown;
 				return result;
 			}
 			if (state == 1 && button == 1)
 			{
 				contextmenu.Visible = false;
-				result.Event = Gl_MouseCenterUp;
+				result.Event = uiglMouseCenterUp;
 				return result;
 			}
 			if (state == 0 && button == 2)
@@ -917,17 +917,17 @@ private:
 				if (ax1 + 75 > Jora::WndW)
 					ax1 = Jora::WndW - 80;
 				contextmenu.Position.SetPosition(ax1, ay);
-				if (Jora::Language != Gl_LanguageEN)contextmenu.Text = "Delete";
+				if (Jora::Language != uiglLanguageEN)contextmenu.Text = "Delete";
 				else contextmenu.Text = "Удалить";
 				contextmenu.Color = Color;
 				contextmenu.Outline_color = Outline_color;
 				contextmenu.Text_color = Text_color;
-				result.Event = Gl_MouseRightDown;
+				result.Event = uiglMouseRightDown;
 				return result;
 			}
 			if (state == 1 && button == 2)
 			{
-				result.Event = Gl_MouseRightUp;
+				result.Event = uiglMouseRightUp;
 				return result;
 			}
 		}
@@ -939,7 +939,7 @@ private:
 					contextmenu.Visible = false;
 					result.Name = Name;
 					_moved = 1;
-					result.Event = Gl_MouseLeftDown;
+					result.Event = uiglMouseLeftDown;
 					moved = true;
 					mx = ax - W;
 					my = ay - H;
@@ -947,7 +947,7 @@ private:
 					if (clock() - double_ckick < 350)
 					{
 						double_ckick = clock();
-						result.Event = Gl_DoubleClick;
+						result.Event = uiglDoubleClick;
 					}
 					else double_ckick = clock();
 
@@ -956,20 +956,20 @@ private:
 				if (state == 1 && button == 0)
 				{
 					contextmenu.Visible = false;
-					result.Event = Gl_MouseLeftUp;
+					result.Event = uiglMouseLeftUp;
 					moved = false;
 					return result;
 				}
 				if (state == 0 && button == 1)
 				{
 					contextmenu.Visible = false;
-					result.Event = Gl_MouseCenterDown;
+					result.Event = uiglMouseCenterDown;
 					return result;
 				}
 				if (state == 1 && button == 1)
 				{
 					contextmenu.Visible = false;
-					result.Event = Gl_MouseCenterUp;
+					result.Event = uiglMouseCenterUp;
 					return result;
 				}
 				if (state == 0 && button == 2)
@@ -979,17 +979,17 @@ private:
 					if (ax1 + 75 > Jora::WndW)
 						ax1 = Jora::WndW - 80;
 					contextmenu.Position.SetPosition(ax1, ay);
-					if (Jora::Language != Gl_LanguageEN)contextmenu.Text = "Delete";
+					if (Jora::Language != uiglLanguageEN)contextmenu.Text = "Delete";
 					else contextmenu.Text = "Удалить";
 					contextmenu.Color = Color;
 					contextmenu.Outline_color = Outline_color;
 					contextmenu.Text_color = Text_color;
-					result.Event = Gl_MouseRightDown;
+					result.Event = uiglMouseRightDown;
 					return result;
 				}	
 				if (state == 1 && button == 2)
 				{
-					result.Event = Gl_MouseRightUp;
+					result.Event = uiglMouseRightUp;
 					return result;
 				}
 			}
@@ -998,9 +998,9 @@ private:
 		contextmenu.Visible = false;
 		return result;
 	}
-	gleventstruct MotionFunc2(float ax, float ay)
+	UiglEvent MotionFunc2(float ax, float ay)
 	{
-		gleventstruct result;
+		UiglEvent result;
 		if (!Visible) return result;
 		if (is_move&&moved)
 		{
@@ -1093,14 +1093,14 @@ public:
 		Size.UpdatePtr = this;
 	}
 	~Panel() {}
-	gleventstruct MouseFunc(int button, int state, int ax, int ay) { return gleventstruct(); }
-	gleventstruct PassiveMotionFunc(int ax, int ay) { return gleventstruct(); }
-	gleventstruct MotionFunc(float ax, float ay) { return gleventstruct(); }
-	gleventstruct MouseWheelFunc(int button, int state, int ax, int ay) { return gleventstruct(); }
-	gleventstruct KeyboardFunc(unsigned char key, int ax, int ay) { return gleventstruct(); }
-	gleventstruct SpecialFunc(int key, int ax, int ay) { return gleventstruct(); }
-	gleventstruct KeyboardUpFunc(unsigned char key, int ax, int ay) { return gleventstruct(); }
-	gleventstruct SpecialUpFunc(int key, int ax, int ay) { return gleventstruct(); }
+	UiglEvent MouseFunc(int button, int state, int ax, int ay) { return UiglEvent(); }
+	UiglEvent PassiveMotionFunc(int ax, int ay) { return UiglEvent(); }
+	UiglEvent MotionFunc(float ax, float ay) { return UiglEvent(); }
+	UiglEvent MouseWheelFunc(int button, int state, int ax, int ay) { return UiglEvent(); }
+	UiglEvent KeyboardFunc(unsigned char key, int ax, int ay) { return UiglEvent(); }
+	UiglEvent SpecialFunc(int key, int ax, int ay) { return UiglEvent(); }
+	UiglEvent KeyboardUpFunc(unsigned char key, int ax, int ay) { return UiglEvent(); }
+	UiglEvent SpecialUpFunc(int key, int ax, int ay) { return UiglEvent(); }
 	void Init() 
 	{
 		Gl_Print_Rectangle(X, Y, W, H, Color, Outline_color);
@@ -1163,12 +1163,12 @@ const string MsgString[2][8]{	"Справка",	"Это слово уже существует",	"Заполните 
 								"Reference","This word already exists",	"Fill in the fields","Word not found"	,"Are you sure you want to delete this word?",	"","","" };
 
 //menu setings
-Glui_Color text_col = Black;
-Glui_Color backgr_col = Green;
-Glui_Color line_col = Black;
-Glui_Color button_col = White;
-Glui_Color select_col = White;
-Glui_Color Alpha_anim(0,255,0,0);
+UiglColor text_col = Black;
+UiglColor backgr_col = Green;
+UiglColor line_col = Black;
+UiglColor button_col = White;
+UiglColor select_col = White;
+UiglColor Alpha_anim(0,255,0,0);
 ///menu setings
 
 vector<Sentence>ArrSentence;
@@ -1234,18 +1234,18 @@ void Animation1(int p)
 		p -= 10;
 	if (p > 0 && p < 255) {
 		Alpha_anim = backgr_col;
-		Alpha_anim.Set_alpha(p);
+		Alpha_anim.setAlpha(p);
 	}
 	glutPostRedisplay();
 	if(p>0)
 		glutTimerFunc(10, Animation1, p);
 }
 
-void Wnd_proc(Glui_Event ev,string name)
+void Wnd_proc(uiglEvents ev,string name)
 {
 	cout << "Wnd_proc1  " << ev << "  " << name << endl;
 	
-	if (ev == Glui_Event::Gl_MsgYes&&name == "del")
+	if (ev == uiglEvents::uiglMsgYes&&name == "del")
 	{
 		for (int i = 0; i < My_data.size(); i++)
 		{
@@ -1259,7 +1259,7 @@ void Wnd_proc(Glui_Event ev,string name)
 	}
 
 
-	if (name == "enter" && ev == Gl_MouseLeftUp||((name=="list1"||name=="list2") && (ev == Gl_DoubleClick || ev == Gl_Enter)))
+	if (name == "enter" && ev == uiglMouseLeftUp||((name=="list1"||name=="list2") && (ev == uiglDoubleClick || ev == uiglEnter)))
 	{
 		if (list1.Selected >= 0 && list1.Selected < My_sub_data.size())
 		{
@@ -1290,19 +1290,19 @@ void Wnd_proc(Glui_Event ev,string name)
 
 		}
 	}
-	if (name == "next" && ev == Gl_MouseLeftUp)
+	if (name == "next" && ev == uiglMouseLeftUp)
 	{
 		cut_data(My_sub_data, My_data, word_count);
 		ans_wrong = ans_correct = 0;
 		resetlist();
 	}
 
-	if(name == "dialog"&&ev == Gl_EraseMsg)
+	if(name == "dialog"&&ev == uiglEraseMsg)
 	{
 		Bild_Window();
 	}
 	
-	if ((ev == Gl_MouseLeftDown || ev == Gl_Enter) && name.substr(0, 6) == "setcol")
+	if ((ev == uiglMouseLeftDown || ev == uiglEnter) && name.substr(0, 6) == "setcol")
 	{
 		switch (name[6])
 		{
@@ -1327,9 +1327,9 @@ void Wnd_proc(Glui_Event ev,string name)
 			Jora::ColDial.Diolog(& select_col, Text_en_ru[(int)Jora::Language][8]);
 			break;
 		case '5':
-			if (Jora::Language == Gl_LanguageRU)
-				Jora::Language = Gl_LanguageEN;
-			else Jora::Language = Gl_LanguageRU;
+			if (Jora::Language == uiglLanguageRU)
+				Jora::Language = uiglLanguageEN;
+			else Jora::Language = uiglLanguageRU;
 			conf.Set_count("en", (int)Jora::Language);
 			Bild_Window();
 			break;
@@ -1338,7 +1338,7 @@ void Wnd_proc(Glui_Event ev,string name)
 		}
 	}
 
-	if ((ev == Gl_MouseLeftDown||ev == Gl_Enter) && name == "setting")
+	if ((ev == uiglMouseLeftDown||ev == uiglEnter) && name == "setting")
 	{
 		if(inp.Text != "")
 			word_count = stoi(inp.Text);
@@ -1348,11 +1348,11 @@ void Wnd_proc(Glui_Event ev,string name)
 		Animation1(0);		 
 	}
 }
-void Wnd_proc1(Glui_Event ev, string name)
+void Wnd_proc1(uiglEvents ev, string name)
 {
 	cout << "Wnd_proc1  "<< ev << "  " << name << endl;
 
-	if ((ev == Gl_MouseLeftDown || ev == Gl_Enter) && name.substr(0,4)=="head")
+	if ((ev == uiglMouseLeftDown || ev == uiglEnter) && name.substr(0,4)=="head")
 	{
 		switch (name[4])
 		{
@@ -1392,7 +1392,7 @@ void Wnd_proc1(Glui_Event ev, string name)
 		}
 	}
 
-	if ((ev == Gl_MouseLeftDown || ev == Gl_Enter)&& name == "setting")
+	if ((ev == uiglMouseLeftDown || ev == uiglEnter)&& name == "setting")
 	{
 		if (inp.Text != "")
 			word_count = stoi(inp.Text);
@@ -1402,7 +1402,7 @@ void Wnd_proc1(Glui_Event ev, string name)
 		Animation1(0);
 	}
 	
-	if ((ev == Gl_MouseLeftDown || ev == Gl_Enter) && name == "swap1")
+	if ((ev == uiglMouseLeftDown || ev == uiglEnter) && name == "swap1")
 	{
 		if (Translate_to)
 			Translate_to = 0;
@@ -1412,7 +1412,7 @@ void Wnd_proc1(Glui_Event ev, string name)
 		Bild_Window();
 	}
 
-	if ((ev == Gl_MouseLeftDown || ev == Gl_Enter)&& name == "favor")
+	if ((ev == uiglMouseLeftDown || ev == uiglEnter)&& name == "favor")
 	{
 		if (inp2.Text != "" && out2.Text != "")
 		{
@@ -1429,13 +1429,13 @@ void Wnd_proc1(Glui_Event ev, string name)
 		}
 	}
 	
-	if ((ev == Gl_MouseLeftDown || ev == Gl_Enter) && name == "cutword")
+	if ((ev == uiglMouseLeftDown || ev == uiglEnter) && name == "cutword")
 	{
-		Jora::MsgBox.Show(MsgString[(int)Jora::Language][4], MsgString[(int)Jora::Language][0],Gl_ButtonOKNO);
+		Jora::MsgBox.Show(MsgString[(int)Jora::Language][4], MsgString[(int)Jora::Language][0],uiglButtonOKNO);
 		Jora::MsgBox.Name = "del";
 	}
 
-	if (ev == Gl_Enter && name == "inp2")
+	if (ev == uiglEnter && name == "inp2")
 	{
 		if (inp2.Text != "") 
 		{
@@ -1458,7 +1458,7 @@ void Wnd_proc1(Glui_Event ev, string name)
 		}
 	}
 
-	if((ev == Gl_MouseLeftDown || ev == Gl_Enter) && name == "setting")
+	if((ev == uiglMouseLeftDown || ev == uiglEnter) && name == "setting")
 	{
 		if (inp.Text != "")
 			word_count = stoi(inp.Text);
@@ -1468,21 +1468,21 @@ void Wnd_proc1(Glui_Event ev, string name)
 	}
 }
 
-void Wnd_proc_Form5(Glui_Event ev, string name) 
+void Wnd_proc_Form5(uiglEvents ev, string name) 
 {
 	cout << "Wnd_proc_Form5  "<< ev << "  " << name << endl;
 
-	if (((ev == Gl_MouseLeftDown) || (ev == Gl_Enter)) && name == "setting")
+	if (((ev == uiglMouseLeftDown) || (ev == uiglEnter)) && name == "setting")
 	{
 		state_wnd = 2;
 		Animation1(0);
 	}
 
-	if ((ev == Gl_MouseLeftUp) && name.substr(0,4) == "word")
+	if ((ev == uiglMouseLeftUp) && name.substr(0,4) == "word")
 	{		
 		WordsPosUpdate(std::stoi(name.substr(4)));
 	}
-	if ((ev == Gl_MouseLeftDown || ev == Gl_Enter) && name == "Translation")
+	if ((ev == uiglMouseLeftDown || ev == uiglEnter) && name == "Translation")
 	{
 
 		for (int i = 0; i < words.size(); i++)
@@ -1498,7 +1498,7 @@ void Wnd_proc_Form5(Glui_Event ev, string name)
 		}
 	}
 
-	if ((ev == Gl_MouseLeftDown || ev == Gl_Enter) && name == "enter")
+	if ((ev == uiglMouseLeftDown || ev == uiglEnter) && name == "enter")
 	{		
 		std::string txt = MakeSentencr();
 		if (txt == "loop")
@@ -1527,7 +1527,7 @@ void Wnd_proc_Form5(Glui_Event ev, string name)
 
 	}
 
-	if ((ev == Gl_MouseLeftDown || ev == Gl_Enter) && name == "next")
+	if ((ev == uiglMouseLeftDown || ev == uiglEnter) && name == "next")
 	{
 		if (sentence_selection < ArrSentence.size())
 		{
@@ -1554,7 +1554,7 @@ int main(int argc, char**argv)
 	conf.Get_count("word_count", word_count);
 	conf.Get_count("WndX", Jora::WndX);
 	conf.Get_count("WndY", Jora::WndY);
-	int a0;	conf.Get_count("en", a0);	Jora::Language = (Glui_Language)a0;
+	int a0;	conf.Get_count("en", a0);	Jora::Language = (uiglLanguages)a0;
 
 	conf.Add_item("word_count", word_count);
 	conf.Add_item("en", (int)Jora::Language);
@@ -1620,11 +1620,11 @@ void Bild_Window()
 		conf.Set_count("word_count", word_count);
 		conf.Set_count("WndH", Jora::WndH);
 		conf.Set_count("WndW", Jora::WndW);
-		conf.Set_color("textcol", text_col);
-		conf.Set_color("backgrcol", backgr_col);
-		conf.Set_color("linecol", line_col);
-		conf.Set_color("buttrcol", button_col);
-		conf.Set_color("selectcol", select_col);
+		conf.setColor("textcol", text_col);
+		conf.setColor("backgrcol", backgr_col);
+		conf.setColor("linecol", line_col);
+		conf.setColor("buttrcol", button_col);
+		conf.setColor("selectcol", select_col);
 	}
 	FormTraining.Background_color = backgr_col;
 	FormSetting.Background_color = backgr_col;
@@ -1757,7 +1757,7 @@ void Bild_Window()
 		Head_menu[i].Color = button_col;
 		Head_menu[i].Outline_color = line_col;
 		Head_menu[i].Text_color = text_col;
-		Head_menu[i].Text_align = Middle_center;
+		Head_menu[i].Text_align = uiglMiddleCenter;
 	}
 	//////////////////////////////////////////////////////FormTranslate
 
@@ -1781,7 +1781,7 @@ void Bild_Window()
 		inp2.Color = button_col;
 		inp2.Outline_color = line_col;
 		inp2.Text_color = text_col;
-		inp2.Text_align = Bottom_center;
+		inp2.Text_align = uiglBottomCenter;
 	}
 	//favor
 	{
@@ -1814,7 +1814,7 @@ void Bild_Window()
 		out2.Color = button_col;
 		out2.Outline_color = line_col;
 		out2.Text_color = text_col;
-		out2.Text_align = Bottom_center;
+		out2.Text_align = uiglBottomCenter;
 	}
 	//swap1
 	{

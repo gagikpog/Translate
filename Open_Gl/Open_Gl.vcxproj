@@ -152,10 +152,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EasyOpenGL.cpp" />
+    <ClCompile Include="lib\uiglColor.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EasyOpenGL.h" />
+    <ClInclude Include="lib\uigl.h" />
+    <ClInclude Include="lib\uiglColor.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
