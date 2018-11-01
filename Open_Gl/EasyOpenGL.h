@@ -2,6 +2,7 @@
 #define EASY_OPENGL_H_ //включить файл
 /// Библиотека EasyOpenGL начало разработки 25.07.2017
 /// Библиотека EasyOpenGL возобновление разработки 30.10.2018
+
 #include <gl\freeglut.h>
 #include <vector>
 #include <list>
@@ -16,11 +17,14 @@
 ///////////////////
 #include "lib/uiglColor.h"
 #include "lib/uigl.h"
+#include "lib/math/Vector2.h"
+#include "lib/math/Vector3.h"
+#include "lib/uiglFunc.h"
 
-const float PI = 3.14159265358979323846f;
+typedef UIGL::Vector2<float> Vector2f;
+typedef UIGL::Vector3<float> Vector3f;
 
 namespace UIGL {
-
 
 	class Glui_Obj;
 	class Glui_Forms;
@@ -29,126 +33,6 @@ namespace UIGL {
 	class UiglColor;
 	class Glui_Combobox;
 
-	struct Vector2f
-	{
-		Vector2f() {}
-		Vector2f(float x, float y)
-		{
-			X = x;
-			Y = y;
-		}
-		Vector2f(const Vector2f& value)
-		{
-			X = value.X;
-			Y = value.Y;
-		}
-		Vector2f operator+(const Vector2f& value) const
-		{
-			return Vector2f(X + value.X, Y + value.Y);
-		}
-		Vector2f operator-(const Vector2f& value) const
-		{
-			return Vector2f(X - value.X, Y - value.Y);
-		}
-		Vector2f& operator=(const Vector2f& value)
-		{
-			X = value.X;
-			Y = value.Y;
-			return *this;
-		}
-		Vector2f& operator+=(const Vector2f& value)
-		{
-			X += value.X;
-			Y += value.Y;
-			return *this;
-		}
-		Vector2f& operator-=(const Vector2f& value)
-		{
-			X -= value.X;
-			Y -= value.Y;
-			return *this;
-		}
-		bool operator==(const Vector2f& operator2)
-		{
-			return (X == operator2.X && Y == operator2.Y);
-		}
-		float X = 0;
-		float Y = 0;
-	};
-	struct Vector3f
-	{
-		Vector3f() {}
-		Vector3f(float x, float y, float z)
-		{
-			X = x;
-			Y = y;
-			Z = z;
-		}		
-		Vector3f(const Vector3f& value)
-		{
-			X = value.X;
-			Y = value.Y;
-			Z = value.Z;
-		}
-		Vector3f operator+(const Vector3f& value) const 
-		{
-			return Vector3f(X + value.X, Y + value.Y,Z + value.Z);
-		}
-		Vector3f operator-(const Vector3f& value) const
-		{
-			return Vector3f(X - value.X, Y - value.Y,Z + value.Z);
-		}
-		Vector3f operator=(const Vector3f& value)
-		{
-			X = value.X;
-			Y = value.Y;
-			Z = value.Z;
-			return *this;
-		}
-		Vector3f operator+=(const Vector3f& value)
-		{
-			X += value.X;
-			Y += value.Y;
-			Z += value.Z;
-			return *this;
-		}
-		Vector3f operator-=(const Vector3f& value)
-		{
-			X -= value.X;
-			Y -= value.Y;
-			Z -= value.Z;
-			return *this;
-		}
-		//Векторное произведение
-		Vector3f operator*(const Vector3f& value)const
-		{
-			Vector3f _tmp;
-			_tmp.X = Y*value.Z - Z*value.Y;
-			_tmp.Y = -X*value.Z + Z*value.X;
-			_tmp.Z = X*value.Y - Y*value.X;
-			return _tmp;
-		}	
-		Vector3f operator/(const float& value) const
-		{
-			return Vector3f(X / value, Y / value, Z / value);
-		}
-		Vector3f operator*(const float& value) const
-		{
-			return Vector3f(X * value, Y * value, Z * value);
-		}
-		friend std::ostream& operator<<(std::ostream& _out,const Vector3f& b)
-		{
-			_out <<"X = "<< b.X <<", Y = "<< b.Y <<", Z = "<< b.Z;
-			return _out;
-		}
-		float GetLength() const
-		{
-			return std::sqrtf(X*X + Y*Y + Z*Z);
-		}
-		float X = 0;
-		float Y = 0;
-		float Z = 0;
-	};
 	struct Glui_Position
 	{
 		void SetPosition(float Xvalue, float Yvalue, float Zvalue = 0);
@@ -179,29 +63,6 @@ namespace UIGL {
 		uiglPrimitives primitive = uiglLINE_LOOP;
 		float line_length = 1;
 	};
-
-#pragma region Function
-	float rotate_x(float x, float y, float alpha);
-	float rotate_y(float x, float y, float alpha);
-	//прямоугольник с закругленными краями контур
-	inline void Gl_Print_Roundrect_Contour(float X, float Y, float W, float H, float R, UiglColor Outline_color = Black, float _angle = 0, float line_width = 1);
-	//прямоугольник с закругленными краями
-	inline void Gl_Print_Roundrect(float X, float Y, float W, float H, float R, UiglColor Color, UiglColor Outline_color = Black, float _angle = 0, bool glossy = 1, float line_width = 1);
-	//окружность контур
-	inline void Gl_Print_Circle_Contour(float X, float Y, float R, UiglColor Outline_color = Black, float line_width = 1);
-	//окружность
-	inline void Gl_Print_Circle(float X, float Y, float R, UiglColor Color, UiglColor Outline_color = Black, float line_width = 1);
-	
-	inline void Gl_Print_Rectangle_Contour(float X, float Y, float W, float H, UiglColor Outline_color = Black, float _angle = 0, float line_width = 1);
-	//прямоугольник 
-	inline void Gl_Print_Rectangle(float X, float Y, float W, float H, UiglColor Color, UiglColor Outline_color = Black, float _angle = 0, bool glossy = 1, float line_width = 1);
-	//круг контур
-	inline void Gl_Print_Circle_Contour(float X, float Y, float r, float R, UiglColor Color, UiglColor Outline_color = Black);
-	//многоугольник
-	inline void Gl_Print_Polygon_Contour(float X, float Y, float R, int Sides, UiglColor Outline_color = Black, float initial_angle = 0, float line_width = 1);
-	//многоугольник
-	inline void Gl_Print_Polygon(float X, float Y, float R, int Sides, UiglColor Color, UiglColor Outline_color = Black, float initial_angle = 0,float line_width = 1);
-#pragma endregion
 
 	class Glui_Obj
 	{

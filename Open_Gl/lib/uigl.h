@@ -11,6 +11,8 @@
 
 namespace UIGL
 {
+	const float PI = 3.14159265358979323846f;
+
 	enum uiglAlignments
 	{
 		uiglTopLeft, uiglTopCenter, uiglTopRight,

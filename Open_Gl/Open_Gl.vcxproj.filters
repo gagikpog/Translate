@@ -16,7 +16,10 @@
     <Filter Include="Заголовочные файлы\lib">
       <UniqueIdentifier>{ec608bb6-3c7d-4386-bc55-48f539111ca6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы ресурсов\lib">
+    <Filter Include="Заголовочные файлы\lib\math">
+      <UniqueIdentifier>{7aac08d3-8c28-4abb-8fd3-8073dd6af6d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\lib">
       <UniqueIdentifier>{84512a27-101a-40d4-bb85-2ac2bd5a0314}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -28,7 +31,10 @@
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
     <ClCompile Include="lib\uiglColor.cpp">
-      <Filter>Файлы ресурсов\lib</Filter>
+      <Filter>Файлы исходного кода\lib</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\uiglFunc.cpp">
+      <Filter>Файлы исходного кода\lib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -42,6 +48,15 @@
       <Filter>Заголовочные файлы\lib</Filter>
     </ClInclude>
     <ClInclude Include="lib\uiglColor.h">
+      <Filter>Заголовочные файлы\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\math\Vector2.h">
+      <Filter>Заголовочные файлы\lib\math</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\math\Vector3.h">
+      <Filter>Заголовочные файлы\lib\math</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\uiglFunc.h">
       <Filter>Заголовочные файлы\lib</Filter>
     </ClInclude>
   </ItemGroup>

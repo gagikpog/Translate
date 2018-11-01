@@ -4,265 +4,6 @@
 
 namespace UIGL
 {
-#pragma region Function
-float rotate_x(float x, float y, float alpha)
-{
-	if (alpha == 0)
-		return x;
-	float l, a1;
-	l = sqrtf(x*x + y*y);
-	if (x || y)
-		a1 = atan2f(y, x) * 180.0f / PI;
-	else a1 = 0.0f;
-	alpha += a1;
-
-	x = cosf(alpha*PI / 180.0f)*l;
-	return x;
-}
-float rotate_y(float x, float y, float alpha)
-{
-	if (alpha == 0)
-		return y;
-	float l, a1;
-	l = sqrtf(x*x + y*y);
-	if (x || y)
-		a1 = atan2f(y, x) * 180.0f / PI;
-	else a1 = 0.0f;
-	alpha += a1;
-
-	y = sinf(alpha*PI / 180.0f)*l;
-	return y;
-}
-//прямоугольник с закругленными краями контур
-inline void Gl_Print_Roundrect_Contour(float X, float Y, float W, float H, float R, UiglColor Outline_color, float _angle,float line_width)
-{
-	float fx, fy, RX, RY;
-	float R1 = R;
-	
-	if (R < H / 2.0f && R < W / 2.0f)
-	{
-		R1 = R;
-	}
-	else
-	{
-		if (W > H)
-			R1 = H / 2.0f;
-		else R1 = W / 2.0f;
-	}
-
-	float siny(0), cosx(0);
-	float fi;
-	glLineWidth(line_width);
-	glBegin(GL_LINE_LOOP);
-	Outline_color.Init();
-
-	RX = X + W - R1;
-	RY = Y + H - R1;
-	for (float i = 0; i <= PI / 2; i += 0.1f)
-	{
-		fx = RX + cos(i)*R1;
-		fy = RY + sin(i)*R1;
-		glVertex2f(rotate_x(fx - X, fy - Y, _angle) + X, rotate_y(fx - X, fy - Y, _angle) + Y);
-	}
-
-	RX = X + R1;
-	RY = Y + H - R1;
-	for (float i = PI / 2.0f; i <= PI; i += 0.1f)
-	{
-		fx = RX + cos(i)*R1;
-		fy = RY + sin(i)*R1;
-		glVertex2f(rotate_x(fx - X, fy - Y, _angle) + X, rotate_y(fx - X, fy - Y, _angle) + Y);
-	}
-
-	RX = X + R1;
-	RY = Y + R1;
-	for (float i = PI; i <= PI * 3 / 2; i += 0.1f)
-	{
-		fx = RX + cos(i)*R1;
-		fy = RY + sin(i)*R1;
-		glVertex2f(rotate_x(fx - X, fy - Y, _angle) + X, rotate_y(fx - X, fy - Y, _angle) + Y);
-	}
-
-	RX = X + W - R1;
-	RY = Y + R1;
-	for (float i = PI * 3 / 2; i <= PI * 2.0f; i += 0.1f)
-	{
-		fx = RX + cos(i)*R1;
-		fy = RY + sin(i)*R1;
-		glVertex2f(rotate_x(fx - X, fy - Y, _angle) + X, rotate_y(fx - X, fy - Y, _angle) + Y);
-	}
-	glEnd();
-	glLineWidth(1);
-}
-//прямоугольник с закругленными краями
-inline void Gl_Print_Roundrect(float X, float Y, float W, float H, float R, UiglColor Color, UiglColor Outline_color, float _angle, bool glossy,float line_width)
-{
-	float fx, fy, RX, RY;
-	float R1 = R;
-
-	if (R < H / 2.0f && R < W / 2.0f)
-	{
-		R1 = R;
-	}
-	else
-	{
-		if (W > H)
-			R1 = H / 2.0f;
-		else R1 = W / 2.0f;
-	}
-
-	float siny(0), cosx(0);
-	float fi;
-	glBegin(GL_POLYGON);
-	Color.Init();
-
-	RX = X + W - R1;
-	RY = Y + H - R1;
-	for (float i = 0; i <= PI / 2; i += 0.1f)
-	{
-		fx = RX + cos(i)*R1;
-		fy = RY + sin(i)*R1;
-		glVertex2f(rotate_x(fx - X,fy - Y, _angle) + X, rotate_y(fx - X,fy - Y,_angle) + Y);
-	}
-
-	RX = X + R1;
-	RY = Y + H - R1;
-	for (float i = PI / 2.0f; i <= PI; i += 0.1f)
-	{
-		fx = RX + cos(i)*R1;
-		fy = RY + sin(i)*R1;
-		glVertex2f(rotate_x(fx - X, fy - Y, _angle) + X, rotate_y(fx - X, fy - Y, _angle) + Y);
-	}
-
-	RX = X + R1;
-	RY = Y + R1;
-	for (float i = PI; i <= PI * 3 / 2; i += 0.1f)
-	{
-		fx = RX + cos(i)*R1;
-		fy = RY + sin(i)*R1;
-		glVertex2f(rotate_x(fx - X, fy - Y, _angle) + X, rotate_y(fx - X, fy - Y, _angle) + Y);
-	}
-
-	RX = X + W - R1;
-	RY = Y + R1;
-	for (float i = PI * 3 / 2; i <= PI * 2.0f; i += 0.1f)
-	{
-		fx = RX + cos(i)*R1;
-		fy = RY + sin(i)*R1;
-		glVertex2f(rotate_x(fx - X, fy - Y, _angle) + X, rotate_y(fx - X, fy - Y, _angle) + Y);
-	}
-	glEnd();
-	Gl_Print_Roundrect_Contour(X, Y, W, H, R, Outline_color, _angle, line_width);
-}
-//окружность контур
-inline void Gl_Print_Circle_Contour(float X, float Y, float R, UiglColor Outline_color, float line_width)
-{
-	glLineWidth(line_width);
-	glBegin(GL_LINE_LOOP);
-	Outline_color.Init();
-	for (float i = 0; i < 2 * PI; i += 0.1f)
-	{
-		glVertex2f(cos(i)*R + R + X, sin(i)*R + R + Y);
-	}
-	glEnd();
-	glLineWidth(1);
-}
-//окружность
-inline void Gl_Print_Circle(float X, float Y, float R, UiglColor Color, UiglColor Outline_color, float line_width)
-{
-	glBegin(GL_POLYGON);
-	Color.Init();
-	for (float i = 0; i < 2 * PI; i += 0.1f)
-	{
-		glVertex2f(cos(i)*R + R + X, sin(i)*R + R + Y);
-	}
-	glEnd();
-	Gl_Print_Circle_Contour(X, Y, R, Outline_color, line_width);
-}
-//прямоугольник контур
-inline void Gl_Print_Rectangle_Contour(float X, float Y, float W, float H, UiglColor Outline_color, float _angle, float line_width)
-{
-	glLineWidth(line_width);
-	glBegin(GL_LINE_LOOP);
-	Outline_color.Init();
-	glVertex2f(X, Y);
-	glVertex2f(X + rotate_x(W, 0, _angle), Y + rotate_y(W, 0, _angle));
-	glVertex2f(X + rotate_x(W, H, _angle), Y + rotate_y(W, H, _angle));
-	glVertex2f(X + rotate_x(0, H, _angle), Y + rotate_y(0, H, _angle));
-	glEnd();
-	glLineWidth(1);
-}
-//прямоугольник 
-inline void Gl_Print_Rectangle(float X, float Y, float W, float H, UiglColor Color, UiglColor Outline_color, float _angle, bool glossy, float line_width)
-{
-	Color.Init();
-	glBegin(GL_POLYGON);
-	if (glossy)
-		Color.Init(0);
-	glVertex2f(X, Y);
-	if (glossy)
-		Color.Init(0);
-	glVertex2f(X + rotate_x(W, 0, _angle), Y + rotate_y(W, 0, _angle));
-	if (glossy)
-		Color.Init(0);
-	glVertex2f(X + rotate_x(W, H, _angle), Y + rotate_y(W, H, _angle));
-	if (glossy)
-		Color.Init(0);
-	glVertex2f(X + rotate_x(0, H, _angle), Y + rotate_y(0, H, _angle));
-	glEnd();
-	Gl_Print_Rectangle_Contour(X,Y,W,H,Outline_color,_angle,line_width);
-}
-//круг контур
-inline void Gl_Print_Circle_Contour(float X, float Y, float r, float R, UiglColor Color, UiglColor Outline_color)
-{
-	glBegin(GL_TRIANGLE_STRIP);
-	Color.Init();
-	for (float i = 0; i <= 2 * PI; i += 0.001f)
-	{
-		glVertex2f(X + R + cosf(i)*R, Y + R + sinf(i)*R);
-		glVertex2f(X + R + cosf(i)*r, Y + R + sinf(i)*r);
-	}
-	glEnd();
-	Outline_color.Init();
-	glBegin(GL_LINE_LOOP);
-	for (float i = 0; i <= 2 * PI; i += 0.001f)
-		glVertex2f(X + R + cosf(i)*R, Y + R + sinf(i)*R);
-	glEnd();
-
-	glBegin(GL_LINE_LOOP);
-	for (float i = 0; i <= 2 * PI; i += 0.001f)
-		glVertex2f(X + R + cosf(i)*r, Y + R + sinf(i)*r);
-	glEnd();
-}
-//многоугольник контур
-inline void Gl_Print_Polygon_Contour(float X, float Y, float R, int Sides, UiglColor Outline_color , float initial_angle, float line_width)
-{
-	glLineWidth(line_width);
-	Outline_color.Init();
-	glBegin(GL_LINE_LOOP);
-	for (float i = initial_angle * PI / 180; i < PI * 2 + initial_angle * PI / 180; i += PI * 2 / Sides)
-		glVertex2f(X + R + cosf(i)*R, Y + R + sinf(i)*R);
-	glEnd();
-	glLineWidth(1);
-}
-//многоугольник
-inline void Gl_Print_Polygon(float X, float Y, float R, int Sides, UiglColor Color, UiglColor Outline_color , float initial_angle,float line_width)
-{
-	Color.Init();
-	glBegin(GL_POLYGON);
-	for (float i = initial_angle * PI / 180.0f; i < PI * 2.0f + initial_angle * PI / 180.0f; i += PI * 2.0f / Sides)
-		glVertex2f(X + R + cosf(i)*R, Y + R + sinf(i)*R);
-	glEnd();
-	Gl_Print_Polygon_Contour(X, Y, R, Sides, Outline_color, initial_angle, line_width);
-}
-
-char *str_cpy(char *l, const char *r) {
-	while (*r) *l++ = *r++;
-	++*l = '\0';
-	return l;
-}
-
-#pragma endregion
 
 #pragma region Structurs Glui_Position AND Glui_Size
 void Glui_Position::SetPosition(float Xvalue, float Yvalue, float Zvalue)
@@ -614,7 +355,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (Enabled == 0)
 			return;
 		if(clear_background)
-			Gl_Print_Rectangle(Glui_MainForm::WndMinX, Glui_MainForm::WndMinY, Glui_MainForm::WndW, Glui_MainForm::WndH, Background_color, Background_color);
+			drawRectangle(Glui_MainForm::WndMinX, Glui_MainForm::WndMinY, Glui_MainForm::WndW, Glui_MainForm::WndH, Background_color, Background_color);
 		
 		if (!Focus.size() || !focus_only)
 			for (std::list<Glui_IForms*>::reverse_iterator it = Stec.rbegin(); it != Stec.rend(); ++it)
@@ -1005,7 +746,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	{
 		col.Init();
 		if (H > 0)
-			y += H*0.1;
+			y += H*0.1f;
 
 		glRasterPos2d(x, y);
 		glPushAttrib(GL_LIST_BIT);
@@ -1033,123 +774,123 @@ void Glui_Size::SetSize(float width, float height, float depth)
 
 		switch (size_text)
 		{
-		case	1: _l = 1; break;
-		case	2: _l = 0.5; break;
-		case	3: _l = 0.6666; break;
-		case	4: _l = 0.501001; break;
-		case	5: _l = 0.60099; break;
-		case	6: _l = 0.501001; break;
-		case	7: _l = 0.571; break;
-		case	8: _l = 0.5; break;
-		case	9: _l = 0.556; break;
-		case	10: _l = 0.501001; break;
-		case	11: _l = 0.547; break;
-		case	12: _l = 0.584; break;
-		case	13: _l = 0.539; break;
-		case	14: _l = 0.572; break;
-		case	15: _l = 0.533; break;
-		case	16: _l = 0.562; break;
-		case	17: _l = 0.529; break;
-		case	18: _l = 0.556; break;
-		case	19: _l = 0.526; break;
-		case	20: _l = 0.55; break;
-		case	21: _l = 0.571; break;
-		case	22: _l = 0.545; break;
-		case	23: _l = 0.565; break;
-		case	24: _l = 0.542; break;
-		case	25: _l = 0.56; break;
-		case	26: _l = 0.538; break;
-		case	27: _l = 0.555; break;
-		case	28: _l = 0.535; break;
-		case	29: _l = 0.551; break;
-		case	30: _l = 0.533; break;
-		case	31: _l = 0.548; break;
-		case	32: _l = 0.561; break;
-		case	33: _l = 0.545; break;
-		case	34: _l = 0.558; break;
-		case	35: _l = 0.542; break;
-		case	36: _l = 0.556; break;
-		case	37: _l = 0.541; break;
-		case	38: _l = 0.553; break;
-		case	39: _l = 0.539; break;
-		case	40: _l = 0.55; break;
-		case	41: _l = 0.561; break;
-		case	42: _l = 0.548; break;
-		case	43: _l = 0.558; break;
-		case	44: _l = 0.545; break;
-		case	45: _l = 0.556; break;
-		case	46: _l = 0.543; break;
-		case	47: _l = 0.553; break;
-		case	48: _l = 0.541; break;
-		case	49: _l = 0.551; break;
-		case	50: _l = 0.54; break;
-		case	51: _l = 0.548; break;
-		case	52: _l = 0.557; break;
-		case	53: _l = 0.547; break;
-		case	54: _l = 0.555; break;
-		case	55: _l = 0.545; break;
-		case	56: _l = 0.553; break;
-		case	57: _l = 0.543; break;
-		case	58: _l = 0.551; break;
-		case	59: _l = 0.542; break;
-		case	60: _l = 0.549; break;
-		case	61: _l = 0.557; break;
-		case	62: _l = 0.548; break;
-		case	63: _l = 0.555; break;
-		case	64: _l = 0.546; break;
-		case	65: _l = 0.553; break;
-		case	66: _l = 0.545; break;
-		case	67: _l = 0.551; break;
-		case	68: _l = 0.544; break;
-		case	69: _l = 0.55; break;
-		case	70: _l = 0.543; break;
-		case	71: _l = 0.549; break;
-		case	72: _l = 0.555; break;
-		case	73: _l = 0.547; break;
-		case	74: _l = 0.553; break;
-		case	75: _l = 0.546; break;
-		case	76: _l = 0.552; break;
-		case	77: _l = 0.545; break;
-		case	78: _l = 0.551; break;
-		case	79: _l = 0.544; break;
-		case	80: _l = 0.549; break;
-		case	81: _l = 0.554; break;
-		case	82: _l = 0.548; break;
-		case	83: _l = 0.553; break;
-		case	84: _l = 0.547; break;
-		case	85: _l = 0.551; break;
-		case	86: _l = 0.546; break;
-		case	87: _l = 0.551; break;
-		case	88: _l = 0.544; break;
-		case	89: _l = 0.55; break;
-		case	90: _l = 0.544; break;
-		case	91: _l = 0.548; break;
-		case	92: _l = 0.553; break;
-		case	93: _l = 0.547; break;
-		case	94: _l = 0.552; break;
-		case	95: _l = 0.547; break;
-		case	96: _l = 0.552; break;
-		case	97: _l = 0.546; break;
-		case	98: _l = 0.551; break;
-		case	99: _l = 0.545; break;
-		case	100: _l = 0.55; break;
-		case	101: _l = 0.554; break;
-		case	102: _l = 0.549; break;
-		case	103: _l = 0.553; break;
-		case	104: _l = 0.548; break;
-		case	105: _l = 0.552; break;
-		case	106: _l = 0.547; break;
-		case	107: _l = 0.551; break;
-		case	108: _l = 0.546; break;
-		case	109: _l = 0.55; break;
-		case	110: _l = 0.545; break;
-		case	111: _l = 0.549; break;
-		case	112: _l = 0.553; break;
-		case	113: _l = 0.548; break;
-		case	114: _l = 0.552; break;
-		case	115: _l = 0.547; break;
+		case	1: _l = 1.0f; break;
+		case	2: _l = 0.5f; break;
+		case	3: _l = 0.6666f; break;
+		case	4: _l = 0.501001f; break;
+		case	5: _l = 0.60099f; break;
+		case	6: _l = 0.501001f; break;
+		case	7: _l = 0.571f; break;
+		case	8: _l = 0.5f; break;
+		case	9: _l = 0.556f; break;
+		case	10: _l = 0.501001f; break;
+		case	11: _l = 0.547f; break;
+		case	12: _l = 0.584f; break;
+		case	13: _l = 0.539f; break;
+		case	14: _l = 0.572f; break;
+		case	15: _l = 0.533f; break;
+		case	16: _l = 0.562f; break;
+		case	17: _l = 0.529f; break;
+		case	18: _l = 0.556f; break;
+		case	19: _l = 0.526f; break;
+		case	20: _l = 0.55f; break;
+		case	21: _l = 0.571f; break;
+		case	22: _l = 0.545f; break;
+		case	23: _l = 0.565f; break;
+		case	24: _l = 0.542f; break;
+		case	25: _l = 0.56f; break;
+		case	26: _l = 0.538f; break;
+		case	27: _l = 0.555f; break;
+		case	28: _l = 0.535f; break;
+		case	29: _l = 0.551f; break;
+		case	30: _l = 0.533f; break;
+		case	31: _l = 0.548f; break;
+		case	32: _l = 0.561f; break;
+		case	33: _l = 0.545f; break;
+		case	34: _l = 0.558f; break;
+		case	35: _l = 0.542f; break;
+		case	36: _l = 0.556f; break;
+		case	37: _l = 0.541f; break;
+		case	38: _l = 0.553f; break;
+		case	39: _l = 0.539f; break;
+		case	40: _l = 0.55f; break;
+		case	41: _l = 0.561f; break;
+		case	42: _l = 0.548f; break;
+		case	43: _l = 0.558f; break;
+		case	44: _l = 0.545f; break;
+		case	45: _l = 0.556f; break;
+		case	46: _l = 0.543f; break;
+		case	47: _l = 0.553f; break;
+		case	48: _l = 0.541f; break;
+		case	49: _l = 0.551f; break;
+		case	50: _l = 0.54f; break;
+		case	51: _l = 0.548f; break;
+		case	52: _l = 0.557f; break;
+		case	53: _l = 0.547f; break;
+		case	54: _l = 0.555f; break;
+		case	55: _l = 0.545f; break;
+		case	56: _l = 0.553f; break;
+		case	57: _l = 0.543f; break;
+		case	58: _l = 0.551f; break;
+		case	59: _l = 0.542f; break;
+		case	60: _l = 0.549f; break;
+		case	61: _l = 0.557f; break;
+		case	62: _l = 0.548f; break;
+		case	63: _l = 0.555f; break;
+		case	64: _l = 0.546f; break;
+		case	65: _l = 0.553f; break;
+		case	66: _l = 0.545f; break;
+		case	67: _l = 0.551f; break;
+		case	68: _l = 0.544f; break;
+		case	69: _l = 0.55f; break;
+		case	70: _l = 0.543f; break;
+		case	71: _l = 0.549f; break;
+		case	72: _l = 0.555f; break;
+		case	73: _l = 0.547f; break;
+		case	74: _l = 0.553f; break;
+		case	75: _l = 0.546f; break;
+		case	76: _l = 0.552f; break;
+		case	77: _l = 0.545f; break;
+		case	78: _l = 0.551f; break;
+		case	79: _l = 0.544f; break;
+		case	80: _l = 0.549f; break;
+		case	81: _l = 0.554f; break;
+		case	82: _l = 0.548f; break;
+		case	83: _l = 0.553f; break;
+		case	84: _l = 0.547f; break;
+		case	85: _l = 0.551f; break;
+		case	86: _l = 0.546f; break;
+		case	87: _l = 0.551f; break;
+		case	88: _l = 0.544f; break;
+		case	89: _l = 0.55f; break;
+		case	90: _l = 0.544f; break;
+		case	91: _l = 0.548f; break;
+		case	92: _l = 0.553f; break;
+		case	93: _l = 0.547f; break;
+		case	94: _l = 0.552f; break;
+		case	95: _l = 0.547f; break;
+		case	96: _l = 0.552f; break;
+		case	97: _l = 0.546f; break;
+		case	98: _l = 0.551f; break;
+		case	99: _l = 0.545f; break;
+		case	100: _l = 0.55f; break;
+		case	101: _l = 0.554f; break;
+		case	102: _l = 0.549f; break;
+		case	103: _l = 0.553f; break;
+		case	104: _l = 0.548f; break;
+		case	105: _l = 0.552f; break;
+		case	106: _l = 0.547f; break;
+		case	107: _l = 0.551f; break;
+		case	108: _l = 0.546f; break;
+		case	109: _l = 0.55f; break;
+		case	110: _l = 0.545f; break;
+		case	111: _l = 0.549f; break;
+		case	112: _l = 0.553f; break;
+		case	113: _l = 0.548f; break;
+		case	114: _l = 0.552f; break;
+		case	115: _l = 0.547f; break;
 		default:
-			_l = 0.55;
+			_l = 0.55f;
 			break;
 		}
 		return _l*(float)(size_text*_count);
@@ -1204,8 +945,8 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	{
 		if (!Visible) return UiglEvent();
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
-		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
-		ax = axt;
+		ay = (int)rotate_y(ax - X, ay - Y, -Angle) + Y;
+		ax = (int)axt;
 
 		UiglEvent result;
 		bool lu, ld, ru, rd, B1, B2;
@@ -1269,8 +1010,8 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	{
 		if (!Visible) return UiglEvent();
 		float axt = rotate_x(ax - X, ay - Y, -Angle) + X;
-		ay = rotate_y(ax - X, ay - Y, -Angle) + Y;
-		ax = axt;
+		ay = (int)rotate_y(ax - X, ay - Y, -Angle) + Y;
+		ax = (int)axt;
 
 		if (R > H / 2 || R > W / 2)
 		{
@@ -1411,7 +1152,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (in_focus)
 			Outline_color_temp = Outline_color.getNegative();
 
-		Gl_Print_Roundrect(X, Y, W, H, R, Color + _n, Outline_color_temp,Angle);
+		drawRoundrect(X, Y, W, H, R, Color + _n, Outline_color_temp,Angle);
 	}
 #pragma endregion
 
@@ -1576,7 +1317,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (in_focus)
 			Outline_color_temp = Outline_color.getNegative();
 
-		Gl_Print_Circle(X, Y, R, Color + _n, Outline_color_temp);
+		drawCircle(X, Y, R, Color + _n, Outline_color_temp);
 	}
 	void Glui_Circle::Update()
 	{
@@ -1775,7 +1516,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (in_focus)
 			Outline_color_temp = Outline_color.getNegative();
 
-		Gl_Print_Rectangle(X, Y, W, H, Color + _n, Outline_color_temp,Angle);
+		drawRectangle(X, Y, W, H, Color + _n, Outline_color_temp,Angle);
 		float align_h = 0;
 		switch (Text_align)
 		{
@@ -1806,7 +1547,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	{
 		Text_size = _size;
 		//textprint.Setfontsize(Text_size);
-		textprint.SetHeightText(_size);
+		textprint.SetHeightText((int)_size);
 	}
 #pragma endregion
 	
@@ -1998,19 +1739,19 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	{
 		if (!Visible) return;
 
-		Gl_Print_Rectangle(X, Y, W, H, Color, Outline_color, Angle);
+		drawRectangle(X, Y, W, H, Color, Outline_color, Angle);
 		UiglColor _col = Color;
 		if (passiv_hover == 1 && IsHover)
 			_col = _col + 70;
-		Gl_Print_Rectangle(X, Y, H*0.9f, H, _col, Outline_color, Angle);
+		drawRectangle(X, Y, H*0.9f, H, _col, Outline_color, Angle);
 		_col = Color;
 		if (passiv_hover == 2 && IsHover)
 			_col = _col + 70;
-		Gl_Print_Rectangle(rotate_x(W - H*0.9f, 0, Angle) + X, rotate_y(W - H*0.9f, 0, Angle) + Y, H*0.9f, H, _col, Outline_color, Angle);
+		drawRectangle(rotate_x(W - H*0.9f, 0, Angle) + X, rotate_y(W - H*0.9f, 0, Angle) + Y, H*0.9f, H, _col, Outline_color, Angle);
 		_col = Color_slider;
 		if (passiv_hover == 3 && IsHover)
 			_col = _col + 100;
-		Gl_Print_Rectangle(X + rotate_x(Px - Slider_length, H*0.1, Angle), Y + rotate_y(Px - Slider_length, H*0.1, Angle), Slider_length * 2, H*0.8, _col, Outline_color, Angle);
+		drawRectangle(X + rotate_x(Px - Slider_length, H*0.1, Angle), Y + rotate_y(Px - Slider_length, H*0.1, Angle), Slider_length * 2, H*0.8, _col, Outline_color, Angle);
 
 		glBegin(GL_LINES);
 		Outline_color.Init();
@@ -2196,8 +1937,8 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			_col = _col + 72;
 		if (in_focus)
 			_col1 = _col1.getNegative();
-		Gl_Print_Rectangle(X, Y, W, W, _col, _col1);
-		Gl_Print_Rectangle_Contour(X, Y, W, W, Outline_color,0, Line_length);
+		drawRectangle(X, Y, W, W, _col, _col1);
+		drawRectangleContour(X, Y, W, W, Outline_color,0, Line_length);
 		textprint.glText(X + W*1.1, Y + (W*1.3 - Text_size) / 2, Text.c_str());
 
 		if (Checked)
@@ -2430,8 +2171,8 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	//	return;
 
 		if (PositionBar < Max)
-			Gl_Print_Rectangle(X + PositionBar*W / (Max - Min), Y, W - PositionBar*W / (Max - Min) - 0.0f, H - 2.0f, Color, Color);
-		Gl_Print_Rectangle_Contour(X, Y, W, H, Outline_color);
+			drawRectangle(X + PositionBar*W / (Max - Min), Y, W - PositionBar*W / (Max - Min) - 0.0f, H - 2.0f, Color, Color);
+		drawRectangleContour(X, Y, W, H, Outline_color);
 
 		if (Pos <  W*1.2f-5.0f)
 			Pos += 5.0f;
@@ -2934,7 +2675,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (in_focus)
 			Outline_color_temp = Outline_color.getNegative();
 
-		Gl_Print_Rectangle(X, Y, W, H, Color + _n, Outline_color_temp);
+		drawRectangle(X, Y, W, H, Color + _n, Outline_color_temp);
 
 
 		std::string Text1 = Text;
@@ -2984,7 +2725,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		if (in_focus) {
 
 			if (Select_begin != Select_end)
-				Gl_Print_Rectangle(sel_b + X, Y + H*0.1, sel_l, H*0.7, Selection_color, Selection_color);
+				drawRectangle(sel_b + X, Y + H*0.1, sel_l, H*0.7, Selection_color, Selection_color);
 			textprint.glText(X + 2, Y + H*0.2, Text.substr(text_pos_begin, _length), Text_color);
 		}
 		else {
@@ -3343,7 +3084,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			Outline_Color_Temp = Outline_color.getNegative();
 		if (hover_index == 1)
 			Color_temp = Color + 70;
-		Gl_Print_Rectangle(X + W - H*0.8f, Y, H*0.8f, H, Color_temp, Outline_Color_Temp);
+		drawRectangle(X + W - H*0.8f, Y, H*0.8f, H, Color_temp, Outline_Color_Temp);
 		
 		glBegin(GL_POLYGON);
 		Outline_color.Init();
@@ -3356,8 +3097,8 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			for (int i = 0; i < Items.size() && i < MaxDropDownItems; i++)
 			{
 				if (i != Select_temp - Select_min)
-					Gl_Print_Rectangle(X, Y - (i + 1.0f)*H, W, H, Color, Outline_color);
-				else Gl_Print_Rectangle(X, Y - (i + 1.0f)*H, W, H, Color_select, Outline_color);
+					drawRectangle(X, Y - (i + 1.0f)*H, W, H, Color, Outline_color);
+				else drawRectangle(X, Y - (i + 1.0f)*H, W, H, Color_select, Outline_color);
 				tbox.textprint.glText(X + H*0.1f, Y - (i + 1.0f)*H + H*0.25f, Items[i + Select_min].c_str());
 			}
 		}
@@ -3641,11 +3382,11 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	void Glui_Listbox::Init()
 	{
 		int _count = ((H - 10.0f) / Text_size);
-		Gl_Print_Rectangle(X, Y, W, H, Color, Outline_color);
+		drawRectangle(X, Y, W, H, Color, Outline_color);
 
 		if (Selected >= 0 && Selected >= item_up_num && Selected < item_up_num + _count)
 		{
-			Gl_Print_Rectangle(X + 1, Y + H - 5 - (Selected - item_up_num + 1)*Text_size, W - 2, Text_size, Select_color, Outline_color);
+			drawRectangle(X + 1, Y + H - 5 - (Selected - item_up_num + 1)*Text_size, W - 2, Text_size, Select_color, Outline_color);
 		}
 
 		for (int i = 0; i < Items.size() - item_up_num && i<_count; i++)
@@ -4151,10 +3892,10 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			_n_up = 80;
 		if (Mouse_in_button_down)
 			_n_down = 80;
-		Gl_Print_Rectangle(X + W - H*0.8f, Y, H*0.8f, H*0.5f, Color + -20 + _n_down, Outline_color_temp);
-		Gl_Print_Rectangle(X + W - H*0.8f, Y + H*0.5f, H*0.8f, H*0.5f, Color + -20 + _n_up, Outline_color_temp);
-		Gl_Print_Polygon(X + W - H*0.5f, Y + H*0.6, H*0.1f, 3, Outline_color, Outline_color_temp, -30);
-		Gl_Print_Polygon(X + W - H*0.5f, Y + H*0.1, H*0.1f, 3, Outline_color, Outline_color_temp, 30);
+		drawRectangle(X + W - H*0.8f, Y, H*0.8f, H*0.5f, Color + -20 + _n_down, Outline_color_temp);
+		drawRectangle(X + W - H*0.8f, Y + H*0.5f, H*0.8f, H*0.5f, Color + -20 + _n_up, Outline_color_temp);
+		drawPolygon(X + W - H*0.5f, Y + H*0.6, H*0.1f, 3, Outline_color, Outline_color_temp, -30);
+		drawPolygon(X + W - H*0.5f, Y + H*0.1, H*0.1f, 3, Outline_color, Outline_color_temp, 30);
 	}
 #pragma endregion 
 
@@ -4361,7 +4102,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		
 		if (!contour)
-			Gl_Print_Rectangle_Contour(X, Y, W, H, Outline_color);
+			drawRectangleContour(X, Y, W, H, Outline_color);
 
 ///		glLineWidth(1);
 //		glPointSize(1);
@@ -4584,15 +4325,15 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	{
 		if (l != 0) { if (lp)  l += 2; else l -= 2; }
 		if (l > 6) lp = 0;
-		Gl_Print_Rectangle(X - l, Y - l, W + 2 * l, H + 2 * l, UiglColor(0, 255, 0, 100), UiglColor(0, 255, 0, 100));
+		drawRectangle(X - l, Y - l, W + 2 * l, H + 2 * l, UiglColor(0, 255, 0, 100), UiglColor(0, 255, 0, 100));
 
-		Gl_Print_Rectangle(X, Y, W, H, Color, Outline_color);
-		Gl_Print_Rectangle(X, Y + H - Win_fon_H, W, Win_fon_H, Lightsteelblue, Outline_color);
+		drawRectangle(X, Y, W, H, Color, Outline_color);
+		drawRectangle(X, Y + H - Win_fon_H, W, Win_fon_H, Lightsteelblue, Outline_color);
 		textprint.glText(X + 10, Y + H + 10 - Win_fon_H, Title);// Text_en_ru_dialog[Language][0]);
 
 		if (act == 1)
-			Gl_Print_Rectangle(X + W - Win_fon_H, Y + H - Win_fon_H, Win_fon_H, Win_fon_H, Red, Outline_color);
-		else Gl_Print_Rectangle(X + W - Win_fon_H, Y + H - Win_fon_H, Win_fon_H, Win_fon_H, Silver, Outline_color);
+			drawRectangle(X + W - Win_fon_H, Y + H - Win_fon_H, Win_fon_H, Win_fon_H, Red, Outline_color);
+		else drawRectangle(X + W - Win_fon_H, Y + H - Win_fon_H, Win_fon_H, Win_fon_H, Silver, Outline_color);
 
 		glLineWidth(3);
 		glBegin(GL_LINES);
@@ -4605,26 +4346,26 @@ void Glui_Size::SetSize(float width, float height, float depth)
 
 		if (spector)
 		{
-			Gl_Print_Rectangle(X, Y + H - Win_fon_H * 2, 150, Win_fon_H, Silver, Outline_color);
-			Gl_Print_Rectangle(X + 150, Y + H - Win_fon_H * 2, 150, Win_fon_H, Color, Outline_color);
+			drawRectangle(X, Y + H - Win_fon_H * 2, 150, Win_fon_H, Silver, Outline_color);
+			drawRectangle(X + 150, Y + H - Win_fon_H * 2, 150, Win_fon_H, Color, Outline_color);
 			spector_print(X + 15, Y + 15, (H - Win_fon_H * 2), 6 * (H - Win_fon_H * 2) / 7);
 			cursor(X + c_x, Y + c_y);
 			brightness(X + 20 + h * 7, Y + 15, h * 6, cur2_h, Color_spector(c_x + X, c_y + Y));
 		}
 		else
 		{
-			Gl_Print_Rectangle(X, Y + H - Win_fon_H * 2, 150, Win_fon_H, Color, Outline_color);
-			Gl_Print_Rectangle(X + 150, Y + H - Win_fon_H * 2, 150, Win_fon_H, Silver, Outline_color);
+			drawRectangle(X, Y + H - Win_fon_H * 2, 150, Win_fon_H, Color, Outline_color);
+			drawRectangle(X + 150, Y + H - Win_fon_H * 2, 150, Win_fon_H, Silver, Outline_color);
 			D_color(X + 15, Y + 15, (H - Win_fon_H * 2) / 7);
 		}
 
 		textprint.glText(X + 10, Y + H + 10 - Win_fon_H * 2, Text_en_ru_dialog[Language][1]);
 		textprint.glText(X + 170, Y + H + 10 - Win_fon_H * 2, Text_en_ru_dialog[Language][2]);
 
-		Gl_Print_Rectangle(X + W - 85, Y + 15, 70, Win_fon_H, White, Outline_color);
+		drawRectangle(X + W - 85, Y + 15, 70, Win_fon_H, White, Outline_color);
 		textprint.glText(X + W - 60, Y + 24, Text_en_ru_dialog[Language][3]);
 
-		Gl_Print_Rectangle(X + W - 85, Y + 20 + Win_fon_H, 70, Win_fon_H, Color_temp, Outline_color);
+		drawRectangle(X + W - 85, Y + 20 + Win_fon_H, 70, Win_fon_H, Color_temp, Outline_color);
 
 		brightness(X + 50 + h * 7, Y + 15, h * 6, cur3_h, White);
 
@@ -5064,7 +4805,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			for (int j = 0; j < 6; j++)
 			{
 				col.setColor(uiglColornum(i * 6 + j)).Init();
-				Gl_Print_Rectangle(x + _h*i, y + _h*j, _h, _h, col, Outline_color, 0, 0);
+				drawRectangle(x + _h*i, y + _h*j, _h, _h, col, Outline_color, 0, 0);
 			}
 		}
 	}
@@ -5462,8 +5203,8 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			return;
 		if (l != 0) { if (lp)  l += 2; else l -= 2; }
 		if (l > 6) lp = 0;
-		Gl_Print_Rectangle(X-l, Y-l, W+2*l, H+2*l, UiglColor(0,255,0,100), UiglColor(0,255,0,100));
-		Gl_Print_Rectangle(X, Y, W, H, Color, Outline_color);
+		drawRectangle(X-l, Y-l, W+2*l, H+2*l, UiglColor(0,255,0,100), UiglColor(0,255,0,100));
+		drawRectangle(X, Y, W, H, Color, Outline_color);
 		panel.Init();
 		exit.Init();
 		B_ok.Init();

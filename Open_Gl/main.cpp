@@ -595,14 +595,14 @@ public:
 		Color.Init(_n);
 
 		glBegin(GL_POLYGON);
-		glVertex2f(X + W / 2, Y + H / 2);
+		glVertex2f(X + W / 2.0f, Y + H / 2.0f);
 		glVertex2f(X + r, Y);
-		for (float i = -PI / 2.0f; i < PI / 2.0f; i += 0.1)
+		for (float i = -PI / 2.0f; i < PI / 2.0f; i += 0.1f)
 			glVertex2f(X + cosf(i)*r, Y + r * 2 + sinf(i)*r);
 		glVertex2f(X + r, Y + H);
 		glVertex2f(X + W + r, Y + H);
 
-		for (float i = PI / 2.0f; i > -PI / 2.0f; i -= 0.1)
+		for (float i = PI / 2.0f; i > -PI / 2.0f; i -= 0.1f)
 			glVertex2f(X + W + cosf(i)*r, Y + r * 2 + sinf(i)*r);
 		glVertex2f(X + W + r, Y);
 		glVertex2f(X + W, Y);
@@ -614,25 +614,25 @@ public:
 		if (Back != nullptr)
 		{
 			glBegin(GL_POLYGON);
-			for (float i = 0; i < PI * 2.0f; i += 0.1)
+			for (float i = 0.0f; i < PI * 2.0f; i += 0.1f)
 				glVertex2f(X + cosf(i)*r, Y + r * 2 + sinf(i)*r);
 			glEnd();
 		}
 		if (Next != nullptr)
 		{
 			glBegin(GL_POLYGON);
-			for (float i = 0; i < PI * 2.0f; i += 0.1)
+			for (float i = 0.0f; i < PI * 2.0f; i += 0.1f)
 				glVertex2f(X + W + cosf(i)*r, Y + r * 2 + sinf(i)*r);
 			glEnd();
 		}
 		glBegin(GL_LINE_LOOP);
 		glVertex2f(X + r, Y);
-		for (float i = -PI / 2.0f; i < PI / 2.0f; i += 0.1)
+		for (float i = -PI / 2.0f; i < PI / 2.0f; i += 0.1f)
 			glVertex2f(X + cosf(i)*r, Y + r * 2 + sinf(i)*r);
 		glVertex2f(X + r, Y + H);
 		glVertex2f(X + W + r, Y + H);
-		for (float i = PI / 2.0f; i > -PI / 2.0f; i -= 0.1)
-			glVertex2f(X + W + cosf(i)*r, Y + r * 2 + sinf(i)*r);
+		for (float i = PI / 2.0f; i > -PI / 2.0f; i -= 0.1f)
+			glVertex2f(X + W + cosf(i)*r, Y + r * 2.0f + sinf(i)*r);
 		glVertex2f(X + W + r, Y);
 		glVertex2f(X + W, Y);
 		glEnd();
@@ -778,8 +778,8 @@ private:
 		glVertex2f(W, H + h);
 
 		glVertex2f(W + h + r, H + h);
-		for (float i = PI / 2.0f; i > -PI / 2.0f; i -= 0.1)
-			glVertex2f(W + h + cosf(i)*r, H + r * 2 + sinf(i)*r);
+		for (float i = PI / 2.0f; i > -PI / 2.0f; i -= 0.1f)
+			glVertex2f(W + h + cosf(i)*r, H + r * 2.0f + sinf(i)*r);
 		glVertex2f(h + W + r, H);
 		glVertex2f(h + W, H);
 		glVertex2f(W, H);
@@ -792,22 +792,22 @@ private:
 		if (Back != nullptr) 
 		{
 			glBegin(GL_POLYGON);
-			for (float i = 0; i < PI * 2.0f; i += 0.1)
-				glVertex2f(X + cosf(i)*r, Y + r * 2 + sinf(i)*r);
+			for (float i = 0.0f; i < PI * 2.0f; i += 0.1f)
+				glVertex2f(X + cosf(i)*r, Y + r * 2.0f + sinf(i)*r);
 			glEnd();
 		}
 		if (Next != nullptr)
 		{
 			glBegin(GL_POLYGON);
-			for (float i = 0; i < PI * 2.0f; i += 0.1)
-				glVertex2f(W + h + cosf(i)*r, H + r * 2 + sinf(i)*r);
+			for (float i = 0.0f; i < PI * 2.0f; i += 0.1f)
+				glVertex2f(W + h + cosf(i)*r, H + r * 2.0f + sinf(i)*r);
 			glEnd();
 		}
 
 		glBegin(GL_LINE_LOOP);
 
 		glVertex2f(X + r, Y);
-		for (float i = -PI / 2.0f; i < PI / 2.0f; i += 0.1)
+		for (float i = -PI / 2.0f; i < PI / 2.0f; i += 0.1f)
 			glVertex2f(X + cosf(i)*r, Y + r * 2 + sinf(i)*r);
 		glVertex2f(X + r, Y + h);
 		glVertex2f(X + h, Y + h);
@@ -817,7 +817,7 @@ private:
 		glBegin(GL_LINE_LOOP);
 		glVertex2f(W, H + h);
 		glVertex2f(W + h + r, H + h);
-		for (float i = PI / 2.0f; i > -PI / 2.0f; i -= 0.1)
+		for (float i = PI / 2.0f; i > -PI / 2.0f; i -= 0.1f)
 			glVertex2f(W + h + cosf(i)*r, H + r * 2 + sinf(i)*r);
 		glVertex2f(h + W + r, H);
 		glVertex2f(h + W, H);
@@ -826,8 +826,8 @@ private:
 
 		glLineWidth(3);
 		glBegin(GL_LINE_STRIP);
-		glVertex2f(X + h, Y + h / 2);
-		glVertex2f(X + h + h / 2, Y + h / 2);
+		glVertex2f(X + h, Y + h / 2.0f);
+		glVertex2f(X + h + h / 2.0f, Y + h / 2.0f);
 
 		if (W < X + h*2.0f)
 		{
@@ -1103,7 +1103,7 @@ public:
 	UiglEvent SpecialUpFunc(int key, int ax, int ay) { return UiglEvent(); }
 	void Init() 
 	{
-		Gl_Print_Rectangle(X, Y, W, H, Color, Outline_color);
+		drawRectangle(X, Y, W, H, Color, Outline_color);
 	}
 };
 
@@ -1196,7 +1196,7 @@ void Display()
 	glDepthMask(GL_FALSE);
 	glClear(GL_COLOR_BUFFER_BIT);
 	Jora::Display();
-	Gl_Print_Rectangle(Jora::WndMinX, Jora::WndMinY, Jora::WndW, Jora::WndH, Alpha_anim, Alpha_anim);
+	drawRectangle(Jora::WndMinX, Jora::WndMinY, Jora::WndW, Jora::WndH, Alpha_anim, Alpha_anim);
 	glutSwapBuffers();
 }
 
