@@ -22,6 +22,12 @@
     <Filter Include="Файлы исходного кода\lib">
       <UniqueIdentifier>{84512a27-101a-40d4-bb85-2ac2bd5a0314}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Заголовочные файлы\lib\UI">
+      <UniqueIdentifier>{c8fa58b6-403d-46d4-b788-15bff1abf3bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\lib\UI">
+      <UniqueIdentifier>{3561f286-08bd-4fb5-a67a-78abcaca6225}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -36,14 +42,62 @@
     <ClCompile Include="lib\uiglText.cpp">
       <Filter>Файлы исходного кода\lib</Filter>
     </ClCompile>
-    <ClCompile Include="lib\EasyOpenGL.cpp">
-      <Filter>Файлы исходного кода\lib</Filter>
-    </ClCompile>
     <ClCompile Include="lib\uiglPosition.cpp">
       <Filter>Файлы исходного кода\lib</Filter>
     </ClCompile>
     <ClCompile Include="lib\uiglSize.cpp">
       <Filter>Файлы исходного кода\lib</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\uiglForm.cpp">
+      <Filter>Файлы исходного кода\lib</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\uiglMainForm.cpp">
+      <Filter>Файлы исходного кода\lib</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\UI\uiglRoundrect.cpp">
+      <Filter>Файлы исходного кода\lib\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\UI\uiglCircle.cpp">
+      <Filter>Файлы исходного кода\lib\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\UI\uiglRectangle.cpp">
+      <Filter>Файлы исходного кода\lib\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\UI\uiglSkrollbar.cpp">
+      <Filter>Файлы исходного кода\lib\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\UI\uiglCheckbox.cpp">
+      <Filter>Файлы исходного кода\lib\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\UI\uiglTextbox.cpp">
+      <Filter>Файлы исходного кода\lib\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\UI\uiglProgressbar.cpp">
+      <Filter>Файлы исходного кода\lib\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\UI\uiglCombobox.cpp">
+      <Filter>Файлы исходного кода\lib\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\UI\uiglListbox.cpp">
+      <Filter>Файлы исходного кода\lib\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\UI\uiglNumericupdown.cpp">
+      <Filter>Файлы исходного кода\lib\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\Config.cpp">
+      <Filter>Файлы исходного кода\lib\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\UI\uiglPicture.cpp">
+      <Filter>Файлы исходного кода\lib\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\UI\uiglColDialog.cpp">
+      <Filter>Файлы исходного кода\lib\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\UI\uiglPhysics.cpp">
+      <Filter>Файлы исходного кода\lib\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\UI\uiglMessageBox.cpp">
+      <Filter>Файлы исходного кода\lib\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -71,9 +125,6 @@
     <ClInclude Include="lib\freeuigl.h">
       <Filter>Заголовочные файлы\lib</Filter>
     </ClInclude>
-    <ClInclude Include="lib\EasyOpenGL.h">
-      <Filter>Заголовочные файлы\lib</Filter>
-    </ClInclude>
     <ClInclude Include="lib\uiglPosition.h">
       <Filter>Заголовочные файлы\lib</Filter>
     </ClInclude>
@@ -82,6 +133,60 @@
     </ClInclude>
     <ClInclude Include="lib\uiglobj.h">
       <Filter>Заголовочные файлы\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\uiglForm.h">
+      <Filter>Заголовочные файлы\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\uiglMainForm.h">
+      <Filter>Заголовочные файлы\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\UI\uiglRoundrect.h">
+      <Filter>Заголовочные файлы\lib\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\UI\uiglCircle.h">
+      <Filter>Заголовочные файлы\lib\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\uiglIForms.h">
+      <Filter>Заголовочные файлы\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\UI\uiglRectangle.h">
+      <Filter>Заголовочные файлы\lib\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\UI\uiglSkrollbar.h">
+      <Filter>Заголовочные файлы\lib\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\UI\uiglCheckbox.h">
+      <Filter>Заголовочные файлы\lib\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\UI\uiglTextbox.h">
+      <Filter>Заголовочные файлы\lib\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\UI\uiglProgressbar.h">
+      <Filter>Заголовочные файлы\lib\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\UI\uiglCombobox.h">
+      <Filter>Заголовочные файлы\lib\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\UI\uiglListbox.h">
+      <Filter>Заголовочные файлы\lib\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\UI\uiglNumericupdown.h">
+      <Filter>Заголовочные файлы\lib\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\Config.h">
+      <Filter>Заголовочные файлы\lib\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\UI\uiglPicture.h">
+      <Filter>Заголовочные файлы\lib\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\UI\uiglPhysics.h">
+      <Filter>Заголовочные файлы\lib\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\UI\uiglMessageBox.h">
+      <Filter>Заголовочные файлы\lib\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\UI\uiglColDialog.h">
+      <Filter>Заголовочные файлы\lib\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

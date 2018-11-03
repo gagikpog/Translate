@@ -151,26 +151,59 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="lib\EasyOpenGL.cpp" />
+    <ClCompile Include="lib\Config.cpp" />
     <ClCompile Include="lib\uiglColor.cpp" />
+    <ClCompile Include="lib\uiglForm.cpp" />
     <ClCompile Include="lib\uiglFunc.cpp" />
+    <ClCompile Include="lib\uiglMainForm.cpp" />
     <ClCompile Include="lib\uiglPosition.cpp" />
     <ClCompile Include="lib\uiglSize.cpp" />
     <ClCompile Include="lib\uiglText.cpp" />
+    <ClCompile Include="lib\UI\uiglCheckbox.cpp" />
+    <ClCompile Include="lib\UI\uiglCircle.cpp" />
+    <ClCompile Include="lib\UI\uiglColDialog.cpp" />
+    <ClCompile Include="lib\UI\uiglCombobox.cpp" />
+    <ClCompile Include="lib\UI\uiglListbox.cpp" />
+    <ClCompile Include="lib\UI\uiglMessageBox.cpp" />
+    <ClCompile Include="lib\UI\uiglNumericupdown.cpp" />
+    <ClCompile Include="lib\UI\uiglPhysics.cpp" />
+    <ClCompile Include="lib\UI\uiglPicture.cpp" />
+    <ClCompile Include="lib\UI\uiglProgressbar.cpp" />
+    <ClCompile Include="lib\UI\uiglRectangle.cpp" />
+    <ClCompile Include="lib\UI\uiglRoundrect.cpp" />
+    <ClCompile Include="lib\UI\uiglSkrollbar.cpp" />
+    <ClCompile Include="lib\UI\uiglTextbox.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="lib\EasyOpenGL.h" />
+    <ClInclude Include="lib\Config.h" />
     <ClInclude Include="lib\freeuigl.h" />
     <ClInclude Include="lib\math\Vector2.h" />
     <ClInclude Include="lib\math\Vector3.h" />
     <ClInclude Include="lib\uigl.h" />
     <ClInclude Include="lib\uiglColor.h" />
+    <ClInclude Include="lib\uiglForm.h" />
     <ClInclude Include="lib\uiglFunc.h" />
+    <ClInclude Include="lib\uiglIForms.h" />
+    <ClInclude Include="lib\uiglMainForm.h" />
     <ClInclude Include="lib\uiglobj.h" />
     <ClInclude Include="lib\uiglPosition.h" />
     <ClInclude Include="lib\uiglSize.h" />
     <ClInclude Include="lib\uiglText.h" />
+    <ClInclude Include="lib\UI\uiglCheckbox.h" />
+    <ClInclude Include="lib\UI\uiglCircle.h" />
+    <ClInclude Include="lib\UI\uiglColDialog.h" />
+    <ClInclude Include="lib\UI\uiglCombobox.h" />
+    <ClInclude Include="lib\UI\uiglListbox.h" />
+    <ClInclude Include="lib\UI\uiglMessageBox.h" />
+    <ClInclude Include="lib\UI\uiglNumericupdown.h" />
+    <ClInclude Include="lib\UI\uiglPhysics.h" />
+    <ClInclude Include="lib\UI\uiglPicture.h" />
+    <ClInclude Include="lib\UI\uiglProgressbar.h" />
+    <ClInclude Include="lib\UI\uiglRectangle.h" />
+    <ClInclude Include="lib\UI\uiglRoundrect.h" />
+    <ClInclude Include="lib\UI\uiglSkrollbar.h" />
+    <ClInclude Include="lib\UI\uiglTextbox.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

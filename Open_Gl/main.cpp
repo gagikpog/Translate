@@ -218,7 +218,7 @@ struct Sentence
 	bool use = 0;
 };
 
-class textbox :public Glui_Textbox
+class textbox :public UiglTextbox
 {
 public:
 	textbox() {}
@@ -264,8 +264,8 @@ public:
 			break;
 		}
 
-		Glui_Textbox::Init();
-		Glui_Textbox::textprint.glText(X + align_w, Y + align_h, Title, Text_color);
+		UiglTextbox::Init();
+		UiglTextbox::textprint.glText(X + align_w, Y + align_h, Title, Text_color);
 	}
 
 	string Title;
@@ -273,7 +273,7 @@ public:
 private:
 };
 
-class numbox :public Glui_Numericupdown
+class numbox :public UiglNumericupdown
 {
 public:
 	numbox() {}
@@ -317,8 +317,8 @@ public:
 			align_w = W + 10;
 			break;
 		}
-		Glui_Numericupdown::Init();
-		Glui_Textbox::textprint.glText(X + align_w, Y + align_h, Title, Text_color);
+		UiglNumericupdown::Init();
+		UiglTextbox::textprint.glText(X + align_w, Y + align_h, Title, Text_color);
 	}
 
 	string Title;
@@ -326,7 +326,7 @@ public:
 private:
 };
 
-class listbox :public Glui_Listbox
+class listbox :public UiglListbox
 {
 public:
 	listbox() {}
@@ -334,7 +334,7 @@ public:
 	void Init()
 	{
 		int _count = ((H - 10.0f) / Text_size);
-		Glui_Listbox::Init();
+		UiglListbox::Init();
 		for (int i = 0; i < Items1.size() - item_up_num && i < _count; i++)
 		{
 			textprint.glText(X + W / 2 + 5, Y + H - 2 - (i + 1)*Text_size, Items1[i + item_up_num], Text_color);
@@ -351,7 +351,7 @@ private:
 
 };
 
-class WordObj :public Glui_IForms
+class WordObj :public UiglIForms
 {
 public:
 	WordObj()
@@ -504,17 +504,17 @@ public:
 			X = ax - mx;
 			Y = ay - my;
 
-			if (X + _w > Glui_MainForm::WndMinX + Glui_MainForm::WndW)
-				X = Glui_MainForm::WndMinX + Glui_MainForm::WndW - _w;
+			if (X + _w > UiglMainForm::WndMinX + UiglMainForm::WndW)
+				X = UiglMainForm::WndMinX + UiglMainForm::WndW - _w;
 
-			if (X < Glui_MainForm::WndMinX)
-				X = Glui_MainForm::WndMinX;
+			if (X < UiglMainForm::WndMinX)
+				X = UiglMainForm::WndMinX;
 
-			if (Y < Glui_MainForm::WndMinY)
-				Y = Glui_MainForm::WndMinY;
+			if (Y < UiglMainForm::WndMinY)
+				Y = UiglMainForm::WndMinY;
 
-			if (Y > Glui_MainForm::WndMinY + Glui_MainForm::WndH*0.8f-H)
-				Y = Glui_MainForm::WndMinY + Glui_MainForm::WndH*0.8f-H;
+			if (Y > UiglMainForm::WndMinY + UiglMainForm::WndH*0.8f-H)
+				Y = UiglMainForm::WndMinY + UiglMainForm::WndH*0.8f-H;
 
 			Position.setPosition(X, Y);
 			UpdateStec(moved);
@@ -715,7 +715,7 @@ public:
 		H = operator2.H;
 		Angle = operator2.Angle;
 //		Points = operator2.Points;
-//		Glui_IForms
+//		UiglIForms
 		Name = operator2.Name;
 		Color = operator2.Color;
 		Outline_color = operator2.Outline_color;
@@ -746,7 +746,7 @@ public:
 	WordObj* Back = NULL;
 	bool LineTranslation = 0;
 private:
-	Glui_Rectangle contextmenu;
+	UiglRectangle contextmenu;
 	void Init2()
 	{
 		if (!Visible) return;
@@ -1011,17 +1011,17 @@ private:
 				X = ax - mx;
 				Y = ay - my;
 
-				if (X + _w > Glui_MainForm::WndMinX + Glui_MainForm::WndW)
-					X = Glui_MainForm::WndMinX + Glui_MainForm::WndW - _w;
+				if (X + _w > UiglMainForm::WndMinX + UiglMainForm::WndW)
+					X = UiglMainForm::WndMinX + UiglMainForm::WndW - _w;
 
-				if (X < Glui_MainForm::WndMinX)
-					X = Glui_MainForm::WndMinX;
+				if (X < UiglMainForm::WndMinX)
+					X = UiglMainForm::WndMinX;
 
-				if (Y < Glui_MainForm::WndMinY)
-					Y = Glui_MainForm::WndMinY;
+				if (Y < UiglMainForm::WndMinY)
+					Y = UiglMainForm::WndMinY;
 
-				if (Y > Glui_MainForm::WndMinY + Glui_MainForm::WndH*0.8f - h)
-					Y = Glui_MainForm::WndMinY + Glui_MainForm::WndH*0.8f - h;
+				if (Y > UiglMainForm::WndMinY + UiglMainForm::WndH*0.8f - h)
+					Y = UiglMainForm::WndMinY + UiglMainForm::WndH*0.8f - h;
 
 				Position.setPosition(X, Y);
 				UpdateStec(moved);
@@ -1043,17 +1043,17 @@ private:
 				W = ax - mx;
 				H = ay - my;
 
-				if (W + _w > Glui_MainForm::WndMinX + Glui_MainForm::WndW)
-					W = Glui_MainForm::WndMinX + Glui_MainForm::WndW - _w;
+				if (W + _w > UiglMainForm::WndMinX + UiglMainForm::WndW)
+					W = UiglMainForm::WndMinX + UiglMainForm::WndW - _w;
 
-				if (W < Glui_MainForm::WndMinX + h / 2)
-					W = Glui_MainForm::WndMinX + h / 2;
+				if (W < UiglMainForm::WndMinX + h / 2)
+					W = UiglMainForm::WndMinX + h / 2;
 
-				if (H < Glui_MainForm::WndMinY)
-					H = Glui_MainForm::WndMinY;
+				if (H < UiglMainForm::WndMinY)
+					H = UiglMainForm::WndMinY;
 
-				if (H > Glui_MainForm::WndMinY + Glui_MainForm::WndH*0.8f - h)
-					H = Glui_MainForm::WndMinY + Glui_MainForm::WndH*0.8f - h;
+				if (H > UiglMainForm::WndMinY + UiglMainForm::WndH*0.8f - h)
+					H = UiglMainForm::WndMinY + UiglMainForm::WndH*0.8f - h;
 
 				Size.setSize(W, H);
 				UpdateStec(0);
@@ -1082,7 +1082,7 @@ protected:
 private:
 };
 
-class Panel:public Glui_IForms
+class Panel:public UiglIForms
 {
 public:
 	Panel() 
@@ -1176,18 +1176,18 @@ vector<string_int> My_data;
 vector<string_int*> My_sub_data;
 vector<WordObj> words(30);
 
-Glui_Forms FormTraining,FormSetting,FormMain,FormTranslate,Form5;
+UiglForms FormTraining,FormSetting,FormMain,FormTranslate,Form5;
 listbox list_l;
-Glui_Listbox list1,list2;
+UiglListbox list1,list2;
 textbox inp2,out2;
-Glui_Config conf("settings.conf");
+UiglConfig conf("settings.conf");
 numbox inp;
 Glui_Picture swap1;
 Panel panel1;
 
-Glui_Rectangle butt,butt1,butt2,butt3,favor,cutword,AddLineTranslation, TestTranslation;
-Glui_Rectangle sett_col[7];
-Glui_Rectangle Head_menu[4];
+UiglRectangle butt,butt1,butt2,butt3,favor,cutword,AddLineTranslation, TestTranslation;
+UiglRectangle sett_col[7];
+UiglRectangle Head_menu[4];
 
 void Display()
 {

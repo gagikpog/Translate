@@ -50,7 +50,7 @@ namespace UIGL
 		static unsigned int ColorToUInt(UiglColor color);
 		static UiglColor UIntToColor(unsigned int intValue);
 		
-		friend class Glui_ColDiàlog;
+		friend class UiglColDiàlog;
 	private:
 	protected:
 		UiglColor bildColor(uiglColornum _Color)const;

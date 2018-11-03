@@ -1,7 +1,7 @@
 #include "uiglText.h"
-#include "EasyOpenGL.h"
+//#include "EasyOpenGL.h"
+#include "uiglMainForm.h"
 
-#pragma region UiglText
 
 namespace UIGL {
 
@@ -198,7 +198,7 @@ namespace UIGL {
 	}
 	void UiglText::BildFont()
 	{
-		hdc = &Glui_MainForm::hDC;
+		hdc = &UiglMainForm::hDC;
 		HFONT   oldfont;
 		if (!hdc)
 			return;
@@ -219,6 +219,4 @@ namespace UIGL {
 	{
 		glDeleteLists(arial, 255);
 	}
-
 }
-#pragma endregion
