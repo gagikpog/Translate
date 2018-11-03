@@ -1,8 +1,11 @@
-#include <cmath>
-
 #ifndef VECTOR3_H
-#define VECTOR3_H
+#define VECTOR3_H 
+
+#include <cmath>
+#include <ostream>
+
 namespace UIGL {
+
 	template <typename T,
 		typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 		struct Vector3
@@ -109,5 +112,7 @@ namespace UIGL {
 		T Y = 0;
 		T Z = 0;
 	};
+
+	typedef UIGL::Vector3<float> Vector3f;
 }
 #endif

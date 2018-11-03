@@ -15,48 +15,22 @@
 #include <iterator>
 
 ///////////////////
-#include "lib/uiglColor.h"
-#include "lib/uigl.h"
-#include "lib/math/Vector2.h"
-#include "lib/math/Vector3.h"
-#include "lib/uiglFunc.h"
-
-typedef UIGL::Vector2<float> Vector2f;
-typedef UIGL::Vector3<float> Vector3f;
+#include "uiglColor.h"
+#include "uigl.h"
+#include "math/Vector2.h"
+#include "math/Vector3.h"
+#include "uiglFunc.h"
+#include "uiglText.h"
+#include "uiglPosition.h"
+#include "uiglSize.h"
+#include "uiglObj.h"
 
 namespace UIGL {
 
-	class Glui_Obj;
 	class Glui_Forms;
-	class Glui_Text;
 	class Glui_MessageBox;
-	class UiglColor;
 	class Glui_Combobox;
-
-	struct Glui_Position
-	{
-		void SetPosition(float Xvalue, float Yvalue, float Zvalue = 0);
-		void SetPosition(const Vector3f& value);
-		void SetPosition(const Vector2f& value);
-		Vector2f GetPosition2f() const { return Vector2f(X, Y); }
-		Vector3f GetPosition3f() const { return Vector3f(X, Y, Z); }
-		float GetPositionX() const { return X; }
-		float GetPositionY() const { return Y; }
-		float GetPositionZ() const { return Z; }
-		Glui_Obj* UpdatePtr = NULL;
-	private:
-		float X = 0,Y = 0,Z = 0;
-	};
-	struct Glui_Size
-	{
-		void SetSize(float width, float height, float depth = 0);
-		float GetSizeW() const { return W; }
-		float GetSizeH() const { return H; }
-		float GetSizeD() const { return D; }
-		Glui_Obj* UpdatePtr = NULL;
-	private:
-		float W = 10, H = 10, D = 0;
-	};
+	
 	struct Layer
 	{
 		int count = 0;
@@ -64,35 +38,9 @@ namespace UIGL {
 		float line_length = 1;
 	};
 
-	class Glui_Obj
-	{
-	public:
-		Glui_Obj() {}
-		~Glui_Obj() {}
-		Glui_Position Position;
-		Glui_Size Size;
-		float SetAngle(float angle) { return Angle = angle; }
-		float GetAngle() { return Angle; }
-		virtual void Update()
-		{
-			X = Position.GetPositionX();
-			Y = Position.GetPositionY();
-			H = Size.GetSizeH();
-			W = Size.GetSizeW();
-		}
-	protected:
-		std::vector<Vector2f> Points;
-		//позиция X
-		float X = 0.0f;
-		//позиция Y
-		float Y = 0.0f;
-		float H = 10.0f;
-		float W = 10.0f;
-		//угол
-		float Angle = 0.0f;
-	};
 	
-	class Glui_IForms :virtual public Glui_Obj
+	
+	class Glui_IForms :virtual public UiglObj
 	{
 	public:
 		Glui_IForms() {}
@@ -220,41 +168,10 @@ namespace UIGL {
 		static void SpecialUpFunc(int key, int ax, int ay);
 		static void PositionFunc(int ax, int ay);
 		static void ReshapeFunc(int aw, int ah);
-		static Glui_Text _t;
+		//static UiglText _text_;
 	};
 
 	typedef Glui_MainForm Jora;
-
-	class Glui_Text
-	{
-	public:
-		Glui_Text();
-		~Glui_Text();
-		//установка размера шрифта
-		void Setfontsize(int _size);
-		//установка размера шрифта
-		void SetHeightText(int _h);
-		//установка размера шрифта
-		void SetWidthText(int _w);
-		//печатает текст по заданным координатам
-		void glText(float x, float y, const std::string txt, UiglColor col = Black);
-		//
-		float Get_text_length(std::string txt);
-		//устанавливает дескриптор контекста устройства
-		void SetHDC(HDC* _hdc);
-		void SetFont(std::string font_name);
-	private:
-		//создание шрифта 
-		void bildfont();
-		//удаление шрифта
-		void KillFont();
-		float W, H;
-		HFONT font;
-		int size_text;
-		HDC* hdc;
-		GLuint arial;
-		std::string Font = "Arial";
-	};
 
 	//прямоугольник с закругленными краями
 	class Glui_Roundrect :public Glui_IForms
@@ -297,7 +214,7 @@ namespace UIGL {
 		float R;
 	protected:
 	private:
-		Glui_Size Size;
+		uiglSize Size;
 	};
 	//прямоугольник 
 	class Glui_Rectangle :public Glui_IForms
@@ -323,7 +240,7 @@ namespace UIGL {
 	private:
 		float Text_size;
 	protected:
-		Glui_Text textprint;
+		UiglText textprint;
 	};
 	typedef Glui_Rectangle Glui_Button;
 	//полоса прокрутки(ползунок)
@@ -390,7 +307,7 @@ namespace UIGL {
 		bool Checked;
 	private:
 		void SetHDC(HDC* _hdc);
-		Glui_Text textprint;
+		UiglText textprint;
 		float Text_size;
 	};
 	//Прогресс бар
@@ -462,7 +379,7 @@ namespace UIGL {
 		int Select_begin = 0, Select_end = 0;
 		int Cursor_pos = 0;
 		float Text_size;
-		Glui_Text textprint;		
+		UiglText textprint;		
 	};
 	//Комбинированный список
 	class Glui_Combobox :public Glui_IForms
@@ -523,7 +440,7 @@ namespace UIGL {
 	protected:
 		Glui_Skrollbar Skrol;
 		float Text_size = 12;
-		Glui_Text textprint;
+		UiglText textprint;
 		int item_up_num = 0;
 	};
 	//
@@ -617,7 +534,7 @@ namespace UIGL {
 		bool lp = 0;
 		int l = 0;
 		Glui_Numericupdown num[4];
-		Glui_Text textprint;
+		UiglText textprint;
 		bool Made_color, spector, is_cur_move, is_cur2_move, is_cur3_move;
 		int act = 0;
 		UiglColor* Color_result = NULL;
@@ -635,7 +552,7 @@ namespace UIGL {
 														"Change the palette",	"Recen colors",		"Palette",	"OK" };
 	}; 
 
-	class Glui_Physics :virtual public Glui_Obj
+	class Glui_Physics :virtual public UiglObj
 	{
 	public:
 		Glui_Physics() {}
@@ -711,7 +628,7 @@ namespace UIGL {
 		Glui_Rectangle B_cancel;
 		float Win_fon_H = 30.0f;
 		std::string Text;
-		Glui_Text textprint;
+		UiglText textprint;
 		const std::string Text_en_ru[2][3] = {	"   NO", "   OK",	"Concel",
 												"  Нет", "   Да","Отмена" };
 	};

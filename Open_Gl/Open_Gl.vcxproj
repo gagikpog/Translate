@@ -151,18 +151,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="EasyOpenGL.cpp" />
+    <ClCompile Include="lib\EasyOpenGL.cpp" />
     <ClCompile Include="lib\uiglColor.cpp" />
     <ClCompile Include="lib\uiglFunc.cpp" />
+    <ClCompile Include="lib\uiglPosition.cpp" />
+    <ClCompile Include="lib\uiglSize.cpp" />
+    <ClCompile Include="lib\uiglText.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EasyOpenGL.h" />
+    <ClInclude Include="lib\EasyOpenGL.h" />
+    <ClInclude Include="lib\freeuigl.h" />
     <ClInclude Include="lib\math\Vector2.h" />
     <ClInclude Include="lib\math\Vector3.h" />
     <ClInclude Include="lib\uigl.h" />
     <ClInclude Include="lib\uiglColor.h" />
     <ClInclude Include="lib\uiglFunc.h" />
+    <ClInclude Include="lib\uiglobj.h" />
+    <ClInclude Include="lib\uiglPosition.h" />
+    <ClInclude Include="lib\uiglSize.h" />
+    <ClInclude Include="lib\uiglText.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

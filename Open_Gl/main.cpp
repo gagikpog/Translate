@@ -1,4 +1,4 @@
-#include "EasyOpenGL.h"
+#include "lib/freeuigl.h"
 #include "resource.h"
 
 using namespace std;
@@ -341,8 +341,8 @@ public:
 		}
 		Outline_color.Init();
 		glBegin(GL_LINES);
-		glVertex2f(Position.GetPositionX() + Size.GetSizeW() / 2.0f, Position.GetPositionY());
-		glVertex2f(Position.GetPositionX() + Size.GetSizeW() / 2.0f, Position.GetPositionY() + Size.GetSizeH());
+		glVertex2f(Position.getPositionX() + Size.getSizeW() / 2.0f, Position.getPositionY());
+		glVertex2f(Position.getPositionX() + Size.getSizeW() / 2.0f, Position.getPositionY() + Size.getSizeH());
 		glEnd();
 
 	}
@@ -357,14 +357,14 @@ public:
 	WordObj()
 	{
 		Visible = false;
-		textprint.SetFont("Consolas");
+		textprint.setFont("Consolas");
 		Position.UpdatePtr = this;
 		Size.UpdatePtr = this;
 		Set_text_size(Text_size);
 		is_move = true;
 		moved = false;
 		Color = uiglColornum::Blue;
-		contextmenu.Size.SetSize(75, 20);
+		contextmenu.Size.setSize(75, 20);
 		contextmenu.Set_text_size(15);
 		contextmenu.Visible = false;
 	}
@@ -493,7 +493,7 @@ public:
 			{
 				if (!_next->LineTranslation)
 				{
-					_w = _next->Position.GetPositionX() + _next->Size.GetSizeW() - X+H / 4;
+					_w = _next->Position.getPositionX() + _next->Size.getSizeW() - X+H / 4;
 				}
 				else {
 					_w += Text_size*1.5f;
@@ -516,7 +516,7 @@ public:
 			if (Y > Glui_MainForm::WndMinY + Glui_MainForm::WndH*0.8f-H)
 				Y = Glui_MainForm::WndMinY + Glui_MainForm::WndH*0.8f-H;
 
-			Position.SetPosition(X, Y);
+			Position.setPosition(X, Y);
 			UpdateStec(moved);
 			double_ckick = 0;
 		}
@@ -643,13 +643,13 @@ public:
 	void SetHDC(HDC* _hdc)
 	{
 		hdc = _hdc;
-		textprint.SetHDC(_hdc);
+		textprint.setHDC(_hdc);
 		contextmenu.SetHDC(_hdc);
 	}
 	void Set_text_size(float _size)
 	{
 		Text_size = _size;
-		textprint.SetHeightText(_size);
+		textprint.setHeightText(_size);
 	}
 	void Update()
 	{
@@ -661,17 +661,17 @@ public:
 			Position.UpdatePtr = this;
 			Size.UpdatePtr = this;
 		}
-		float _length = textprint.Get_text_length(Text);
-		_length += Size.GetSizeH();
+		float _length = textprint.getTextLength(Text);
+		_length += Size.getSizeH();
 			
-		if (Size.GetSizeH() == Text_size+6 && _length == Size.GetSizeW())
+		if (Size.getSizeH() == Text_size+6 && _length == Size.getSizeW())
 		{
-			X = Position.GetPositionX();
-			Y = Position.GetPositionY();
-			H = Size.GetSizeH();
-			W = Size.GetSizeW();
+			X = Position.getPositionX();
+			Y = Position.getPositionY();
+			H = Size.getSizeH();
+			W = Size.getSizeW();
 		}
-		else Size.SetSize(_length, Text_size+6);
+		else Size.setSize(_length, Text_size+6);
 	}
 	void UpdateStec(bool m = 0)
 	{
@@ -686,13 +686,13 @@ public:
 //			if (_next->Back == NULL){cout << "error\n";	Next = NULL;break;}
 			if (!_next->Back->LineTranslation)
 			{
-				t = _next->Back->Position.GetPosition2f();
-				t.X += _next->Back->Size.GetSizeW();
-				_next->Position.SetPosition(t);
+				t = _next->Back->Position.getPosition2f();
+				t.X += _next->Back->Size.getSizeW();
+				_next->Position.setPosition(t);
 			}else {
-				t = Vector2f( _next->Back->Size.GetSizeW(), _next->Back->Size.GetSizeH());
+				t = Vector2f( _next->Back->Size.getSizeW(), _next->Back->Size.getSizeH());
 				t.X += Text_size + 6;
-				_next->Position.SetPosition(t);
+				_next->Position.setPosition(t);
 			}
 			if (_next->LineTranslation == 1)break;
 		}
@@ -700,13 +700,13 @@ public:
 	void Jamp()
 	{
 		if (Y < (Jora::WndMinY + Jora::WndH)*0.5f - Text_size-6)
-			Position.SetPosition(X, Y + Text_size + 10);
-		else  Position.SetPosition(X, Y - Text_size - 10);
+			Position.setPosition(X, Y + Text_size + 10);
+		else  Position.setPosition(X, Y - Text_size - 10);
 		UpdateStec(1);
 	}
 	WordObj operator=(WordObj operator2)
 	{
-//		Glui_Obj
+//		UiglObj
 		Position = operator2.Position;
 		Size = operator2.Size;
 		X = operator2.X;
@@ -916,7 +916,7 @@ private:
 				float ax1 = ax;
 				if (ax1 + 75 > Jora::WndW)
 					ax1 = Jora::WndW - 80;
-				contextmenu.Position.SetPosition(ax1, ay);
+				contextmenu.Position.setPosition(ax1, ay);
 				if (Jora::Language != uiglLanguageEN)contextmenu.Text = "Delete";
 				else contextmenu.Text = "Удалить";
 				contextmenu.Color = Color;
@@ -978,7 +978,7 @@ private:
 					float ax1 = ax;
 					if (ax1 + 75 > Jora::WndW)
 						ax1 = Jora::WndW - 80;
-					contextmenu.Position.SetPosition(ax1, ay);
+					contextmenu.Position.setPosition(ax1, ay);
 					if (Jora::Language != uiglLanguageEN)contextmenu.Text = "Delete";
 					else contextmenu.Text = "Удалить";
 					contextmenu.Color = Color;
@@ -1023,7 +1023,7 @@ private:
 				if (Y > Glui_MainForm::WndMinY + Glui_MainForm::WndH*0.8f - h)
 					Y = Glui_MainForm::WndMinY + Glui_MainForm::WndH*0.8f - h;
 
-				Position.SetPosition(X, Y);
+				Position.setPosition(X, Y);
 				UpdateStec(moved);
 			}
 			else {
@@ -1033,7 +1033,7 @@ private:
 				{
 					if (!_next->LineTranslation)
 					{
-						_w = _next->Position.GetPositionX() + _next->Size.GetSizeW() - W+h/4.0f;
+						_w = _next->Position.getPositionX() + _next->Size.getSizeW() - W+h/4.0f;
 					}
 					else {
 						_w += Text_size*1.5f;
@@ -1055,7 +1055,7 @@ private:
 				if (H > Glui_MainForm::WndMinY + Glui_MainForm::WndH*0.8f - h)
 					H = Glui_MainForm::WndMinY + Glui_MainForm::WndH*0.8f - h;
 
-				Size.SetSize(W, H);
+				Size.setSize(W, H);
 				UpdateStec(0);
 			}
 			double_ckick = 0;
@@ -1069,16 +1069,16 @@ private:
 			Position.UpdatePtr = this;
 			Size.UpdatePtr = this;
 		}
-		X = Position.GetPositionX();
-		Y = Position.GetPositionY();
-		H = Size.GetSizeH();
-		W = Size.GetSizeW();
+		X = Position.getPositionX();
+		Y = Position.getPositionY();
+		H = Size.getSizeH();
+		W = Size.getSizeW();
 	}
 	int _moved = 0;
 	bool hover2 = 0;
 protected:
 	float Text_size = 30;
-	Glui_Text textprint;
+	UiglText textprint;
 private:
 };
 
@@ -1491,8 +1491,8 @@ void Wnd_proc_Form5(uiglEvents ev, string name)
 			{
 				words[i].Visible = 1;
 				words[i].LineTranslation = 1;
-				words[i].Position.SetPosition(Jora::WndW *0.5f, Jora::WndH*0.4f);
-				words[i].Size.SetSize(Jora::WndW *0.5f, Jora::WndH*0.2f);
+				words[i].Position.setPosition(Jora::WndW *0.5f, Jora::WndH*0.4f);
+				words[i].Size.setSize(Jora::WndW *0.5f, Jora::WndH*0.2f);
 				break;
 			}
 		}
@@ -1635,8 +1635,8 @@ void Bild_Window()
 	
 	//list1
 	{
-		list1.Size.SetSize(Jora::WndW / 2,Jora::WndH*0.8);	
-		list1.Position.SetPosition(0,0);
+		list1.Size.setSize(Jora::WndW / 2,Jora::WndH*0.8);	
+		list1.Position.setPosition(0,0);
 		list1.Name = "list1";
 		list1.Set_text_size(25);
 		list1.Color = button_col;
@@ -1646,8 +1646,8 @@ void Bild_Window()
 	}
 	//list2
 	{
-		list2.Size.SetSize(Jora::WndW / 2,Jora::WndH*0.8);
-		list2.Position.SetPosition(Jora::WndW / 2, 0);
+		list2.Size.setSize(Jora::WndW / 2,Jora::WndH*0.8);
+		list2.Position.setPosition(Jora::WndW / 2, 0);
 		list2.Name = "list2";
 		list2.Set_text_size(25);
 		list2.Color = button_col;
@@ -1657,10 +1657,10 @@ void Bild_Window()
 	}
 	//butt
 	{
-		butt.Size.SetSize(150,30);
-		butt.Position.SetPosition(10, Jora::WndH - butt.Size.GetSizeH() - 10 );
+		butt.Size.setSize(150,30);
+		butt.Position.setPosition(10, Jora::WndH - butt.Size.getSizeH() - 10 );
 		butt.Name = "enter";
-		butt.Set_text_size(butt.Size.GetSizeH() - 5);
+		butt.Set_text_size(butt.Size.getSizeH() - 5);
 		butt.Text = Text_en_ru[(int)Jora::Language][0];
 		butt.Color = button_col;
 		butt.Outline_color = line_col;
@@ -1668,10 +1668,10 @@ void Bild_Window()
 	}
 	//butt1
 	{
-		butt1.Size.SetSize(150, 30);
-		butt1.Position.SetPosition(10, Jora::WndH - butt.Size.GetSizeH() - 50);
+		butt1.Size.setSize(150, 30);
+		butt1.Position.setPosition(10, Jora::WndH - butt.Size.getSizeH() - 50);
 		butt1.Name = "next";
-		butt1.Set_text_size(butt.Size.GetSizeH() - 5);
+		butt1.Set_text_size(butt.Size.getSizeH() - 5);
 		butt1.Text = Text_en_ru[(int)Jora::Language][1];
 		butt1.Color = button_col;
 		butt1.Outline_color = line_col;
@@ -1679,10 +1679,10 @@ void Bild_Window()
 	}
 	//butt2
 	{
-		butt2.Size.SetSize(150, 30);
-		butt2.Position.SetPosition(Jora::WndW - 160, Jora::WndH - 40 );
+		butt2.Size.setSize(150, 30);
+		butt2.Position.setPosition(Jora::WndW - 160, Jora::WndH - 40 );
 		butt2.Name = "setting";
-		butt2.Set_text_size(butt.Size.GetSizeH() - 5);
+		butt2.Set_text_size(butt.Size.getSizeH() - 5);
 		butt2.Text = Text_en_ru[(int)Jora::Language][2];
 		butt2.Color = button_col;
 		butt2.Outline_color = line_col;
@@ -1690,11 +1690,11 @@ void Bild_Window()
 	}
 	//butt3
 	{
-		butt3.Size.SetSize(Jora::WndW, 30);
-		butt3.Position.SetPosition(0, Jora::WndH*0.8 );
+		butt3.Size.setSize(Jora::WndW, 30);
+		butt3.Position.setPosition(0, Jora::WndH*0.8 );
 		butt3.Name = "inf";
 		butt3.IsHover = 0;
-		butt3.Set_text_size(butt.Size.GetSizeH() - 5);
+		butt3.Set_text_size(butt.Size.getSizeH() - 5);
 		butt3.Text = to_string(word_count) + "/ " + Text_en_ru[(int)Jora::Language][11] + ":" + to_string(ans_correct) + " " +
 			Text_en_ru[(int)Jora::Language][12] + ":" + to_string(ans_wrong);
 		butt3.Color = button_col;
@@ -1707,10 +1707,10 @@ void Bild_Window()
 	//inp
 	{
 		inp.NumbersOnly = 1;
-		inp.Size.SetSize(70, 30);
-		inp.Set_text_size(inp.Size.GetSizeH() - 6);
+		inp.Size.setSize(70, 30);
+		inp.Set_text_size(inp.Size.getSizeH() - 6);
 		inp.Name = "textbox";
-		inp.Position.SetPosition(10, Jora::WndH - inp.Size.GetSizeH() - 10 );
+		inp.Position.setPosition(10, Jora::WndH - inp.Size.getSizeH() - 10 );
 		inp.Title = Text_en_ru[(int)Jora::Language][3];
 		inp.SetMin(5);
 		inp.SetMax(99);
@@ -1732,8 +1732,8 @@ void Bild_Window()
 
 		for (int i = 0; i < 7; i++)
 		{
-			sett_col[i].Size.SetSize(30, 30);
-			sett_col[i].Position.SetPosition(Vector2f(10, Jora::WndH - 40 * (i + 2)));
+			sett_col[i].Size.setSize(30, 30);
+			sett_col[i].Position.setPosition(Vector2f(10, Jora::WndH - 40 * (i + 2)));
 			sett_col[i].Set_text_size(24);
 			sett_col[i].Name = "setcol" + to_string(i);
 			sett_col[i].Text_color = text_col;
@@ -1742,15 +1742,15 @@ void Bild_Window()
 			sett_col[i].IsHover = false;
 		}
 		sett_col[5].IsHover = true;
-		sett_col[5].Size.SetSize(50, 30);
+		sett_col[5].Size.setSize(50, 30);
 	}
 	//////////////////////////////////////////////////////FormMain
 
 	//Head_menu
 	for (int i = 0; i < 4; i++)
 	{
-		Head_menu[i].Size.SetSize(300, 100);
-		Head_menu[i].Position.SetPosition(Jora::WndW / 2 - 150, Jora::WndH / 2 - 160 + i * 110);
+		Head_menu[i].Size.setSize(300, 100);
+		Head_menu[i].Position.setPosition(Jora::WndW / 2 - 150, Jora::WndH / 2 - 160 + i * 110);
 		Head_menu[i].Name = "head" + to_string(i);
 		Head_menu[i].Set_text_size(35);
 		Head_menu[i].Text = Head_en_ru[(int)Jora::Language][i];
@@ -1763,8 +1763,8 @@ void Bild_Window()
 
 	//list_l
 	{
-		list_l.Size.SetSize(Jora::WndW,Jora::WndH*0.8);
-		list_l.Position.SetPosition(0, 0);
+		list_l.Size.setSize(Jora::WndW,Jora::WndH*0.8);
+		list_l.Position.setPosition(0, 0);
 		list_l.Name = "list_l";
 		list_l.Set_text_size(25);
 		list_l.Color = button_col;
@@ -1774,10 +1774,10 @@ void Bild_Window()
 	}
 	//inp2
 	{
-		inp2.Size.SetSize(Jora::WndW*0.5 - 35, 30);
-		inp2.Set_text_size(inp.Size.GetSizeH() - 6);
+		inp2.Size.setSize(Jora::WndW*0.5 - 35, 30);
+		inp2.Set_text_size(inp.Size.getSizeH() - 6);
 		inp2.Name = "inp2";
-		inp2.Position.SetPosition(10, Jora::WndH - 80 );
+		inp2.Position.setPosition(10, Jora::WndH - 80 );
 		inp2.Color = button_col;
 		inp2.Outline_color = line_col;
 		inp2.Text_color = text_col;
@@ -1785,10 +1785,10 @@ void Bild_Window()
 	}
 	//favor
 	{
-		favor.Size.SetSize(300,30);
-		favor.Position.SetPosition(10, Jora::WndH - butt.Size.GetSizeH() - 10 );
+		favor.Size.setSize(300,30);
+		favor.Position.setPosition(10, Jora::WndH - butt.Size.getSizeH() - 10 );
 		favor.Name = "favor";
-		favor.Set_text_size(butt.Size.GetSizeH() - 5);
+		favor.Set_text_size(butt.Size.getSizeH() - 5);
 		favor.Text = Head_en_ru[(int)Jora::Language][6];
 		favor.Color = button_col;
 		favor.Outline_color = line_col;
@@ -1796,10 +1796,10 @@ void Bild_Window()
 	}
 	//cutword
 	{
-		cutword.Size.SetSize(150, 30);
-		cutword.Position.SetPosition(Jora::WndW - 160, Jora::WndH*0.8+10 );
+		cutword.Size.setSize(150, 30);
+		cutword.Position.setPosition(Jora::WndW - 160, Jora::WndH*0.8+10 );
 		cutword.Name = "cutword";
-		cutword.Set_text_size(butt.Size.GetSizeH() - 5);
+		cutword.Set_text_size(butt.Size.getSizeH() - 5);
 		cutword.Text = Head_en_ru[(int)Jora::Language][7];
 		cutword.Color = button_col;
 		cutword.Outline_color = line_col;
@@ -1807,10 +1807,10 @@ void Bild_Window()
 	}
 	//out2
 	{
-		out2.Size.SetSize(Jora::WndW*0.5f-35, 30);
-		out2.Position.SetPosition(Jora::WndW*0.5f+25, Jora::WndH - 80);
+		out2.Size.setSize(Jora::WndW*0.5f-35, 30);
+		out2.Position.setPosition(Jora::WndW*0.5f+25, Jora::WndH - 80);
 		out2.Name = "out2";
-		out2.Set_text_size(butt.Size.GetSizeH() - 5);
+		out2.Set_text_size(butt.Size.getSizeH() - 5);
 		out2.Color = button_col;
 		out2.Outline_color = line_col;
 		out2.Text_color = text_col;
@@ -1818,9 +1818,9 @@ void Bild_Window()
 	}
 	//swap1
 	{
-		swap1.Size.SetSize(40, 40);
-		swap1.Position.SetPosition(Jora::WndW*0.5f - 20, Jora::WndH - 85);	
-//		swap1.Position.SetPosition(Jora::WndW, Jora::WndH);		
+		swap1.Size.setSize(40, 40);
+		swap1.Position.setPosition(Jora::WndW*0.5f - 20, Jora::WndH - 85);	
+//		swap1.Position.setPosition(Jora::WndW, Jora::WndH);		
 		swap1.Name = "swap1";
 		swap1.Color = button_col;
 		swap1.Outline_color = line_col;
@@ -1840,16 +1840,16 @@ void Bild_Window()
 		words[i].Outline_color = line_col;
 		words[i].Text_color = text_col;
 	}
-	panel1.Position.SetPosition(Jora::WndMinX, Jora::WndMinY);
-	panel1.Size.SetSize(Jora::WndW, Jora::WndH*0.8f);
+	panel1.Position.setPosition(Jora::WndMinX, Jora::WndMinY);
+	panel1.Size.setSize(Jora::WndW, Jora::WndH*0.8f);
 	panel1.Color = select_col;
 	panel1.Outline_color = line_col;
 	
 	///AddLineTranslation
 	{
-		AddLineTranslation.Size.SetSize(210, 30);
-		AddLineTranslation.Position.SetPosition(10, Jora::WndH*0.8 + 10 + butt3.Size.GetSizeH());
-		AddLineTranslation.Set_text_size(butt.Size.GetSizeH() - 5);
+		AddLineTranslation.Size.setSize(210, 30);
+		AddLineTranslation.Position.setPosition(10, Jora::WndH*0.8 + 10 + butt3.Size.getSizeH());
+		AddLineTranslation.Set_text_size(butt.Size.getSizeH() - 5);
 		AddLineTranslation.Text = Text_Form5[(int)Jora::Language][0];
 		AddLineTranslation.Color = button_col;
 		AddLineTranslation.Outline_color = line_col;
@@ -1858,9 +1858,9 @@ void Bild_Window()
 	}
 	///TestTranslation
 	/*{
-		TestTranslation.Size.SetSize(150, 30);
-		TestTranslation.Position.SetPosition(10, Jora::WndH - TestTranslation.Size.GetSizeH()-10);
-		TestTranslation.Set_text_size(butt.Size.GetSizeH() - 5);
+		TestTranslation.Size.setSize(150, 30);
+		TestTranslation.Position.setPosition(10, Jora::WndH - TestTranslation.Size.getSizeH()-10);
+		TestTranslation.Set_text_size(butt.Size.getSizeH() - 5);
 		TestTranslation.Text = Text_en_ru[(int)Jora::Language][0];
 		TestTranslation.Color = button_col;
 		TestTranslation.Outline_color = line_col;
@@ -2210,21 +2210,21 @@ void BildWords(std::string text)
 	w_count++;
 
 	for (int i = 0; i < w_count; i++)
-		words[i].Position.SetPosition(rand() % (int)(Jora::WndW*0.8f)-Jora::WndMinX,rand() % (int)(Jora::WndH*0.8f-50)-Jora::WndMinY);
+		words[i].Position.setPosition(rand() % (int)(Jora::WndW*0.8f)-Jora::WndMinX,rand() % (int)(Jora::WndH*0.8f-50)-Jora::WndMinY);
 }
 
 void WordsPosUpdate(int n)
 {
 	Vector2f a, b, c;
 	int l = 0;
-	a = words[n].Position.GetPosition2f();
+	a = words[n].Position.getPosition2f();
 	for (int i = 0; i < words.size(); i++)
 	{	
 		if (i == n || !words[i].Visible) continue;
 		if (!words[i].LineTranslation)
 		{
-			b = words[i].Position.GetPosition2f();
-			b = b + Vector2f(words[i].Size.GetSizeW(), 0);
+			b = words[i].Position.getPosition2f();
+			b = b + Vector2f(words[i].Size.getSizeW(), 0);
 			c = a - b;
 			l = std::sqrtf(c.X*c.X + c.Y*c.Y);
 			if (l < 35)
@@ -2239,7 +2239,7 @@ void WordsPosUpdate(int n)
 				break;
 			}
 		}else {
-			b = Vector2f(words[i].Size.GetSizeW() + words[n].Size.GetSizeH(), words[i].Size.GetSizeH());
+			b = Vector2f(words[i].Size.getSizeW() + words[n].Size.getSizeH(), words[i].Size.getSizeH());
 			c = a - b;
 			l = std::sqrtf(c.X*c.X + c.Y*c.Y);
 			if (l < 35)

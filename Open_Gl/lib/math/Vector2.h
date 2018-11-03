@@ -1,7 +1,9 @@
-#include <cmath>
-
 #ifndef VECTOR2_H
 #define VECTOR2_H
+
+#include <cmath>
+#include <ostream>
+
 namespace UIGL {
 
 	template <typename T,
@@ -131,5 +133,7 @@ namespace UIGL {
 		T X = 0;
 		T Y = 0;
 	};
+
+	typedef UIGL::Vector2<float> Vector2f;
 }
 #endif

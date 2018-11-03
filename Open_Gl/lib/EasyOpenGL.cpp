@@ -5,40 +5,6 @@
 namespace UIGL
 {
 
-#pragma region Structurs Glui_Position AND Glui_Size
-void Glui_Position::SetPosition(float Xvalue, float Yvalue, float Zvalue)
-	{
-		X = Xvalue;
-		Y = Yvalue;
-		Z = Zvalue;
-		if (UpdatePtr != nullptr)
-			UpdatePtr->Update();
-	}
-void Glui_Position::SetPosition(const Vector3f& value)
-{
-	X = value.X;
-	Y = value.Y;
-	Z = value.Z;
-	if (UpdatePtr != nullptr)
-		UpdatePtr->Update();
-}
-void Glui_Position::SetPosition(const Vector2f& value)
-{
-	X = value.X;
-	Y = value.Y;
-	Z = 0;
-	if (UpdatePtr != nullptr)
-		UpdatePtr->Update();
-}
-void Glui_Size::SetSize(float width, float height, float depth)
-{
-	W = width;
-	H = height;
-	D = depth;
-	if (UpdatePtr != nullptr)
-		UpdatePtr->Update();
-}
-#pragma endregion
 
 #pragma region Glui_Forms
 	std::vector<Glui_Forms*> Glui_Forms::Forms;
@@ -447,7 +413,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	HWND Glui_MainForm::hWnd = NULL;
 	int Glui_MainForm::argc = 0;
 	uiglLanguages Glui_MainForm::Language = uiglLanguageEN;
-	Glui_Text Glui_MainForm::_t;
+//	UiglText Glui_MainForm::_text_;
 	std::vector<std::string> Glui_MainForm::argv;
 	std::string Glui_MainForm::Name;
 	Glui_ColDiàlog Glui_MainForm::ColDial;
@@ -493,7 +459,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			glutSpecialUpFunc(SpecialUpFunc);
 			glutReshapeFunc(ReshapeFunc);
 			glutPositionFunc(PositionFunc);
-			_t.SetHDC(&hDC);
+//			_text_.setHDC(&hDC);
 			MsgBox.SetHDC(&hDC);
 	}
 	void Glui_MainForm::Display(bool OnlyFocus,bool clear_background)
@@ -714,223 +680,6 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	}
 #pragma endregion
 
-#pragma region Glui_Text
-	Glui_Text::Glui_Text()
-	{
-		size_text = 12;
-		W = H = 0;
-	}
-	Glui_Text::~Glui_Text()
-	{
-		KillFont();
-	}
-	void Glui_Text::Setfontsize(int _size)
-	{
-		//	KillFont();
-		size_text = _size;
-		H = 0;
-		bildfont();
-
-	}
-	void Glui_Text::SetHeightText(int _h)
-	{
-		H = _h;
-		size_text = _h;
-		bildfont();
-	}
-	void Glui_Text::SetWidthText(int _w)
-	{
-		W = _w;
-	}
-	void Glui_Text::glText(float x, float y, const std::string txt, UiglColor col)
-	{
-		col.Init();
-		if (H > 0)
-			y += H*0.1f;
-
-		glRasterPos2d(x, y);
-		glPushAttrib(GL_LIST_BIT);
-		glListBase(arial - 32);
-#ifndef NDEBUG
-		glCallLists((GLsizei)txt.length(), GL_UNSIGNED_BYTE, txt.c_str());
-#else// NDEBUG
-		std::wstring stemp = std::wstring(txt.begin(), txt.end());
-		LPCWSTR sw = stemp.c_str();
-		glCallLists((GLsizei)txt.length(), GL_SHORT, sw);
-#endif// NDEBUG
-		glPopAttrib();
-	}
-	float Glui_Text::Get_text_length(std::string txt)
-	{
-		if ("Consolas" != Font)
-			return 0;
-
-		float _l = 0.55f;
-		int _count(0);
-
-		for (int i = 0; i < txt.size(); i++)
-			if (txt[i] >= ' ' && txt[i] <= '~' || txt[i] >= 'À' && txt[i] <= 'ÿ')
-				_count++;
-
-		switch (size_text)
-		{
-		case	1: _l = 1.0f; break;
-		case	2: _l = 0.5f; break;
-		case	3: _l = 0.6666f; break;
-		case	4: _l = 0.501001f; break;
-		case	5: _l = 0.60099f; break;
-		case	6: _l = 0.501001f; break;
-		case	7: _l = 0.571f; break;
-		case	8: _l = 0.5f; break;
-		case	9: _l = 0.556f; break;
-		case	10: _l = 0.501001f; break;
-		case	11: _l = 0.547f; break;
-		case	12: _l = 0.584f; break;
-		case	13: _l = 0.539f; break;
-		case	14: _l = 0.572f; break;
-		case	15: _l = 0.533f; break;
-		case	16: _l = 0.562f; break;
-		case	17: _l = 0.529f; break;
-		case	18: _l = 0.556f; break;
-		case	19: _l = 0.526f; break;
-		case	20: _l = 0.55f; break;
-		case	21: _l = 0.571f; break;
-		case	22: _l = 0.545f; break;
-		case	23: _l = 0.565f; break;
-		case	24: _l = 0.542f; break;
-		case	25: _l = 0.56f; break;
-		case	26: _l = 0.538f; break;
-		case	27: _l = 0.555f; break;
-		case	28: _l = 0.535f; break;
-		case	29: _l = 0.551f; break;
-		case	30: _l = 0.533f; break;
-		case	31: _l = 0.548f; break;
-		case	32: _l = 0.561f; break;
-		case	33: _l = 0.545f; break;
-		case	34: _l = 0.558f; break;
-		case	35: _l = 0.542f; break;
-		case	36: _l = 0.556f; break;
-		case	37: _l = 0.541f; break;
-		case	38: _l = 0.553f; break;
-		case	39: _l = 0.539f; break;
-		case	40: _l = 0.55f; break;
-		case	41: _l = 0.561f; break;
-		case	42: _l = 0.548f; break;
-		case	43: _l = 0.558f; break;
-		case	44: _l = 0.545f; break;
-		case	45: _l = 0.556f; break;
-		case	46: _l = 0.543f; break;
-		case	47: _l = 0.553f; break;
-		case	48: _l = 0.541f; break;
-		case	49: _l = 0.551f; break;
-		case	50: _l = 0.54f; break;
-		case	51: _l = 0.548f; break;
-		case	52: _l = 0.557f; break;
-		case	53: _l = 0.547f; break;
-		case	54: _l = 0.555f; break;
-		case	55: _l = 0.545f; break;
-		case	56: _l = 0.553f; break;
-		case	57: _l = 0.543f; break;
-		case	58: _l = 0.551f; break;
-		case	59: _l = 0.542f; break;
-		case	60: _l = 0.549f; break;
-		case	61: _l = 0.557f; break;
-		case	62: _l = 0.548f; break;
-		case	63: _l = 0.555f; break;
-		case	64: _l = 0.546f; break;
-		case	65: _l = 0.553f; break;
-		case	66: _l = 0.545f; break;
-		case	67: _l = 0.551f; break;
-		case	68: _l = 0.544f; break;
-		case	69: _l = 0.55f; break;
-		case	70: _l = 0.543f; break;
-		case	71: _l = 0.549f; break;
-		case	72: _l = 0.555f; break;
-		case	73: _l = 0.547f; break;
-		case	74: _l = 0.553f; break;
-		case	75: _l = 0.546f; break;
-		case	76: _l = 0.552f; break;
-		case	77: _l = 0.545f; break;
-		case	78: _l = 0.551f; break;
-		case	79: _l = 0.544f; break;
-		case	80: _l = 0.549f; break;
-		case	81: _l = 0.554f; break;
-		case	82: _l = 0.548f; break;
-		case	83: _l = 0.553f; break;
-		case	84: _l = 0.547f; break;
-		case	85: _l = 0.551f; break;
-		case	86: _l = 0.546f; break;
-		case	87: _l = 0.551f; break;
-		case	88: _l = 0.544f; break;
-		case	89: _l = 0.55f; break;
-		case	90: _l = 0.544f; break;
-		case	91: _l = 0.548f; break;
-		case	92: _l = 0.553f; break;
-		case	93: _l = 0.547f; break;
-		case	94: _l = 0.552f; break;
-		case	95: _l = 0.547f; break;
-		case	96: _l = 0.552f; break;
-		case	97: _l = 0.546f; break;
-		case	98: _l = 0.551f; break;
-		case	99: _l = 0.545f; break;
-		case	100: _l = 0.55f; break;
-		case	101: _l = 0.554f; break;
-		case	102: _l = 0.549f; break;
-		case	103: _l = 0.553f; break;
-		case	104: _l = 0.548f; break;
-		case	105: _l = 0.552f; break;
-		case	106: _l = 0.547f; break;
-		case	107: _l = 0.551f; break;
-		case	108: _l = 0.546f; break;
-		case	109: _l = 0.55f; break;
-		case	110: _l = 0.545f; break;
-		case	111: _l = 0.549f; break;
-		case	112: _l = 0.553f; break;
-		case	113: _l = 0.548f; break;
-		case	114: _l = 0.552f; break;
-		case	115: _l = 0.547f; break;
-		default:
-			_l = 0.55f;
-			break;
-		}
-		return _l*(float)(size_text*_count);
-	}
-	void Glui_Text::SetHDC(HDC * _hdc)
-	{
-		hdc = _hdc;
-		bildfont();
-	}
-	void Glui_Text::SetFont(std::string font_name)
-	{
-		Font = font_name;
-		//	KillFont();
-		bildfont();
-	}
-	void Glui_Text::bildfont()
-	{
-		hdc = &Glui_MainForm::hDC;
-		HFONT   oldfont;
-		if (!hdc)
-			return;
-		KillFont();
-		arial = glGenLists(255);
-		font = CreateFontA(-size_text, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
-			RUSSIAN_CHARSET, OUT_TT_PRECIS, CLIP_DEFAULT_PRECIS,
-			ANTIALIASED_QUALITY, DEFAULT_QUALITY | DEFAULT_PITCH,
-			Font.c_str());
-
-		oldfont = (HFONT)SelectObject(*hdc, font);
-		wglUseFontBitmaps(*hdc, 32, 224, arial);
-		SelectObject(*hdc, oldfont);
-		DeleteObject(font);
-
-	}
-	void Glui_Text::KillFont()
-	{
-		glDeleteLists(arial, 255);
-	}
-#pragma endregion
-
 #pragma region Glui_Roundrect
 	Glui_Roundrect::Glui_Roundrect()
 	{
@@ -1069,7 +818,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		{
 			X = ax - mx;
 			Y = ay - my;
-			Position.SetPosition(X, Y);
+			Position.setPosition(X, Y);
 			double_ckick = 0;
 		}
 		return result;
@@ -1258,7 +1007,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		{
 			X = ax - mx;
 			Y = ay - my;
-			Position.SetPosition(X, Y);
+			Position.setPosition(X, Y);
 			double_ckick = 0;
 		}
 		return result;
@@ -1322,10 +1071,10 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	void Glui_Circle::Update()
 	{
 		Position.UpdatePtr = this;
-		X = Position.GetPositionX();
-		Y = Position.GetPositionY();
-		H = Size.GetSizeH();
-		W = Size.GetSizeW();
+		X = Position.getPositionX();
+		Y = Position.getPositionY();
+		H = Size.getSizeH();
+		W = Size.getSizeW();
 	}
 #pragma endregion 
 
@@ -1441,7 +1190,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		{
 			X = ax - mx;
 			Y = ay - my;
-			Position.SetPosition(X, Y);
+			Position.setPosition(X, Y);
 			double_ckick = 0;
 		}
 		return result;
@@ -1541,13 +1290,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	void Glui_Rectangle::SetHDC(HDC * _hdc)
 	{
 		hdc = _hdc;
-		textprint.SetHDC(_hdc);
+		textprint.setHDC(_hdc);
 	}
 	void Glui_Rectangle::Set_text_size(float _size)
 	{
 		Text_size = _size;
-		//textprint.Setfontsize(Text_size);
-		textprint.SetHeightText((int)_size);
+		//textprint.setFontSize(Text_size);
+		textprint.setHeightText((int)_size);
 	}
 #pragma endregion
 	
@@ -1558,7 +1307,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		Size.UpdatePtr = this;
 		H = 20;
 		W = 100;
-		Size.SetSize(W, H);
+		Size.setSize(W, H);
 		Max = 100;
 		Min = 0;
 		Slider_length = 10;
@@ -1665,7 +1414,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		{
 			X = ax - mx;
 			Y = ay - my;
-			Position.SetPosition(X, Y);
+			Position.setPosition(X, Y);
 			double_ckick = 0;
 		}
 		if (Move_slider)
@@ -1818,10 +1567,10 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	}
 	void Glui_Skrollbar::Update()
 	{
-		X = Position.GetPositionX();
-		Y = Position.GetPositionY();
-		W = Size.GetSizeW();
-		H = Size.GetSizeH();
+		X = Position.getPositionX();
+		Y = Position.getPositionY();
+		W = Size.getSizeW();
+		H = Size.getSizeH();
 		Px = Slider_length + H + (W - 2.0f * (H + Slider_length)) / (Max - Min)*(Position_p - Min);
 	}
 #pragma endregion
@@ -1835,7 +1584,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		Line_length = 2.0f;
 		Text_size = W;
 		Color = White;
-		//	textprint.SetHDC(hdc);
+		//	textprint.setHDC(hdc);
 	}
 	UiglEvent Glui_Checkbox::MouseFunc(int button, int state, int ax, int ay)
 	{
@@ -1893,7 +1642,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		{
 			X = ax - mx;
 			Y = ay - my;
-			Position.SetPosition(X, Y);
+			Position.setPosition(X, Y);
 			double_ckick = 0;
 		}
 		return result;
@@ -1961,13 +1710,13 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	void Glui_Checkbox::Set_text_size(float _size)
 	{
 		Text_size = _size;
-		textprint.Setfontsize(Text_size);
+		textprint.setFontSize(Text_size);
 	}
 	void Glui_Checkbox::SetHDC(HDC * _hdc)
 	{
 		hdc = _hdc;
-		textprint.SetHDC(_hdc);
-		textprint.Setfontsize(Text_size);
+		textprint.setHDC(_hdc);
+		textprint.setFontSize(Text_size);
 	}
 #pragma endregion
 
@@ -2071,7 +1820,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		{
 			X = ax - mx;
 			Y = ay - my;
-			Position.SetPosition(X, Y);
+			Position.setPosition(X, Y);
 			double_ckick = 0;
 		}
 		return result;
@@ -2202,10 +1951,10 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		Size.UpdatePtr = this;
 		W = 200.0f;
 		H = 40.0f;
-		textprint.SetHeightText(H - H*0.2f);
+		textprint.setHeightText(H - H*0.2f);
 		Color = White;
 		Cursor_time = clock();
-		textprint.SetFont("Consolas");
+		textprint.setFont("Consolas");
 		Selection_color.setAlpha(100);
 		Text_max_length = Text.max_size();
 	}
@@ -2223,7 +1972,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				mx = ax - X;
 				my = ay - Y;
 
-				Cursor_pos = text_pos_begin + (int)(ax - X) / textprint.Get_text_length("a");
+				Cursor_pos = text_pos_begin + (int)(ax - X) / textprint.getTextLength("a");
 				if (Cursor_pos > Text.length())
 					Cursor_pos = Text.length();
 
@@ -2310,7 +2059,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		{
 			X = ax - mx;
 			Y = ay - my;
-			Position.SetPosition(X, Y);
+			Position.setPosition(X, Y);
 			double_ckick = 0;
 		}
 		if (moved == true) 
@@ -2318,7 +2067,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			int _n = ax - X;
 		//	if (_n > 0)
 		//		_n = -1;
-			Cursor_pos = Select_end = text_pos_begin + int(_n / textprint.Get_text_length("a"));
+			Cursor_pos = Select_end = text_pos_begin + int(_n / textprint.getTextLength("a"));
 			if (Select_end > Text.length())
 				Select_end = Text.length();
 		}
@@ -2680,7 +2429,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 
 		std::string Text1 = Text;
 		int out_l = 0;
-		while (textprint.Get_text_length(Text1) > W)
+		while (textprint.getTextLength(Text1) > W)
 		{
 			Text1 = Text1.substr(1);
 			out_l++;
@@ -2701,7 +2450,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			text_pos_begin--;
 
 
-		float char_length = textprint.Get_text_length("a");
+		float char_length = textprint.getTextLength("a");
 		float sel_b = 0, sel_l = char_length*(Select_end - Select_begin);
 
 		if (Select_begin < Select_end)
@@ -2733,7 +2482,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 
 		if (in_focus && !Read_only) {
-			cursor_line_pos = textprint.Get_text_length(Text.substr(text_pos_begin, Cursor_pos - text_pos_begin)) + X + 2;
+			cursor_line_pos = textprint.getTextLength(Text.substr(text_pos_begin, Cursor_pos - text_pos_begin)) + X + 2;
 			if (Cursor_enbl) {
 				Text_color.Init();
 				glBegin(GL_LINES);
@@ -2746,12 +2495,12 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	void Glui_Textbox::Set_text_size(float _size)
 	{
 		Text_size = _size;
-		textprint.SetHeightText(Text_size - 2);
+		textprint.setHeightText(Text_size - 2);
 	}
 	void Glui_Textbox::SetHDC(HDC * _hdc)
 	{
 		hdc = _hdc;
-		textprint.SetHDC(_hdc);
+		textprint.setHDC(_hdc);
 	}
 #pragma endregion
 	
@@ -2760,9 +2509,9 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	{
 		Position.UpdatePtr = this;
 		Size.UpdatePtr = this;
-		Size.SetSize(200, 30);
-		tbox.Size.SetSize(200-30*0.8f, 30);
-		tbox.Position.SetPosition(0, 0);
+		Size.setSize(200, 30);
+		tbox.Size.setSize(200-30*0.8f, 30);
+		tbox.Position.setPosition(0, 0);
 		tbox.Read_only = true;
 		Color = White;
 		Skroll.Set_Position(2);
@@ -2776,19 +2525,19 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		UiglEvent result;
 		if (button == 0 && state == 0)
 		{
-			if (Position.GetPositionX()<ax && Position.GetPositionX() + Size.GetSizeW()>ax &&
-				Position.GetPositionY()<ay && Position.GetPositionY() + Size.GetSizeH()>ay)
+			if (Position.getPositionX()<ax && Position.getPositionX() + Size.getSizeW()>ax &&
+				Position.getPositionY()<ay && Position.getPositionY() + Size.getSizeH()>ay)
 			{
 				result.Name = Name;
 				result.Event = uiglMouseLeftDown;
-				if (ax > Position.GetPositionX() + Size.GetSizeW() - Size.GetSizeH()*0.8f)
+				if (ax > Position.getPositionX() + Size.getSizeW() - Size.getSizeH()*0.8f)
 					open = true;
 			}
 		}
 		if (button == 0 && state == 1)
 		{
-			if (Position.GetPositionX()<ax && Position.GetPositionX() + Size.GetSizeW()>ax &&
-				Position.GetPositionY()<ay && Position.GetPositionY() + Size.GetSizeH()>ay)
+			if (Position.getPositionX()<ax && Position.getPositionX() + Size.getSizeW()>ax &&
+				Position.getPositionY()<ay && Position.getPositionY() + Size.getSizeH()>ay)
 			{
 				result.Name = Name;
 				result.Event = uiglMouseLeftUp;
@@ -2796,8 +2545,8 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		if (button == 1 && state == 0)
 		{
-			if (Position.GetPositionX()<ax && Position.GetPositionX() + Size.GetSizeW()>ax &&
-				Position.GetPositionY()<ay && Position.GetPositionY() + Size.GetSizeH()>ay)
+			if (Position.getPositionX()<ax && Position.getPositionX() + Size.getSizeW()>ax &&
+				Position.getPositionY()<ay && Position.getPositionY() + Size.getSizeH()>ay)
 			{
 				result.Name = Name;
 				result.Event = uiglMouseCenterDown;
@@ -2805,8 +2554,8 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		if (button == 1 && state == 1)
 		{
-			if (Position.GetPositionX()<ax && Position.GetPositionX() + Size.GetSizeW()>ax &&
-				Position.GetPositionY()<ay && Position.GetPositionY() + Size.GetSizeH()>ay)
+			if (Position.getPositionX()<ax && Position.getPositionX() + Size.getSizeW()>ax &&
+				Position.getPositionY()<ay && Position.getPositionY() + Size.getSizeH()>ay)
 			{
 				result.Name = Name;
 				result.Event = uiglMouseCenterUp;
@@ -2814,8 +2563,8 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}
 		if (button == 2 && state == 0)
 		{
-			if (Position.GetPositionX()<ax && Position.GetPositionX() + Size.GetSizeW()>ax &&
-				Position.GetPositionY()<ay && Position.GetPositionY() + Size.GetSizeH()>ay)
+			if (Position.getPositionX()<ax && Position.getPositionX() + Size.getSizeW()>ax &&
+				Position.getPositionY()<ay && Position.getPositionY() + Size.getSizeH()>ay)
 			{
 				result.Name = Name;
 				result.Event = uiglMouseRightDown;
@@ -2823,8 +2572,8 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		}	
 		if (button == 2 && state == 1)
 		{
-			if (Position.GetPositionX()<ax && Position.GetPositionX() + Size.GetSizeW()>ax &&
-				Position.GetPositionY()<ay && Position.GetPositionY() + Size.GetSizeH()>ay)
+			if (Position.getPositionX()<ax && Position.getPositionX() + Size.getSizeW()>ax &&
+				Position.getPositionY()<ay && Position.getPositionY() + Size.getSizeH()>ay)
 			{
 				result.Name = Name;
 				result.Event = uiglMouseRightUp;
@@ -3117,16 +2866,16 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	}
 	void Glui_Combobox::initiation()
 	{
-		Skroll.SetAngle(90);
-		Skroll.Size.SetSize(Skroll.Size.GetSizeW(),H*0.8f);
+		Skroll.setAngle(90);
+		Skroll.Size.setSize(Skroll.Size.getSizeW(),H*0.8f);
 		if (MaxDropDownItems < Items.size())
 		{
-			Skroll.Size.SetSize(H *MaxDropDownItems,Skroll.Size.GetSizeH());
-			Skroll.Position.SetPosition(X + W - H*0.8f, Y - H*MaxDropDownItems);
+			Skroll.Size.setSize(H *MaxDropDownItems,Skroll.Size.getSizeH());
+			Skroll.Position.setPosition(X + W - H*0.8f, Y - H*MaxDropDownItems);
 		}
 		else {
-			Skroll.Size.SetSize(H *Items.size(), Skroll.Size.GetSizeH());
-			Skroll.Position.SetPosition(X + W - H*0.8f, Y - H*Items.size());
+			Skroll.Size.setSize(H *Items.size(), Skroll.Size.getSizeH());
+			Skroll.Position.setPosition(X + W - H*0.8f, Y - H*Items.size());
 		}
 		Skroll.Max = Items.size() - MaxDropDownItems;
 		Skroll.Color = Color;
@@ -3140,12 +2889,12 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	}
 	void Glui_Combobox::Update()
 	{
-		X = Position.GetPositionX();
-		Y = Position.GetPositionY();
-		H = Size.GetSizeH();
-		W = Size.GetSizeW();
-		tbox.Size.SetSize(W-H*0.8f, H);
-		tbox.Position.SetPosition(X, Y);
+		X = Position.getPositionX();
+		Y = Position.getPositionY();
+		H = Size.getSizeH();
+		W = Size.getSizeW();
+		tbox.Size.setSize(W-H*0.8f, H);
+		tbox.Position.setPosition(X, Y);
 	}
 #pragma endregion
 
@@ -3157,7 +2906,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		W = 200;
 		H = 400;
 		Color = White;
-		Skrol.SetAngle(90);
+		Skrol.setAngle(90);
 		Skrol.Set_Position(100);
 	}
 	UiglEvent Glui_Listbox::MouseFunc(int button, int state, int ax, int ay)
@@ -3275,7 +3024,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		{
 			X = ax - mx;
 			Y = ay - my;
-			Position.SetPosition(X, Y);
+			Position.setPosition(X, Y);
 			double_ckick = 0;
 		}
 		if (Skrol.MotionFunc(ax, ay).Event == uiglChanged)
@@ -3397,8 +3146,8 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			Skrol.Color = Color;
 			Skrol.Color_slider = Select_color;
 			Skrol.Outline_color = Outline_color;
-			Skrol.Size.SetSize(H, 19);
-			Skrol.Position.SetPosition(X + W, Y);
+			Skrol.Size.setSize(H, 19);
+			Skrol.Position.setPosition(X + W, Y);
 			Skrol.Set_Position(Items.size() - _count - item_up_num);
 			if (Items.size() > _count)
 				Skrol.Max = Items.size() - _count;
@@ -3411,7 +3160,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	void Glui_Listbox::Set_text_size(float _size)
 	{
 		Text_size = _size;
-		textprint.SetHeightText(_size);
+		textprint.setHeightText(_size);
 	}
 	std::string Glui_Listbox::Get_Selected_text()
 	{
@@ -3422,7 +3171,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	void Glui_Listbox::SetHDC(HDC * _hdc)
 	{
 		hdc = _hdc;
-		textprint.SetHDC(_hdc);
+		textprint.setHDC(_hdc);
 	}
 #pragma endregion
 
@@ -3475,7 +3224,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 				mx = ax - X;
 				my = ay - Y;
 
-				Cursor_pos = text_pos_begin + (int)(ax - X) / textprint.Get_text_length("a");
+				Cursor_pos = text_pos_begin + (int)(ax - X) / textprint.getTextLength("a");
 				if (Cursor_pos > Text.length())
 					Cursor_pos = Text.length();
 
@@ -4232,7 +3981,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		{
 			X = ax - mx;
 			Y = ay - my;
-			Position.SetPosition(X, Y);
+			Position.setPosition(X, Y);
 			double_ckick = 0;
 		}
 		return result;
@@ -4306,7 +4055,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		Size.UpdatePtr = this;
 		W = 440.0f;
 		H = 300.0f;
-		Size.SetSize(440, 300);
+		Size.setSize(440, 300);
 		for (int i = 0; i < 4; i++)
 		{
 			num[i].W = 70;
@@ -4649,7 +4398,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 
 			X = ax - mx;
 			Y = ay - my;
-			Position.SetPosition(X, Y);
+			Position.setPosition(X, Y);
 			double_ckick = 0;
 			return result;
 		}
@@ -4789,8 +4538,8 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	void Glui_ColDiàlog::SetHDC(HDC * _hdc)
 	{
 		hdc = _hdc;
-		textprint.SetHDC(_hdc);
-		textprint.SetHeightText(Win_fon_H - 15);
+		textprint.setHDC(_hdc);
+		textprint.setHeightText(Win_fon_H - 15);
 		for (int i = 0; i < 4; i++)
 		{
 			num[i].SetHDC(_hdc);
@@ -5047,7 +4796,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 
 		Position.UpdatePtr = this;
 		Size.UpdatePtr = this;
-		Size.SetSize(350.0f,150.0f);
+		Size.setSize(350.0f,150.0f);
 		panel.IsHover = false;
 		panel.is_move = true;
 		panel.Color = Panel_color;
@@ -5055,14 +4804,14 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		B_ok.Set_text_size(22);
 		B_no.Set_text_size(22);
 		B_cancel.Set_text_size(22);
-		textprint.Setfontsize(22);
-		textprint.SetFont("Consolas");
+		textprint.setFontSize(22);
+		textprint.setFont("Consolas");
 		exit.Color = Red;
-		panel.Size.SetSize(W - Win_fon_H, Win_fon_H);
-		exit.Size.SetSize(Win_fon_H, Win_fon_H);
-		B_ok.Size.SetSize(90, Win_fon_H);
-		B_no.Size.SetSize(90, Win_fon_H);
-		B_cancel.Size.SetSize(90, Win_fon_H);
+		panel.Size.setSize(W - Win_fon_H, Win_fon_H);
+		exit.Size.setSize(Win_fon_H, Win_fon_H);
+		B_ok.Size.setSize(90, Win_fon_H);
+		B_no.Size.setSize(90, Win_fon_H);
+		B_cancel.Size.setSize(90, Win_fon_H);
 		B_ok.Color = B_no.Color = B_cancel.Color = Button_color;
 		B_ok.Name = "ok";
 		B_no.Name = "no";
@@ -5136,23 +4885,23 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			return result;
 
 		panel.MotionFunc(ax, ay);
-		Vector2f t = panel.Position.GetPosition2f();
+		Vector2f t = panel.Position.getPosition2f();
 
 		if (t.X < 0) t.X = 0;
 		if (t.X + W > Glui_MainForm::WndW)t.X = Glui_MainForm::WndW-W;
 		if (t.Y-H+Win_fon_H < 0) t.Y = H - Win_fon_H;
 		if (t.Y + Win_fon_H > Glui_MainForm::WndH)t.Y = Glui_MainForm::WndH-Win_fon_H;
 	
-//		X = panel.Position.GetPositionX();
-//		this->Position.SetPosition(t);
+//		X = panel.Position.getPositionX();
+//		this->Position.setPosition(t);
 
-		panel.Position.SetPosition(t);
+		panel.Position.setPosition(t);
 		t.Y -= H - Win_fon_H;
-		this->Position.SetPosition(t);
-		exit.Position.SetPosition(X + W - Win_fon_H, Y + H - Win_fon_H);
-		B_no.Position.SetPosition(X + 20, Y + 10);
-		B_ok.Position.SetPosition(X + 130, Y + 10);
-		B_cancel.Position.SetPosition(X + 240, Y + 10);
+		this->Position.setPosition(t);
+		exit.Position.setPosition(X + W - Win_fon_H, Y + H - Win_fon_H);
+		B_no.Position.setPosition(X + 20, Y + 10);
+		B_ok.Position.setPosition(X + 130, Y + 10);
+		B_cancel.Position.setPosition(X + 240, Y + 10);
 		return result;
 	}
 	UiglEvent Glui_MessageBox::MouseWheelFunc(int button, int state, int ax, int ay)
@@ -5228,7 +4977,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 	void Glui_MessageBox::Show(std::string text, std::string title, uiglMsgBoxButtons _buttons)
 	{
 		Base_Text.clear();
-		if (textprint.Get_text_length(text) < Size.GetSizeW())
+		if (textprint.getTextLength(text) < Size.getSizeW())
 		{
 			Base_Text.push_back(text);
 		}else {
@@ -5236,7 +4985,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			{
 				if (text[i] == ' ')
 				{
-					if (textprint.Get_text_length(text.substr(0, i)) < Size.GetSizeW()-textprint.Get_text_length("a"))
+					if (textprint.getTextLength(text.substr(0, i)) < Size.getSizeW()-textprint.getTextLength("a"))
 					{
 						Base_Text.push_back(text.substr(0, i));
 						text = text.substr(i+1);
@@ -5246,19 +4995,19 @@ void Glui_Size::SetSize(float width, float height, float depth)
 			}
 		}
 		if(Base_Text.size()>3)
-			Size.SetSize(350.0f, 150.0f + Base_Text.size()*20);
-		else Size.SetSize(350.0f, 150.0f);
+			Size.setSize(350.0f, 150.0f + Base_Text.size()*20);
+		else Size.setSize(350.0f, 150.0f);
 
 		X = (Glui_MainForm::WndW - W) / 2;
 		Y = (Glui_MainForm::WndH - H) / 2;
 		Visible = 1;
 		panel.Text = title;
 		Text = text;
-		panel.Position.SetPosition(X,Y+H-Win_fon_H);
-		exit.Position.SetPosition(X + W - Win_fon_H, Y + H - Win_fon_H);
-		B_no.Position.SetPosition(X + 20, Y + 10);
-		B_ok.Position.SetPosition(X + 130, Y + 10);
-		B_cancel.Position.SetPosition(X + 240, Y + 10);
+		panel.Position.setPosition(X,Y+H-Win_fon_H);
+		exit.Position.setPosition(X + W - Win_fon_H, Y + H - Win_fon_H);
+		B_no.Position.setPosition(X + 20, Y + 10);
+		B_ok.Position.setPosition(X + 130, Y + 10);
+		B_cancel.Position.setPosition(X + 240, Y + 10);
 		
 		B_no.Text = Text_en_ru[Language][0];
 		B_ok.Text = Text_en_ru[Language][1];
@@ -5281,7 +5030,7 @@ void Glui_Size::SetSize(float width, float height, float depth)
 		B_no.SetHDC(_hdc); 
 		B_ok.SetHDC(_hdc);
 		B_cancel.SetHDC(_hdc);
-		textprint.SetHDC(_hdc);
+		textprint.setHDC(_hdc);
 	}
 #pragma endregion
 
