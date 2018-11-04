@@ -28,6 +28,12 @@
     <Filter Include="Файлы исходного кода\lib\UI">
       <UniqueIdentifier>{3561f286-08bd-4fb5-a67a-78abcaca6225}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Заголовочные файлы\src">
+      <UniqueIdentifier>{40465532-908a-4bd9-b2f5-cde8864d2808}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\src">
+      <UniqueIdentifier>{d8e9de8d-b7a2-4815-948d-e0fa3e6198f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -98,6 +104,21 @@
     </ClCompile>
     <ClCompile Include="lib\UI\uiglMessageBox.cpp">
       <Filter>Файлы исходного кода\lib\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sentence.cpp">
+      <Filter>Файлы исходного кода\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\textbox.cpp">
+      <Filter>Файлы исходного кода\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\numbox.cpp">
+      <Filter>Файлы исходного кода\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\doubleListbox.cpp">
+      <Filter>Файлы исходного кода\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WordObj.cpp">
+      <Filter>Файлы исходного кода\src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +208,24 @@
     </ClInclude>
     <ClInclude Include="lib\UI\uiglColDialog.h">
       <Filter>Заголовочные файлы\lib\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Sentence.h">
+      <Filter>Заголовочные файлы\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\textbox.h">
+      <Filter>Заголовочные файлы\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\numbox.h">
+      <Filter>Заголовочные файлы\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\doubleListbox.h">
+      <Filter>Заголовочные файлы\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WordObj.h">
+      <Filter>Заголовочные файлы\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Panel.h">
+      <Filter>Заголовочные файлы\src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

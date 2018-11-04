@@ -174,6 +174,11 @@
     <ClCompile Include="lib\UI\uiglSkrollbar.cpp" />
     <ClCompile Include="lib\UI\uiglTextbox.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\doubleListbox.cpp" />
+    <ClCompile Include="src\numbox.cpp" />
+    <ClCompile Include="src\Sentence.cpp" />
+    <ClCompile Include="src\textbox.cpp" />
+    <ClCompile Include="src\WordObj.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lib\Config.h" />
@@ -205,6 +210,12 @@
     <ClInclude Include="lib\UI\uiglSkrollbar.h" />
     <ClInclude Include="lib\UI\uiglTextbox.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="src\doubleListbox.h" />
+    <ClInclude Include="src\numbox.h" />
+    <ClInclude Include="src\Panel.h" />
+    <ClInclude Include="src\Sentence.h" />
+    <ClInclude Include="src\textbox.h" />
+    <ClInclude Include="src\WordObj.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />

@@ -9,10 +9,10 @@
 #ifndef UIGL_H
 #define UIGL_H
 
+const float PI = 3.14159265358979323846f;
+
 namespace UIGL
 {
-	const float PI = 3.14159265358979323846f;
-
 	enum uiglAlignments
 	{
 		uiglTopLeft, uiglTopCenter, uiglTopRight,
