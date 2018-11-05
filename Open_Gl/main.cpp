@@ -7,6 +7,9 @@
 #include "src/WordObj.h"
 #include "src/Panel.h"
 
+#include "src/readFromFile.h"
+#include "FormTranslate.h"
+
 #include "resource.h"
 
 using namespace std;
@@ -20,6 +23,8 @@ struct Mytext
 };
 //////////////////////////////////////////////////
 
+FormTranslateNew formT2;
+
 int word_count(20), ans_wrong(0), ans_correct(0), sentence_selection = 0;
 int state_wnd(2);
 bool Translate_to(0);
@@ -29,13 +34,7 @@ void WordsPosUpdate(int n);
 void BildWords(std::string text);
 void Bild_Window();
 void Wnd_init();
-bool SaveSentence(const vector<Sentence>& _sentence, std::string file_name);
-bool OpenSentence(vector<Sentence>& _sentence, std::string file_name);
 bool cut_data(vector<string_int*>& sub_mas, vector<string_int>& mas, int sub_mas_size);
-bool Find_in_file(std::string file_name, std::string Text_en, std::string &Text_ru);
-bool open(string file_name, vector<string_int>& mas);
-bool save(string file_name, vector<string_int>& mas);
-bool Open_dataen(string file_name1, vector<Mytext>& mas);
 string translate(string text_en);
 void resetlist();
 void list_updat();
@@ -87,18 +86,18 @@ vector<string_int> My_data;
 vector<string_int*> My_sub_data;
 vector<WordObj> words(30);
 
-UiglForms FormTraining,FormSetting,FormMain,FormTranslate,Form5;
+UiglForms FormTraining, FormSetting, FormMain, FormTranslate, Form5;
 doubleListbox list_l;
 UiglListbox list1,list2;
 textbox inp2,out2;
 UiglConfig conf("settings.conf");
 numbox inp;
-Glui_Picture swap1;
+UiglPicture swap1;
 Panel panel1;
 
 UiglRectangle butt,butt1,butt2,butt3,favor,cutword,AddLineTranslation, TestTranslation;
 UiglRectangle sett_col[7];
-UiglRectangle Head_menu[4];
+UiglRectangle Head_menu[5];
 
 void Display()
 {
@@ -166,7 +165,7 @@ void Wnd_proc(uiglEvents ev,string name)
 			}
 		}
 		list_updat();
-		save("selfnew.txt", My_data);
+		saveFavouriteWords("selfnew.txt", My_data);
 	}
 
 
@@ -196,7 +195,7 @@ void Wnd_proc(uiglEvents ev,string name)
 			}
 			butt3.Text = to_string(word_count) + "/ "+ Text_en_ru[(int)Jora::Language][11] +":"+ to_string(ans_correct)+" "+
 				Text_en_ru[(int)Jora::Language][12]+":"+ to_string(ans_wrong);
-			save("selfnew.txt", My_data);
+			saveFavouriteWords("selfnew.txt", My_data);
 			conf.Save("settings.conf");
 
 		}
@@ -300,6 +299,10 @@ void Wnd_proc1(uiglEvents ev, string name)
 					sentence_selection = 0;
 			}
 		}break;
+		case '4':
+			state_wnd = 5;
+			Animation1(0);
+			break;
 		}
 	}
 
@@ -352,7 +355,7 @@ void Wnd_proc1(uiglEvents ev, string name)
 		{
 			if (Translate_to)
 			{//ru to en
-				if (!Find_in_file("ru.txt", inp2.Text, out2.Text))
+				if (!TranslateFromFile("ru.txt", inp2.Text, out2.Text))
 				{
 					Jora::MsgBox.Show(MsgString[(int)Jora::Language][3], MsgString[(int)Jora::Language][0]);
 					Jora::MsgBox.Name = "msgbax";
@@ -360,7 +363,7 @@ void Wnd_proc1(uiglEvents ev, string name)
 			}
 			else
 			{
-				if (!Find_in_file("en.txt", inp2.Text, out2.Text))
+				if (!TranslateFromFile("en.txt", inp2.Text, out2.Text))
 				{
 					Jora::MsgBox.Show(MsgString[(int)Jora::Language][3], MsgString[(int)Jora::Language][0]);
 					Jora::MsgBox.Name = "msgbax";
@@ -481,7 +484,7 @@ int main(int argc, char**argv)
 	}
 	///config
 
-	Jora::WinProc = Wnd_proc;
+	Jora::WinProc_ptr = Wnd_proc;
 	Jora::GluiInit(argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
 	glClearColor(1, 1, 1, 1);
@@ -513,8 +516,8 @@ int main(int argc, char**argv)
 	ss.SetText("Nastya and Gena study at a secondary school."); ArrSentence.push_back(ss);
 	ss.SetText("Take the ball out of the pit."); ArrSentence.push_back(ss);
 	ss.SetText("Let's go to the cinema!"); ArrSentence.push_back(ss);
-	SaveSentence(ArrSentence, "Sentense.tss");*/
-	OpenSentence(ArrSentence, "Sentense.tss");
+	saveSentence(ArrSentence, "Sentense.tss");*/
+	openSentence(ArrSentence, "Sentense.tss");
 
 	glutTimerFunc(50, timer, 0);
 	glutDisplayFunc(Display);
@@ -658,7 +661,7 @@ void Bild_Window()
 	//////////////////////////////////////////////////////FormMain
 
 	//Head_menu
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		Head_menu[i].Size.setSize(300, 100);
 		Head_menu[i].Position.setPosition(Jora::WndW / 2 - 150, Jora::WndH / 2 - 160 + i * 110);
@@ -788,6 +791,7 @@ void Bild_Window()
 		FormMain.Enabled = 0;
 		FormTranslate.Enabled = 0;
 		Form5.Enabled = 0;
+		formT2.Enabled = 0;
 		resetlist();
 		break;
 	case 1:
@@ -797,6 +801,7 @@ void Bild_Window()
 		FormMain.Enabled = 0;
 		FormTranslate.Enabled = 0;
 		Form5.Enabled = 0;
+		formT2.Enabled = 0;
 		break;
 	case 2:
 		cout << "FormMain\n";
@@ -805,6 +810,7 @@ void Bild_Window()
 		FormMain.Enabled = 1;
 		FormTranslate.Enabled = 0;
 		Form5.Enabled = 0;
+		formT2.Enabled = 0;
 		break;
 	case 3:
 		cout << "FormTranslate\n";
@@ -813,6 +819,7 @@ void Bild_Window()
 		FormMain.Enabled = 0;
 		FormTranslate.Enabled = 1;
 		Form5.Enabled = 0;
+		formT2.Enabled = 0;
 		break;
 	case 4:
 		cout << "Form5\n";
@@ -821,6 +828,16 @@ void Bild_Window()
 		FormMain.Enabled = 0;
 		FormTranslate.Enabled = 0;
 		Form5.Enabled = 1;
+		formT2.Enabled = 0;
+		break;	
+	case 5:
+		cout << "FormT2\n";
+		FormTraining.Enabled = 0;
+		FormSetting.Enabled = 0;
+		FormMain.Enabled = 0;
+		FormTranslate.Enabled = 0;
+		Form5.Enabled = 0;
+		formT2.Enabled = 1;
 		break;
 	}
 	conf.Save();
@@ -854,6 +871,7 @@ void Wnd_init()
 	FormMain.Stec_push_back(&Head_menu[1]);
 	FormMain.Stec_push_back(&Head_menu[2]);
 	FormMain.Stec_push_back(&Head_menu[3]);
+	FormMain.Stec_push_back(&Head_menu[4]);
 	/////////////////////////////////////////////////FormTranslate
 	FormTranslate.Stec_push_back(&butt2);
 	FormTranslate.Stec_push_back(&list_l);
@@ -879,7 +897,7 @@ void Wnd_init()
 
 	////////////////////////////////////////////////
 	srand(time(0));
-	open("selfnew.txt", My_data);
+	openFavouriteWords("selfnew.txt", My_data);
 	list_updat();
 	cut_data(My_sub_data, My_data, word_count);
 }
@@ -912,7 +930,7 @@ bool Add_word()
 	inp2.Text = "";
 	out2.Text = "";
 	list_updat();
-	save("selfnew.txt", My_data);
+	saveFavouriteWords("selfnew.txt", My_data);
 
 	return 1;
 }
@@ -942,128 +960,6 @@ void list_updat()
 		list_l.Items1.push_back(My_data[i].Text1);
 	}
 	list_l.Selected = 0;
-}
-
-bool Find_in_file(std::string file_name, std::string Text_find, std::string &Text_result)
-{
-	std::ifstream fin;
-	fin.open(file_name);
-	if (!fin.is_open())
-		return 0;
-	std::string temp;
-	char T;
-	bool read(1), find(0);
-
-	fin.seekg(0,ios::end);
-	int FileEnd = fin.tellg(), seekBegin = 0,seekEnd = 0;
-	seekEnd = FileEnd;
-
-	do{
-		fin.seekg((seekEnd+seekBegin)/2);
-		std::getline(fin,temp);
-		T = fin.peek();
-		if (T < Text_find[0])
-			seekBegin = fin.tellg();
-		if (T > Text_find[0])
-			seekEnd = fin.tellg();
-		if (seekEnd - seekBegin < 300)
-			return 0;
-	} while (T != Text_find[0] && !fin.eof());
-
-	seekBegin = fin.tellg();
-	do {
-		if (seekBegin - 200 > 0)
-			seekBegin -= 200;
-		else { fin.seekg(0); break;}
-		fin.seekg(seekBegin);
-		std::getline(fin, temp);
-		T = fin.peek();
-	} while (T == Text_find[0] && !fin.eof());
-
-	fin >> temp;
-	bool b = 0;
-	while ( !fin.eof())
-	{
-		if (Text_find == temp)
-		{
-			find = 1;
-			break;
-		}else std::getline(fin, temp);
-		T = fin.peek();
-		if (T == Text_find[0])
-			b = 1;
-		if (T != Text_find[0] && b == 1)
-			return 0;
-		fin >> temp;
-	}
-	fin.get();
-	if (find)
-	{
-		Text_result = "";
-		while (T = fin.get())
-		{
-			if (T != '\n')
-				Text_result += T;
-			else return 1;
-		}
-	}
-	return 0;
-}
-
-bool open(string file_name, vector<string_int>& mas)
-{
-	ifstream in;
-	in.open(file_name);
-	if (!in.is_open())
-		return 0;
-	mas.clear();
-	int _count;
-	string_int tempdata;
-	string tempstr;
-	bool is_read(1);
-	
-	while (in >> tempstr)
-	{
-		tempdata.Text = tempstr;
-
-		in >> _count;
-		tempdata.Count = _count;
-
-		in.get();
-		std::getline(in, tempstr);
-		tempdata.Text1 = tempstr;
-		mas.push_back(tempdata);
-	}
-	return 1;
-}
-
-bool save(string file_name, vector<string_int>& mas)
-{
-	ofstream out;
-	out.open(file_name);
-	if (!out.is_open())
-		return 0;
-	for (int i = 0; i < mas.size(); i++)
-		out << mas[i].Text << " "<< mas[i].Count << " "<< mas[i].Text1 <<endl;
-	return 1;
-}
-
-bool Open_dataen(string file_name1,vector<Mytext>& mas)
-{
-	ifstream in(file_name1);
-	if (!in.is_open())
-		return 0;
-	string _word;
-	Mytext _temp;
-	while (!in.eof())
-	{
-		in >> _word;
-		_temp.en = _word;
-		in.get();
-		getline(in, _word);
-		mas.push_back(_temp);
-	}
-	return 1;
 }
 
 string translate(string text_en)
@@ -1164,87 +1060,6 @@ void WordsPosUpdate(int n)
 			}
 		}
 	}
-}
-
-bool SaveSentence(const vector<Sentence>& _sentence,std::string file_name)
-{
-	ofstream fout(file_name);
-	if (fout.is_open())
-	{
-		fout.write((char*)&("TSS_"),4);
-		int str_count = _sentence.size(),str_length = 0,arr_length = 0;
-		fout.write((char*)&str_count, sizeof(int));
-		for (int i = 0; i < _sentence.size(); i++)
-		{
-			fout.write((char*)&(_sentence[i].Rating), sizeof(int));
-
-			str_length = _sentence[i].Text.size();
-			fout.write((char*)&str_length, sizeof(int));
-			const char* _t = _sentence[i].Text.c_str();
-			fout.write( _t, sizeof(char)*str_length);
-
-			for (int j = 0; j < _sentence[i].arr.size(); j++)
-				arr_length += _sentence[i].arr[j].size();
-			fout.write((char*)&arr_length, sizeof(int));
-			for (int k = 0; k < _sentence[i].arr.size(); k++)
-			{
-				for (int j = 0; j < _sentence[i].arr[k].size(); j++)
-					fout <<(char)_sentence[i].arr[k][j];
-			}
-		}
-		fout.close();
-		return true;
-	}
-	else return false;
-}
-
-bool OpenSentence(vector<Sentence>& _sentence,std::string file_name)
-{
-	ifstream fin(file_name);
-	if (fin.is_open())
-	{
-		char T[] = "ABCD";
-		fin.read((char*)(&T), 4);
-		if (std::string(T) == "TSS_")
-		{
-			_sentence.clear();
-			Sentence temp;
-			int str_count = 0,str_length = 0, arr_length = 0,c_count = 0;
-			fin.read((char*)&str_count, sizeof(int));
-			for (int i = 0; i < str_count && !fin.eof(); i++)
-			{
-				fin.read((char*)&(temp.Rating), sizeof(int));
-
-				fin.read((char*)&(str_length), sizeof(int));
-				char* _t = new char[str_length+1];
-				fin.read(_t, sizeof(char)*str_length);
-				temp.Text = _t;
-				temp.Text = temp.Text.substr(0, str_length);
-				c_count = 0;
-				for (int j = 0; j < temp.Text.length(); j++)
-					if (temp.Text[j] == ' '+30)
-						c_count++;
-				c_count++;
-
-				fin.read((char*)&(arr_length), sizeof(int));
-				char _c = 0;
-				for (int k = 0; k < arr_length/c_count; k++)
-				{
-					temp.arr.push_back(vector<char>());
-					for (int j = 0; j < c_count; j++)
-					{
-						fin >> _c;
-						temp.arr.back().push_back(_c);
-					}
-				}
-				_sentence.push_back(temp);
-			}
-
-			fin.close();
-			return true;
-		}
-	}
-	return false;
 }
 
 std::string  MakeSentencr()

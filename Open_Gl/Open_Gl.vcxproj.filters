@@ -120,6 +120,12 @@
     <ClCompile Include="src\WordObj.cpp">
       <Filter>Файлы исходного кода\src</Filter>
     </ClCompile>
+    <ClCompile Include="src\readFromFile.cpp">
+      <Filter>Файлы исходного кода\src</Filter>
+    </ClCompile>
+    <ClCompile Include="FormTranslate.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -226,6 +232,12 @@
     </ClInclude>
     <ClInclude Include="src\Panel.h">
       <Filter>Заголовочные файлы\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\readFromFile.h">
+      <Filter>Заголовочные файлы\src</Filter>
+    </ClInclude>
+    <ClInclude Include="FormTranslate.h">
+      <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -7,15 +7,15 @@
 #include "uiglColor.h"
 
 namespace UIGL {
-	namespace {
-		struct string_int
-		{
-			std::string Text = "";
-			std::string Text1 = "";
-			unsigned int Count = 0;
-			int Num = 0;
-		};
-	}
+
+	struct string_int
+	{
+		std::string Text = "";
+		std::string Text1 = "";
+		unsigned int Count = 0;
+		int Num = 0;
+	};
+
 	//сохранение параметров (имя,значения)
 	class UiglConfig
 	{

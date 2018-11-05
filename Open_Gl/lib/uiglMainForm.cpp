@@ -5,7 +5,7 @@
 
 namespace UIGL {
 	///UiglMainForm 
-	void(*UiglMainForm::WinProc)(uiglEvents, std::string);
+	void(*UiglMainForm::WinProc_ptr)(uiglEvents, std::string);
 	void(*UiglMainForm::KeyboardFunc_ptr)(unsigned char, int, int) = NULL;
 	void(*UiglMainForm::SpecialFunc_ptr)(int, int, int) = NULL;
 	void(*UiglMainForm::MouseFunc_ptr)(int, int, int, int) = NULL;
@@ -96,8 +96,8 @@ namespace UIGL {
 			if (it != nullptr)
 			{
 				it->SetHDC(&hDC);
-				if (it->Wnd_proc == nullptr && WinProc != nullptr)
-					it->Wnd_proc = WinProc;
+				if (it->Wnd_proc == nullptr && WinProc_ptr != nullptr)
+					it->Wnd_proc = WinProc_ptr;
 			}
 			else UiglForms::Forms.erase(UiglForms::Forms.begin() + i);
 			i++;
@@ -120,8 +120,8 @@ namespace UIGL {
 		else {
 			UiglEvent ev;
 			ev = MsgBox.KeyboardFunc(key, ax, WndH - ay);
-			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc != nullptr)
-				WinProc(ev.Event, ev.Name);
+			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc_ptr != nullptr)
+				WinProc_ptr(ev.Event, ev.Name);
 		}
 	}
 	void UiglMainForm::SpecialFunc(int key, int ax, int ay)
@@ -149,8 +149,8 @@ namespace UIGL {
 		else {
 			UiglEvent ev;
 			ev = MsgBox.SpecialFunc(key, ax, WndH - ay);
-			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc != nullptr)
-				WinProc(ev.Event, ev.Name);
+			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc_ptr != nullptr)
+				WinProc_ptr(ev.Event, ev.Name);
 		}
 		//	ColDial.SpecialFunc(key, ax, WndH - ay);
 	}
@@ -171,8 +171,8 @@ namespace UIGL {
 		else {
 			UiglEvent ev;
 			ev = MsgBox.MouseFunc(button, state, ax, WndH - ay);
-			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc != nullptr)
-				WinProc(ev.Event, ev.Name);
+			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc_ptr != nullptr)
+				WinProc_ptr(ev.Event, ev.Name);
 		}
 		//	ColDial.MouseFunc(button,state, ax, WndH - ay);
 	}
@@ -193,8 +193,8 @@ namespace UIGL {
 		else {
 			UiglEvent ev;
 			ev = MsgBox.MotionFunc(ax, WndH - ay);
-			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc != nullptr)
-				WinProc(ev.Event, ev.Name);
+			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc_ptr != nullptr)
+				WinProc_ptr(ev.Event, ev.Name);
 		}
 		//	ColDial.MotionFunc(ax, WndH - ay);
 	}
@@ -215,8 +215,8 @@ namespace UIGL {
 		else {
 			UiglEvent ev;
 			ev = MsgBox.PassiveMotionFunc(ax, WndH - ay);
-			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc != nullptr)
-				WinProc(ev.Event, ev.Name);
+			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc_ptr != nullptr)
+				WinProc_ptr(ev.Event, ev.Name);
 		}
 		//	ColDial.PassiveMotionFunc(ax, WndH - ay);
 	}
@@ -237,8 +237,8 @@ namespace UIGL {
 		else {
 			UiglEvent ev;
 			ev = MsgBox.MouseWheelFunc(button, state, ax, WndH - ay);
-			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc != nullptr)
-				WinProc(ev.Event, ev.Name);
+			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc_ptr != nullptr)
+				WinProc_ptr(ev.Event, ev.Name);
 		}
 		//	ColDial.MouseWheelFunc(button, state, ax, WndH - ay);
 	}
@@ -259,8 +259,8 @@ namespace UIGL {
 		else {
 			UiglEvent ev;
 			ev = MsgBox.KeyboardUpFunc(key, ax, WndH - ay);
-			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc != nullptr)
-				WinProc(ev.Event, ev.Name);
+			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc_ptr != nullptr)
+				WinProc_ptr(ev.Event, ev.Name);
 		}
 		//	ColDial.KeyboardUpFunc(key, ax, WndH - ay);
 	}
@@ -281,8 +281,8 @@ namespace UIGL {
 		else {
 			UiglEvent ev;
 			ev = MsgBox.SpecialFunc(key, ax, WndH - ay);
-			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc != nullptr)
-				WinProc(ev.Event, ev.Name);
+			if (ev.Event != uiglEvents::uiglEventEmpty && ev.Name != "" && WinProc_ptr != nullptr)
+				WinProc_ptr(ev.Event, ev.Name);
 		}
 		//	ColDial.SpecialFunc(key, ax, WndH - ay);
 	}
@@ -295,6 +295,15 @@ namespace UIGL {
 	}
 	void UiglMainForm::ReshapeFunc(int aw, int ah)
 	{
+		int i = 0;
+		for (auto it : UiglForms::Forms)
+		{
+			if (it != nullptr)
+				it->ReshapeFunc_g(aw, ah);
+			else UiglForms::Forms.erase(UiglForms::Forms.begin() + i);
+			i++;
+		}
+
 		WndH = ah;
 		WndW = aw;
 		if (ReshapeFunc_ptr != nullptr)

@@ -6,13 +6,13 @@
 
 namespace UIGL {
 
-	Glui_Picture::Glui_Picture()
+	UiglPicture::UiglPicture()
 	{
 		Position.UpdatePtr = this;
 		Size.UpdatePtr = this;
 		H = W = 100.f;
 	}
-	void Glui_Picture::Init()
+	void UiglPicture::Init()
 	{
 		float _w, _h;
 		if (w_p != 0 && h_p != 0)
@@ -44,7 +44,7 @@ namespace UIGL {
 		///		glLineWidth(1);
 		//		glPointSize(1);
 	}
-	bool Glui_Picture::Open(std::string _file_name)
+	bool UiglPicture::Open(std::string _file_name)
 	{
 		layers.clear();
 		points.clear();
@@ -77,7 +77,7 @@ namespace UIGL {
 		}
 		return 1;
 	}
-	UiglEvent Glui_Picture::MouseFunc(int button, int state, int ax, int ay)
+	UiglEvent UiglPicture::MouseFunc(int button, int state, int ax, int ay)
 	{
 		UiglEvent result;
 
@@ -129,7 +129,7 @@ namespace UIGL {
 		}
 		return result;
 	}
-	UiglEvent Glui_Picture::PassiveMotionFunc(int ax, int ay)
+	UiglEvent UiglPicture::PassiveMotionFunc(int ax, int ay)
 	{
 		UiglEvent result;
 
@@ -162,7 +162,7 @@ namespace UIGL {
 		}
 		return result;
 	}
-	UiglEvent Glui_Picture::MotionFunc(float ax, float ay)
+	UiglEvent UiglPicture::MotionFunc(float ax, float ay)
 	{
 		UiglEvent result;
 		if (is_move&&moved)
@@ -174,7 +174,7 @@ namespace UIGL {
 		}
 		return result;
 	}
-	UiglEvent Glui_Picture::MouseWheelFunc(int button, int state, int ax, int ay)
+	UiglEvent UiglPicture::MouseWheelFunc(int button, int state, int ax, int ay)
 	{
 		UiglEvent result;
 
@@ -188,7 +188,7 @@ namespace UIGL {
 		}
 		return result;
 	}
-	UiglEvent Glui_Picture::KeyboardFunc(unsigned char key, int ax, int ay)
+	UiglEvent UiglPicture::KeyboardFunc(unsigned char key, int ax, int ay)
 	{
 		UiglEvent result;
 		if (in_focus && key == 13)
@@ -198,22 +198,22 @@ namespace UIGL {
 		}
 		return result;
 	}
-	UiglEvent Glui_Picture::SpecialFunc(int key, int ax, int ay)
+	UiglEvent UiglPicture::SpecialFunc(int key, int ax, int ay)
 	{
 		UiglEvent result;
 		return result;
 	}
-	UiglEvent Glui_Picture::KeyboardUpFunc(unsigned char key, int ax, int ay)
+	UiglEvent UiglPicture::KeyboardUpFunc(unsigned char key, int ax, int ay)
 	{
 		UiglEvent result;
 		return result;
 	}
-	UiglEvent Glui_Picture::SpecialUpFunc(int key, int ax, int ay)
+	UiglEvent UiglPicture::SpecialUpFunc(int key, int ax, int ay)
 	{
 		UiglEvent result;
 		return result;
 	}
-	void Glui_Picture::Line_init(uiglPrimitives prim, float length)
+	void UiglPicture::Line_init(uiglPrimitives prim, float length)
 	{
 		switch (prim)
 		{

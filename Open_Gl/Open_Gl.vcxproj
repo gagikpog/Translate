@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FormTranslate.cpp" />
     <ClCompile Include="lib\Config.cpp" />
     <ClCompile Include="lib\uiglColor.cpp" />
     <ClCompile Include="lib\uiglForm.cpp" />
@@ -176,11 +177,13 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\doubleListbox.cpp" />
     <ClCompile Include="src\numbox.cpp" />
+    <ClCompile Include="src\readFromFile.cpp" />
     <ClCompile Include="src\Sentence.cpp" />
     <ClCompile Include="src\textbox.cpp" />
     <ClCompile Include="src\WordObj.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FormTranslate.h" />
     <ClInclude Include="lib\Config.h" />
     <ClInclude Include="lib\freeuigl.h" />
     <ClInclude Include="lib\math\Vector2.h" />
@@ -213,6 +216,7 @@
     <ClInclude Include="src\doubleListbox.h" />
     <ClInclude Include="src\numbox.h" />
     <ClInclude Include="src\Panel.h" />
+    <ClInclude Include="src\readFromFile.h" />
     <ClInclude Include="src\Sentence.h" />
     <ClInclude Include="src\textbox.h" />
     <ClInclude Include="src\WordObj.h" />

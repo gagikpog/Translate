@@ -12,12 +12,12 @@ namespace UIGL {
 		float line_length = 1;
 	};
 
-	class Glui_Picture :public UiglIForms
+	class UiglPicture :public UiglIForms
 	{
 	public:
-		Glui_Picture();
-		Glui_Picture(std::string name) : Glui_Picture() { Name = name; }
-		~Glui_Picture() {}
+		UiglPicture();
+		UiglPicture(std::string name) : UiglPicture() { Name = name; }
+		~UiglPicture() {}
 		std::vector<std::vector<UiglPoint>> points;
 		std::vector<Layer> layers;
 		std::string file_name;

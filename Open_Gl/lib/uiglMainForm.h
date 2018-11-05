@@ -31,7 +31,7 @@ namespace UIGL {
 		static HWND hWnd;
 		static UiglColDiàlog ColDial;
 		static UiglMessageBox MsgBox;
-		static void(*WinProc)(uiglEvents, std::string);
+		static void(*WinProc_ptr)(uiglEvents, std::string);
 		static void(*KeyboardFunc_ptr)(unsigned char, int, int);
 		static void(*SpecialFunc_ptr)(int, int, int);
 		static void(*MouseFunc_ptr)(int, int, int, int);

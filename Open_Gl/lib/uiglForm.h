@@ -22,6 +22,7 @@ namespace UIGL {
 		void SpecialFunc_g(int key, int ax, int ay);
 		void KeyboardUpFunc_g(unsigned char key, int ax, int ay);
 		void SpecialUpFunc_g(int key, int ax, int ay);
+		virtual void ReshapeFunc_g(int aw, int ah) {}
 		void Init_g(bool OnlyFocus = 0, bool clear_background = true);
 		//принимает ссылку на объект класса UiglIForms
 		void Focus_push_back(UiglIForms* func);
