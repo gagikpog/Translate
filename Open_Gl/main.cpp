@@ -155,7 +155,7 @@ void Wnd_proc(uiglEvents ev,string name)
 {
 	cout << "Wnd_proc1  " << ev << "  " << name << endl;
 	
-	if (ev == uiglEvents::uiglMsgYes&&name == "del")
+	if (ev == uiglEvents::uiglMsgYes && name == "del")
 	{
 		for (int i = 0; i < My_data.size(); i++)
 		{
@@ -318,9 +318,7 @@ void Wnd_proc1(uiglEvents ev, string name)
 	
 	if ((ev == uiglMouseLeftDown || ev == uiglEnter) && name == "swap1")
 	{
-		if (Translate_to)
-			Translate_to = 0;
-		else Translate_to = 1;
+		Translate_to = !Translate_to;
 		inp2.Text = "";
 		out2.Text = "";
 		Bild_Window();
@@ -454,6 +452,11 @@ void Wnd_proc_Form5(uiglEvents ev, string name)
 	}
 }
 
+void formT2_proc(uiglEvents ev, string name) 
+{
+	formT2.Proc(ev, name);
+}
+
 int main(int argc, char**argv)
 {
 	//config
@@ -521,6 +524,9 @@ int main(int argc, char**argv)
 
 	glutTimerFunc(50, timer, 0);
 	glutDisplayFunc(Display);
+	///////////////////////////////////////////////////////////////////
+	formT2.Wnd_proc = formT2_proc;
+	///////////////////////////////////////////////////////////////////
 	Bild_Window();
 	Wnd_init();
 	glutMainLoop();
