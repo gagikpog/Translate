@@ -28,7 +28,7 @@ namespace UIGL {
 			result.Name = Name;
 			if (state == 0 && button == 0)
 			{
-				result.Event = uiglMouseLeftDown;
+				result.Event = UIGL::uiglEvents::uiglMouseLeftDown;
 				moved = true;
 				mx = ax - X;
 				my = ay - Y;
@@ -44,7 +44,7 @@ namespace UIGL {
 				if (clock() - double_ckick < 350)
 				{
 					double_ckick = clock();
-					result.Event = uiglDoubleClick;
+					result.Event = UIGL::uiglEvents::uiglDoubleClick;
 				}
 				else double_ckick = clock();
 
@@ -52,28 +52,28 @@ namespace UIGL {
 			}
 			if (state == 1 && button == 0)
 			{
-				result.Event = uiglMouseLeftUp;
+				result.Event = UIGL::uiglEvents::uiglMouseLeftUp;
 				moved = false;
 				return result;
 			}
 			if (state == 0 && button == 1)
 			{
-				result.Event = uiglMouseCenterDown;
+				result.Event = UIGL::uiglEvents::uiglMouseCenterDown;
 				return result;
 			}
 			if (state == 1 && button == 1)
 			{
-				result.Event = uiglMouseCenterUp;
+				result.Event = UIGL::uiglEvents::uiglMouseCenterUp;
 				return result;
 			}
 			if (state == 0 && button == 2)
 			{
-				result.Event = uiglMouseRightDown;
+				result.Event = UIGL::uiglEvents::uiglMouseRightDown;
 				return result;
 			}
 			if (state == 1 && button == 2)
 			{
-				result.Event = uiglMouseRightUp;
+				result.Event = UIGL::uiglEvents::uiglMouseRightUp;
 				return result;
 			}
 		}
@@ -91,13 +91,13 @@ namespace UIGL {
 			{
 				Mouse_in_button = true;
 				result.Name = Name;
-				result.Event = uiglMouseOver;
+				result.Event = UIGL::uiglEvents::uiglMouseOver;
 				return result;
 			}
 			else {
 
 				result.Name = Name;
-				result.Event = uiglMousemove;
+				result.Event = UIGL::uiglEvents::uiglMousemove;
 				return result;
 			}
 		}
@@ -106,7 +106,7 @@ namespace UIGL {
 			if (Mouse_in_button)
 			{
 				result.Name = Name;
-				result.Event = uiglMouseOut;
+				result.Event = UIGL::uiglEvents::uiglMouseOut;
 				Mouse_in_button = false;
 				return result;
 			}
@@ -142,9 +142,9 @@ namespace UIGL {
 		{
 			result.Name = Name;
 			if (state == -1)
-				result.Event = uiglWheelDown;
+				result.Event = UIGL::uiglEvents::uiglWheelDown;
 			if (state == 1)
-				result.Event = uiglWheelUp;
+				result.Event = UIGL::uiglEvents::uiglWheelUp;
 		}
 		return result;
 	}
@@ -384,10 +384,10 @@ namespace UIGL {
 			}
 
 			result.Name = Name;
-			result.Event = uiglChanged;
+			result.Event = UIGL::uiglEvents::uiglChanged;
 			if (key == 13)
 			{
-				result.Event = uiglEnter;
+				result.Event = UIGL::uiglEvents::uiglEnter;
 			}
 		}
 		return result;

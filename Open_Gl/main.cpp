@@ -169,7 +169,7 @@ void Wnd_proc(uiglEvents ev,string name)
 	}
 
 
-	if (name == "enter" && ev == uiglMouseLeftUp||((name=="list1"||name=="list2") && (ev == uiglDoubleClick || ev == uiglEnter)))
+	if (name == "enter" && ev == UIGL::uiglEvents::uiglMouseLeftUp||((name=="list1"||name=="list2") && (ev == UIGL::uiglEvents::uiglDoubleClick || ev == UIGL::uiglEvents::uiglEnter)))
 	{
 		if (list1.Selected >= 0 && list1.Selected < My_sub_data.size())
 		{
@@ -200,19 +200,19 @@ void Wnd_proc(uiglEvents ev,string name)
 
 		}
 	}
-	if (name == "next" && ev == uiglMouseLeftUp)
+	if (name == "next" && ev == UIGL::uiglEvents::uiglMouseLeftUp)
 	{
 		cut_data(My_sub_data, My_data, word_count);
 		ans_wrong = ans_correct = 0;
 		resetlist();
 	}
 
-	if(name == "dialog"&&ev == uiglEraseMsg)
+	if(name == "dialog"&&ev == UIGL::uiglEvents::uiglEraseMsg)
 	{
 		Bild_Window();
 	}
 	
-	if ((ev == uiglMouseLeftDown || ev == uiglEnter) && name.substr(0, 6) == "setcol")
+	if ((ev == UIGL::uiglEvents::uiglMouseLeftDown || ev == UIGL::uiglEvents::uiglEnter) && name.substr(0, 6) == "setcol")
 	{
 		switch (name[6])
 		{
@@ -248,7 +248,7 @@ void Wnd_proc(uiglEvents ev,string name)
 		}
 	}
 
-	if ((ev == uiglMouseLeftDown||ev == uiglEnter) && name == "setting")
+	if ((ev == UIGL::uiglEvents::uiglMouseLeftDown||ev == UIGL::uiglEvents::uiglEnter) && name == "setting")
 	{
 		if(inp.Text != "")
 			word_count = stoi(inp.Text);
@@ -262,7 +262,7 @@ void Wnd_proc1(uiglEvents ev, string name)
 {
 	cout << "Wnd_proc1  "<< ev << "  " << name << endl;
 
-	if ((ev == uiglMouseLeftDown || ev == uiglEnter) && name.substr(0,4)=="head")
+	if ((ev == UIGL::uiglEvents::uiglMouseLeftDown || ev == UIGL::uiglEvents::uiglEnter) && name.substr(0,4)=="head")
 	{
 		switch (name[4])
 		{
@@ -306,7 +306,7 @@ void Wnd_proc1(uiglEvents ev, string name)
 		}
 	}
 
-	if ((ev == uiglMouseLeftDown || ev == uiglEnter)&& name == "setting")
+	if ((ev == UIGL::uiglEvents::uiglMouseLeftDown || ev == UIGL::uiglEvents::uiglEnter)&& name == "setting")
 	{
 		if (inp.Text != "")
 			word_count = stoi(inp.Text);
@@ -316,7 +316,7 @@ void Wnd_proc1(uiglEvents ev, string name)
 		Animation1(0);
 	}
 	
-	if ((ev == uiglMouseLeftDown || ev == uiglEnter) && name == "swap1")
+	if ((ev == UIGL::uiglEvents::uiglMouseLeftDown || ev == UIGL::uiglEvents::uiglEnter) && name == "swap1")
 	{
 		Translate_to = !Translate_to;
 		inp2.Text = "";
@@ -324,7 +324,7 @@ void Wnd_proc1(uiglEvents ev, string name)
 		Bild_Window();
 	}
 
-	if ((ev == uiglMouseLeftDown || ev == uiglEnter)&& name == "favor")
+	if ((ev == UIGL::uiglEvents::uiglMouseLeftDown || ev == UIGL::uiglEvents::uiglEnter)&& name == "favor")
 	{
 		if (inp2.Text != "" && out2.Text != "")
 		{
@@ -341,13 +341,13 @@ void Wnd_proc1(uiglEvents ev, string name)
 		}
 	}
 	
-	if ((ev == uiglMouseLeftDown || ev == uiglEnter) && name == "cutword")
+	if ((ev == UIGL::uiglEvents::uiglMouseLeftDown || ev == UIGL::uiglEvents::uiglEnter) && name == "cutword")
 	{
 		Jora::MsgBox.Show(MsgString[(int)Jora::Language][4], MsgString[(int)Jora::Language][0],uiglButtonOKNO);
 		Jora::MsgBox.Name = "del";
 	}
 
-	if (ev == uiglEnter && name == "inp2")
+	if (ev == UIGL::uiglEvents::uiglEnter && name == "inp2")
 	{
 		if (inp2.Text != "") 
 		{
@@ -370,7 +370,7 @@ void Wnd_proc1(uiglEvents ev, string name)
 		}
 	}
 
-	if((ev == uiglMouseLeftDown || ev == uiglEnter) && name == "setting")
+	if((ev == UIGL::uiglEvents::uiglMouseLeftDown || ev == UIGL::uiglEvents::uiglEnter) && name == "setting")
 	{
 		if (inp.Text != "")
 			word_count = stoi(inp.Text);
@@ -384,17 +384,17 @@ void Wnd_proc_Form5(uiglEvents ev, string name)
 {
 	cout << "Wnd_proc_Form5  "<< ev << "  " << name << endl;
 
-	if (((ev == uiglMouseLeftDown) || (ev == uiglEnter)) && name == "setting")
+	if (((ev == UIGL::uiglEvents::uiglMouseLeftDown) || (ev == UIGL::uiglEvents::uiglEnter)) && name == "setting")
 	{
 		state_wnd = 2;
 		Animation1(0);
 	}
 
-	if ((ev == uiglMouseLeftUp) && name.substr(0,4) == "word")
+	if ((ev == UIGL::uiglEvents::uiglMouseLeftUp) && name.substr(0,4) == "word")
 	{		
 		WordsPosUpdate(std::stoi(name.substr(4)));
 	}
-	if ((ev == uiglMouseLeftDown || ev == uiglEnter) && name == "Translation")
+	if ((ev == UIGL::uiglEvents::uiglMouseLeftDown || ev == UIGL::uiglEvents::uiglEnter) && name == "Translation")
 	{
 
 		for (int i = 0; i < words.size(); i++)
@@ -410,7 +410,7 @@ void Wnd_proc_Form5(uiglEvents ev, string name)
 		}
 	}
 
-	if ((ev == uiglMouseLeftDown || ev == uiglEnter) && name == "enter")
+	if ((ev == UIGL::uiglEvents::uiglMouseLeftDown || ev == UIGL::uiglEvents::uiglEnter) && name == "enter")
 	{		
 		std::string txt = MakeSentencr();
 		if (txt == "loop")
@@ -439,7 +439,7 @@ void Wnd_proc_Form5(uiglEvents ev, string name)
 
 	}
 
-	if ((ev == uiglMouseLeftDown || ev == uiglEnter) && name == "next")
+	if ((ev == UIGL::uiglEvents::uiglMouseLeftDown || ev == UIGL::uiglEvents::uiglEnter) && name == "next")
 	{
 		if (sentence_selection < ArrSentence.size())
 		{
@@ -526,6 +526,13 @@ int main(int argc, char**argv)
 	glutDisplayFunc(Display);
 	///////////////////////////////////////////////////////////////////
 	formT2.Wnd_proc = formT2_proc;
+	//uiglEvents a;
+	//a =  uiglEvents::uiglEventEmpty | uiglEvents::uiglChanged;
+	//if(a == uiglEvents::uiglEventEmpty )
+	//	cout << "eeeeeeeeee\n";
+//	uiglEvents_t a = uiglEvents::uiglChanged | uiglEvents::uiglEventEmpty;
+//	if (a == uiglEvents::uiglChanged)
+//		cout << "eeeeeeeeee\n";
 	///////////////////////////////////////////////////////////////////
 	Bild_Window();
 	Wnd_init();

@@ -25,7 +25,7 @@ namespace UIGL {
 				}
 				else Checked = 1;
 				result.Name = Name;
-				result.Event = uiglChanged;
+				result.Event = UIGL::uiglEvents::uiglChanged;
 			}
 		return result;
 	}
@@ -40,13 +40,13 @@ namespace UIGL {
 			{
 				Mouse_in_button = true;
 				result.Name = Name;
-				result.Event = uiglMouseOver;
+				result.Event = UIGL::uiglEvents::uiglMouseOver;
 				return result;
 			}
 			else {
 
 				result.Name = Name;
-				result.Event = uiglMousemove;
+				result.Event = UIGL::uiglEvents::uiglMousemove;
 				return result;
 			}
 		}
@@ -55,7 +55,7 @@ namespace UIGL {
 			if (Mouse_in_button)
 			{
 				result.Name = Name;
-				result.Event = uiglMouseOut;
+				result.Event = UIGL::uiglEvents::uiglMouseOut;
 				Mouse_in_button = false;
 				return result;
 			}
@@ -96,7 +96,7 @@ namespace UIGL {
 		{
 			Checked = !Checked;
 			result.Name = Name;
-			result.Event = uiglChanged;
+			result.Event = UIGL::uiglEvents::uiglChanged;
 		}
 
 		return result;

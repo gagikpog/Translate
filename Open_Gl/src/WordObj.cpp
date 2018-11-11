@@ -32,7 +32,7 @@ UIGL::UiglEvent WordObj::MouseFunc(int button, int state, int ax, int ay)
 		result.Name = Name;
 		if (state == 0 && button == 0)
 		{
-			result.Event = UIGL::uiglMouseLeftDown;
+			result.Event = UIGL::uiglEvents::uiglMouseLeftDown;
 			moved = true;
 			mx = ax - X;
 			my = ay - Y;
@@ -40,7 +40,7 @@ UIGL::UiglEvent WordObj::MouseFunc(int button, int state, int ax, int ay)
 			if (clock() - double_ckick < 350)
 			{
 				double_ckick = clock();
-				result.Event = UIGL::uiglDoubleClick;
+				result.Event = UIGL::uiglEvents::uiglDoubleClick;
 			}
 			else double_ckick = clock();
 
@@ -48,28 +48,28 @@ UIGL::UiglEvent WordObj::MouseFunc(int button, int state, int ax, int ay)
 		}
 		if (state == 1 && button == 0)
 		{
-			result.Event = UIGL::uiglMouseLeftUp;
+			result.Event = UIGL::uiglEvents::uiglMouseLeftUp;
 			moved = false;
 			return result;
 		}
 		if (state == 0 && button == 1)
 		{
-			result.Event = UIGL::uiglMouseCenterDown;
+			result.Event = UIGL::uiglEvents::uiglMouseCenterDown;
 			return result;
 		}
 		if (state == 1 && button == 1)
 		{
-			result.Event = UIGL::uiglMouseCenterUp;
+			result.Event = UIGL::uiglEvents::uiglMouseCenterUp;
 			return result;
 		}
 		if (state == 0 && button == 2)
 		{
-			result.Event = UIGL::uiglMouseRightDown;
+			result.Event = UIGL::uiglEvents::uiglMouseRightDown;
 			return result;
 		}
 		if (state == 1 && button == 2)
 		{
-			result.Event = UIGL::uiglMouseRightUp;
+			result.Event = UIGL::uiglEvents::uiglMouseRightUp;
 			return result;
 		}
 	}
@@ -92,12 +92,12 @@ UIGL::UiglEvent WordObj::PassiveMotionFunc(int ax, int ay)
 			{
 				Mouse_in_button = true;
 				result.Name = Name;
-				result.Event = UIGL::uiglMouseOver;
+				result.Event = UIGL::uiglEvents::uiglMouseOver;
 				return result;
 			}
 			else {
 				result.Name = Name;
-				result.Event = UIGL::uiglMousemove;
+				result.Event = UIGL::uiglEvents::uiglMousemove;
 				return result;
 			}
 		}
@@ -105,7 +105,7 @@ UIGL::UiglEvent WordObj::PassiveMotionFunc(int ax, int ay)
 			if (Mouse_in_button)
 			{
 				result.Name = Name;
-				result.Event = UIGL::uiglMouseOut;
+				result.Event = UIGL::uiglEvents::uiglMouseOut;
 			}
 			Mouse_in_button = false;
 			return result;
@@ -184,9 +184,9 @@ UIGL::UiglEvent WordObj::MouseWheelFunc(int button, int state, int ax, int ay)
 	{
 		result.Name = Name;
 		if (state == -1)
-			result.Event = UIGL::uiglWheelDown;
+			result.Event = UIGL::uiglEvents::uiglWheelDown;
 		if (state == 1)
-			result.Event = UIGL::uiglWheelUp;
+			result.Event = UIGL::uiglEvents::uiglWheelUp;
 	}
 	return result;
 }
@@ -200,7 +200,7 @@ UIGL::UiglEvent WordObj::KeyboardFunc(unsigned char key, int ax, int ay)
 	if (!Visible) return result;
 	if (in_focus && key == 13)
 	{
-		result.Event = UIGL::uiglEnter;
+		result.Event = UIGL::uiglEvents::uiglEnter;
 		result.Name = Name;
 	}
 	return result;
@@ -537,7 +537,7 @@ UIGL::UiglEvent WordObj::MouseFunc2(int button, int state, int ax, int ay)
 		{
 			contextmenu.Visible = false;
 			_moved = 0;
-			result.Event = UIGL::uiglMouseLeftDown;
+			result.Event = UIGL::uiglEvents::uiglMouseLeftDown;
 			moved = true;
 			mx = ax - X;
 			my = ay - Y;
@@ -545,7 +545,7 @@ UIGL::UiglEvent WordObj::MouseFunc2(int button, int state, int ax, int ay)
 			if (clock() - double_ckick < 350)
 			{
 				double_ckick = clock();
-				result.Event = UIGL::uiglDoubleClick;
+				result.Event = UIGL::uiglEvents::uiglDoubleClick;
 			}
 			else double_ckick = clock();
 
@@ -554,20 +554,20 @@ UIGL::UiglEvent WordObj::MouseFunc2(int button, int state, int ax, int ay)
 		if (state == 1 && button == 0)
 		{
 			contextmenu.Visible = false;
-			result.Event = UIGL::uiglMouseLeftUp;
+			result.Event = UIGL::uiglEvents::uiglMouseLeftUp;
 			moved = false;
 			return result;
 		}
 		if (state == 0 && button == 1)
 		{
 			contextmenu.Visible = false;
-			result.Event = UIGL::uiglMouseCenterDown;
+			result.Event = UIGL::uiglEvents::uiglMouseCenterDown;
 			return result;
 		}
 		if (state == 1 && button == 1)
 		{
 			contextmenu.Visible = false;
-			result.Event = UIGL::uiglMouseCenterUp;
+			result.Event = UIGL::uiglEvents::uiglMouseCenterUp;
 			return result;
 		}
 		if (state == 0 && button == 2)
@@ -582,12 +582,12 @@ UIGL::UiglEvent WordObj::MouseFunc2(int button, int state, int ax, int ay)
 			contextmenu.Color = Color;
 			contextmenu.Outline_color = Outline_color;
 			contextmenu.Text_color = Text_color;
-			result.Event = UIGL::uiglMouseRightDown;
+			result.Event = UIGL::uiglEvents::uiglMouseRightDown;
 			return result;
 		}
 		if (state == 1 && button == 2)
 		{
-			result.Event = UIGL::uiglMouseRightUp;
+			result.Event = UIGL::uiglEvents::uiglMouseRightUp;
 			return result;
 		}
 	}
@@ -599,7 +599,7 @@ UIGL::UiglEvent WordObj::MouseFunc2(int button, int state, int ax, int ay)
 				contextmenu.Visible = false;
 				result.Name = Name;
 				_moved = 1;
-				result.Event = UIGL::uiglMouseLeftDown;
+				result.Event = UIGL::uiglEvents::uiglMouseLeftDown;
 				moved = true;
 				mx = ax - W;
 				my = ay - H;
@@ -607,7 +607,7 @@ UIGL::UiglEvent WordObj::MouseFunc2(int button, int state, int ax, int ay)
 				if (clock() - double_ckick < 350)
 				{
 					double_ckick = clock();
-					result.Event = UIGL::uiglDoubleClick;
+					result.Event = UIGL::uiglEvents::uiglDoubleClick;
 				}
 				else double_ckick = clock();
 
@@ -616,20 +616,20 @@ UIGL::UiglEvent WordObj::MouseFunc2(int button, int state, int ax, int ay)
 			if (state == 1 && button == 0)
 			{
 				contextmenu.Visible = false;
-				result.Event = UIGL::uiglMouseLeftUp;
+				result.Event = UIGL::uiglEvents::uiglMouseLeftUp;
 				moved = false;
 				return result;
 			}
 			if (state == 0 && button == 1)
 			{
 				contextmenu.Visible = false;
-				result.Event = UIGL::uiglMouseCenterDown;
+				result.Event = UIGL::uiglEvents::uiglMouseCenterDown;
 				return result;
 			}
 			if (state == 1 && button == 1)
 			{
 				contextmenu.Visible = false;
-				result.Event = UIGL::uiglMouseCenterUp;
+				result.Event = UIGL::uiglEvents::uiglMouseCenterUp;
 				return result;
 			}
 			if (state == 0 && button == 2)
@@ -644,12 +644,12 @@ UIGL::UiglEvent WordObj::MouseFunc2(int button, int state, int ax, int ay)
 				contextmenu.Color = Color;
 				contextmenu.Outline_color = Outline_color;
 				contextmenu.Text_color = Text_color;
-				result.Event = UIGL::uiglMouseRightDown;
+				result.Event = UIGL::uiglEvents::uiglMouseRightDown;
 				return result;
 			}
 			if (state == 1 && button == 2)
 			{
-				result.Event = UIGL::uiglMouseRightUp;
+				result.Event = UIGL::uiglEvents::uiglMouseRightUp;
 				return result;
 			}
 		}

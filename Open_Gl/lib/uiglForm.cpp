@@ -35,7 +35,7 @@ namespace UIGL {
 		if (Focus.size())
 		{
 			msg = Focus[Focus.size() - 1]->MouseWheelFunc(button, state, ax, ay);
-			if (msg.Event == uiglEraseMsg)
+			if (msg.Event == UIGL::uiglEvents::uiglEraseMsg)
 				Focus.pop_back();
 			if (msg.Name != "")
 				Wnd_proc(msg.Event, msg.Name);
@@ -45,7 +45,7 @@ namespace UIGL {
 			for (std::list<UiglIForms*>::iterator it = Stec.begin(); it != Stec.end(); it++, i++)
 			{
 				msg = (*it)->MouseWheelFunc(button, state, ax, ay);
-				if (msg.Event == uiglEraseMsg) {
+				if (msg.Event == UIGL::uiglEvents::uiglEraseMsg) {
 					Stec.erase(it);
 					if (i <= in_focus)
 						in_focus--;
@@ -71,7 +71,7 @@ namespace UIGL {
 		if (Focus.size())
 		{
 			msg = Focus[Focus.size() - 1]->PassiveMotionFunc(ax, ay);
-			if (msg.Event == uiglEraseMsg)
+			if (msg.Event == UIGL::uiglEvents::uiglEraseMsg)
 				Focus.pop_back();
 			if (msg.Name != "") {
 				Wnd_proc(msg.Event, msg.Name);
@@ -82,7 +82,7 @@ namespace UIGL {
 			for (std::list<UiglIForms*>::iterator it = Stec.begin(); it != Stec.end(); i++)
 			{
 				msg = (*it)->PassiveMotionFunc(ax, ay);
-				if (msg.Event == uiglEraseMsg)
+				if (msg.Event == UIGL::uiglEvents::uiglEraseMsg)
 				{
 					Stec.erase(it);
 					it = Stec.begin();
@@ -109,7 +109,7 @@ namespace UIGL {
 		if (Focus.size())
 		{
 			msg = Focus[Focus.size() - 1]->MotionFunc(ax, ay);
-			if (msg.Event == uiglEraseMsg)
+			if (msg.Event == UIGL::uiglEvents::uiglEraseMsg)
 				Focus.pop_back();
 			if (msg.Name != "")
 				Wnd_proc(msg.Event, msg.Name);
@@ -119,7 +119,7 @@ namespace UIGL {
 			for (std::list<UiglIForms*>::iterator it = Stec.begin(); it != Stec.end(); it++, i++)
 			{
 				msg = (*it)->MotionFunc(ax, ay);
-				if (msg.Event == uiglEraseMsg)
+				if (msg.Event == UIGL::uiglEvents::uiglEraseMsg)
 				{
 					Stec.erase(it);
 					if (i <= in_focus)
@@ -146,7 +146,7 @@ namespace UIGL {
 		if (Focus.size())
 		{
 			msg = Focus[Focus.size() - 1]->MouseFunc(button, state, ax, ay);
-			if (msg.Event == uiglEraseMsg)
+			if (msg.Event == UIGL::uiglEvents::uiglEraseMsg)
 				Focus.pop_back();
 			if (msg.Name != "")
 				Wnd_proc(msg.Event, msg.Name);
@@ -156,7 +156,7 @@ namespace UIGL {
 			for (std::list<UiglIForms*>::iterator it = Stec.begin(); it != Stec.end(); it++, i++)
 			{
 				msg = (*it)->MouseFunc(button, state, ax, ay);
-				if (msg.Event == uiglEraseMsg)
+				if (msg.Event == UIGL::uiglEvents::uiglEraseMsg)
 				{
 					Stec.erase(it);
 					if (i <= in_focus)
@@ -190,7 +190,7 @@ namespace UIGL {
 		if (Focus.size())
 		{
 			msg = Focus[Focus.size() - 1]->KeyboardFunc(key, ax, ay);
-			if (msg.Event == uiglEraseMsg)
+			if (msg.Event == UIGL::uiglEvents::uiglEraseMsg)
 				Focus.pop_back();
 			if (msg.Name != "")
 			{
@@ -215,7 +215,7 @@ namespace UIGL {
 			std::list<UiglIForms*>::iterator it = Stec.begin();
 			std::advance(it, in_focus);
 			msg = (*it)->KeyboardFunc(key, ax, ay);
-			if (msg.Event == uiglEraseMsg)
+			if (msg.Event == UIGL::uiglEvents::uiglEraseMsg)
 			{
 				Stec.erase(it);
 				in_focus--;
@@ -240,7 +240,7 @@ namespace UIGL {
 		if (Focus.size())
 		{
 			msg = Focus[Focus.size() - 1]->SpecialFunc(key, ax, ay);
-			if (msg.Event == uiglEraseMsg)
+			if (msg.Event == UIGL::uiglEvents::uiglEraseMsg)
 				Focus.pop_back();
 			if (msg.Name != "")
 			{
@@ -251,7 +251,7 @@ namespace UIGL {
 			std::list<UiglIForms*>::iterator it = Stec.begin();
 			std::advance(it, in_focus);
 			msg = (*it)->SpecialFunc(key, ax, ay);
-			if (msg.Event == uiglEraseMsg)
+			if (msg.Event == UIGL::uiglEvents::uiglEraseMsg)
 			{
 				Stec.erase(it);
 				in_focus--;
@@ -272,7 +272,7 @@ namespace UIGL {
 		if (Focus.size())
 		{
 			msg = Focus[Focus.size() - 1]->KeyboardUpFunc(key, ax, ay);
-			if (msg.Event == uiglEraseMsg)
+			if (msg.Event == UIGL::uiglEvents::uiglEraseMsg)
 				Focus.pop_back();
 			if (msg.Name != "")
 			{
@@ -283,7 +283,7 @@ namespace UIGL {
 			std::list<UiglIForms*>::iterator it = Stec.begin();
 			std::advance(it, in_focus);
 			msg = (*it)->KeyboardUpFunc(key, ax, ay);
-			if (msg.Event == uiglEraseMsg)
+			if (msg.Event == UIGL::uiglEvents::uiglEraseMsg)
 			{
 				Stec.erase(it);
 				in_focus--;
@@ -307,7 +307,7 @@ namespace UIGL {
 		if (Focus.size())
 		{
 			msg = Focus[Focus.size() - 1]->SpecialUpFunc(key, ax, ay);
-			if (msg.Event == uiglEraseMsg)
+			if (msg.Event == UIGL::uiglEvents::uiglEraseMsg)
 				Focus.pop_back();
 			if (msg.Name != "")
 				Wnd_proc(msg.Event, msg.Name);
@@ -316,7 +316,7 @@ namespace UIGL {
 			std::list<UiglIForms*>::iterator it = Stec.begin();
 			std::advance(it, in_focus);
 			msg = (*it)->SpecialUpFunc(key, ax, ay);
-			if (msg.Event == uiglEraseMsg)
+			if (msg.Event == UIGL::uiglEvents::uiglEraseMsg)
 			{
 				Stec.erase(it);
 				in_focus--;

@@ -35,13 +35,13 @@ namespace UIGL {
 				my = ay - Y;
 
 				int n = (Y + H - 5 - ay) / Text_size;
-				result.Event = uiglChanged;
+				result.Event = UIGL::uiglEvents::uiglChanged;
 				if (_count >n && n + item_up_num<Items.size())
 					Selected = item_up_num + n;
 				if (clock() - double_ckick < 350)
 				{
 					double_ckick = clock();
-					result.Event = uiglDoubleClick;
+					result.Event = UIGL::uiglEvents::uiglDoubleClick;
 				}
 				else double_ckick = clock();
 
@@ -49,29 +49,29 @@ namespace UIGL {
 			}
 			if (state == 1 && button == 0)
 			{
-				result.Event = uiglMouseLeftUp;
+				result.Event = UIGL::uiglEvents::uiglMouseLeftUp;
 				Skrol.MouseFunc(button, state, ax, ay);
 				moved = false;
 				return result;
 			}
 			if (state == 0 && button == 1)
 			{
-				result.Event = uiglMouseCenterDown;
+				result.Event = UIGL::uiglEvents::uiglMouseCenterDown;
 				return result;
 			}
 			if (state == 1 && button == 1)
 			{
-				result.Event = uiglMouseCenterUp;
+				result.Event = UIGL::uiglEvents::uiglMouseCenterUp;
 				return result;
 			}
 			if (state == 0 && button == 2)
 			{
-				result.Event = uiglMouseRightDown;
+				result.Event = UIGL::uiglEvents::uiglMouseRightDown;
 				return result;
 			}
 			if (state == 1 && button == 2)
 			{
-				result.Event = uiglMouseRightUp;
+				result.Event = UIGL::uiglEvents::uiglMouseRightUp;
 				return result;
 			}
 		}
@@ -100,12 +100,12 @@ namespace UIGL {
 			{
 				Mouse_in_button = true;
 				result.Name = Name;
-				result.Event = uiglMouseOver;
+				result.Event = UIGL::uiglEvents::uiglMouseOver;
 				return result;
 			}
 			else {
 				result.Name = Name;
-				result.Event = uiglMousemove;
+				result.Event = UIGL::uiglEvents::uiglMousemove;
 				return result;
 			}
 		}
@@ -114,7 +114,7 @@ namespace UIGL {
 			if (Mouse_in_button)
 			{
 				result.Name = Name;
-				result.Event = uiglMouseOut;
+				result.Event = UIGL::uiglEvents::uiglMouseOut;
 				Mouse_in_button = false;
 				return result;
 			}
@@ -132,7 +132,7 @@ namespace UIGL {
 			Position.setPosition(X, Y);
 			double_ckick = 0;
 		}
-		if (Skrol.MotionFunc(ax, ay).Event == uiglChanged)
+		if (Skrol.MotionFunc(ax, ay).Event == UIGL::uiglEvents::uiglChanged)
 		{
 			int _count = ((H - 10) / Text_size);
 			item_up_num = Items.size() - _count - Skrol.Get_Position();
@@ -153,11 +153,11 @@ namespace UIGL {
 			{
 				Skrol.Step_ago();
 				item_up_num = Skrol.Max - Skrol.Get_Position();
-				result.Event = uiglWheelDown;
+				result.Event = UIGL::uiglEvents::uiglWheelDown;
 			}
 			if (state == 1)
 			{
-				result.Event = uiglWheelUp;
+				result.Event = UIGL::uiglEvents::uiglWheelUp;
 				Skrol.Step_forward();
 				item_up_num = Skrol.Max - Skrol.Get_Position();
 			}
@@ -171,7 +171,7 @@ namespace UIGL {
 		if (key == 13 && in_focus)
 		{
 			result.Name = Name;
-			result.Event = uiglEnter;
+			result.Event = UIGL::uiglEvents::uiglEnter;
 		}
 		return result;
 	}
@@ -187,7 +187,7 @@ namespace UIGL {
 				if (Items.size() >Selected + 1)
 				{
 					Selected++;
-					result.Event = uiglChanged;
+					result.Event = UIGL::uiglEvents::uiglChanged;
 					result.Name = Name;
 					int _count = ((H - 10.0f) / Text_size);
 					if (Selected - item_up_num > _count - 1)
@@ -205,7 +205,7 @@ namespace UIGL {
 				if (Selected > 0)
 				{
 					Selected--;
-					result.Event = uiglChanged;
+					result.Event = UIGL::uiglEvents::uiglChanged;
 					result.Name = Name;
 					int _count = ((H - 10.0f) / Text_size);
 					if (Selected - item_up_num < 0)

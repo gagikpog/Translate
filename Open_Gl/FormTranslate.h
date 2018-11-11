@@ -37,12 +37,12 @@ public:
 	void Proc(UIGL::uiglEvents ev,std::string name)
 	{
 		std::cout << "FormTranslate  " << ev << "  " << name << std::endl;
-		if (ev == UIGL::uiglEnter && name == "inp2")
+		if (ev == UIGL::uiglEvents::uiglEnter && name == "inp2")
 		{
 			translate();
 			return;
 		}
-		if ((ev == UIGL::uiglMouseLeftDown || ev == UIGL::uiglEnter) && name == "swap1")
+		if ((ev == UIGL::uiglEvents::uiglMouseLeftDown || ev == UIGL::uiglEvents::uiglEnter) && name == "swap1")
 		{
 			Translate_to = !Translate_to;
 			inp2.Text = "";
@@ -50,18 +50,34 @@ public:
 			update();
 			return;
 		}
-		if ((ev == UIGL::uiglMouseLeftDown || ev == UIGL::uiglEnter) && name == "favor")
+		if ((ev == UIGL::uiglEvents::uiglMouseLeftDown || ev == UIGL::uiglEvents::uiglEnter) && name == "favor")
 		{
 			favourite();
 		}
-		if ((ev == UIGL::uiglMouseLeftDown || ev == UIGL::uiglEnter) && name == "cutword")
+		if ((ev == UIGL::uiglEvents::uiglMouseLeftDown || ev == UIGL::uiglEvents::uiglEnter) && name == "cutword")
 		{
 			UIGL::Jora::MsgBox.Show(MsgString[(int)UIGL::Jora::Language][4], MsgString[(int)UIGL::Jora::Language][0], UIGL::uiglButtonOKNO);
 			UIGL::Jora::MsgBox.Name = "del";
+			//UIGL::UiglMainForm.
+			//this->Focus_push_back(&messageBox);
+			
+		}
+		if (ev == UIGL::uiglEvents::uiglMsgYes && name == "del")
+		{
+			for (int i = 0; i < My_data.size(); i++)
+			{
+				if (list_l.Get_Selected_text() == My_data[i].Text)
+				{
+					My_data.erase(My_data.begin() + i);
+				}
+			}
+			list_updat();
+			saveFavouriteWords("selfnew.txt", My_data);
 		}
 	}
 
 	bool Translate_to = false;
+	UIGL::UiglMessageBox messageBox;
 private:
 
 	std::vector<UIGL::string_int> My_data;

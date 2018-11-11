@@ -28,7 +28,7 @@ namespace UIGL {
 				Position.getPositionY() < ay && Position.getPositionY() + Size.getSizeH() > ay)
 			{
 				result.Name = Name;
-				result.Event = uiglMouseLeftDown;
+				result.Event = UIGL::uiglEvents::uiglMouseLeftDown;
 				if (ax > Position.getPositionX() + Size.getSizeW() - Size.getSizeH()*0.8f)
 					open = true;
 			}
@@ -39,7 +39,7 @@ namespace UIGL {
 				Position.getPositionY() < ay && Position.getPositionY() + Size.getSizeH() > ay)
 			{
 				result.Name = Name;
-				result.Event = uiglMouseLeftUp;
+				result.Event = UIGL::uiglEvents::uiglMouseLeftUp;
 			}
 		}
 		if (button == 1 && state == 0)
@@ -48,7 +48,7 @@ namespace UIGL {
 				Position.getPositionY() < ay && Position.getPositionY() + Size.getSizeH() > ay)
 			{
 				result.Name = Name;
-				result.Event = uiglMouseCenterDown;
+				result.Event = UIGL::uiglEvents::uiglMouseCenterDown;
 			}
 		}
 		if (button == 1 && state == 1)
@@ -57,7 +57,7 @@ namespace UIGL {
 				Position.getPositionY() < ay && Position.getPositionY() + Size.getSizeH() > ay)
 			{
 				result.Name = Name;
-				result.Event = uiglMouseCenterUp;
+				result.Event = UIGL::uiglEvents::uiglMouseCenterUp;
 			}
 		}
 		if (button == 2 && state == 0)
@@ -66,7 +66,7 @@ namespace UIGL {
 				Position.getPositionY() < ay && Position.getPositionY() + Size.getSizeH() > ay)
 			{
 				result.Name = Name;
-				result.Event = uiglMouseRightDown;
+				result.Event = UIGL::uiglEvents::uiglMouseRightDown;
 			}
 		}
 		if (button == 2 && state == 1)
@@ -75,7 +75,7 @@ namespace UIGL {
 				Position.getPositionY() < ay && Position.getPositionY() + Size.getSizeH() > ay)
 			{
 				result.Name = Name;
-				result.Event = uiglMouseRightUp;
+				result.Event = UIGL::uiglEvents::uiglMouseRightUp;
 			}
 		}
 
@@ -131,13 +131,13 @@ namespace UIGL {
 			{
 				Mouse_in_button = true;
 				result.Name = Name;
-				result.Event = uiglMouseOver;
+				result.Event = UIGL::uiglEvents::uiglMouseOver;
 				return result;
 			}
 			else {
 
 				result.Name = Name;
-				result.Event = uiglMousemove;
+				result.Event = UIGL::uiglEvents::uiglMousemove;
 				return result;
 			}
 		}
@@ -147,7 +147,7 @@ namespace UIGL {
 			if (Mouse_in_button)
 			{
 				result.Name = Name;
-				result.Event = uiglMouseOut;
+				result.Event = UIGL::uiglEvents::uiglMouseOut;
 				Mouse_in_button = false;
 				return result;
 			}
@@ -216,7 +216,7 @@ namespace UIGL {
 			Select = Select_temp;
 			open = 0;
 			result.Name = Name;
-			result.Event = uiglChanged;
+			result.Event = UIGL::uiglEvents::uiglChanged;
 		}
 		/*	if (Select_temp < Select_min) {
 		if (Select_min > 0)
@@ -288,7 +288,7 @@ namespace UIGL {
 					{
 						Select--;
 						result.Name = Name;
-						result.Event = uiglChanged;
+						result.Event = UIGL::uiglEvents::uiglChanged;
 						Select_temp = Select;
 					}
 				}
@@ -298,7 +298,7 @@ namespace UIGL {
 					{
 						Select++;
 						result.Name = Name;
-						result.Event = uiglChanged;
+						result.Event = UIGL::uiglEvents::uiglChanged;
 						Select_temp = Select;
 					}
 				}

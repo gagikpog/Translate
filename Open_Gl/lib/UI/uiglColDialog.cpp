@@ -116,19 +116,19 @@ namespace UIGL {
 			}
 			if (ax > X + W - 100)
 			{
-				if (num[0].MouseFunc(button, state, ax, ay).Event == uiglChanged)
+				if (num[0].MouseFunc(button, state, ax, ay).Event == UIGL::uiglEvents::uiglChanged)
 				{
 					Color_temp.R = stoi(num[0].Text);
 				}
-				if (num[1].MouseFunc(button, state, ax, ay).Event == uiglChanged)
+				if (num[1].MouseFunc(button, state, ax, ay).Event == UIGL::uiglEvents::uiglChanged)
 				{
 					Color_temp.G = stoi(num[1].Text);
 				}
-				if (num[2].MouseFunc(button, state, ax, ay).Event == uiglChanged)
+				if (num[2].MouseFunc(button, state, ax, ay).Event == UIGL::uiglEvents::uiglChanged)
 				{
 					Color_temp.B = stoi(num[2].Text);
 				}
-				if (num[3].MouseFunc(button, state, ax, ay).Event == uiglChanged)
+				if (num[3].MouseFunc(button, state, ax, ay).Event == UIGL::uiglEvents::uiglChanged)
 				{
 					Color_temp.A = stoi(num[3].Text);
 					cur3_h = (float(Color_temp.A) / 255.0f)*(h * 6.0f - 10.0f) + 5.0f;
@@ -138,7 +138,7 @@ namespace UIGL {
 			if (ax > X + W - Win_fon_H && ax<X + W&&ay>Y + H - Win_fon_H&& ay < H + Y)
 			{
 				result.Name = Name;
-				result.Event = uiglEraseMsg;
+				result.Event = UIGL::uiglEvents::uiglEraseMsg;
 				Color_result = NULL;
 			}
 			//colors
@@ -262,7 +262,7 @@ namespace UIGL {
 			{
 				Color_result[0] = Color_temp;
 				//	Color_result->setColor(Color_temp.R, Color_temp.G, Color_temp.B, Color_temp.A);
-				result.Event = uiglEraseMsg;
+				result.Event = UIGL::uiglEvents::uiglEraseMsg;
 				result.Name = Name;
 			}
 			//yarkost
@@ -459,14 +459,14 @@ namespace UIGL {
 		if (key == 27)
 		{
 			result.Name = Name;
-			result.Event = uiglEraseMsg;
+			result.Event = UIGL::uiglEvents::uiglEraseMsg;
 		}
 		if (key == 13)
 		{
 
 			Color_result[0] = Color_temp;
 			result.Name = Name;
-			result.Event = uiglEraseMsg;
+			result.Event = UIGL::uiglEvents::uiglEraseMsg;
 		}
 		return result;
 	}

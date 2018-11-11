@@ -42,7 +42,7 @@ namespace UIGL {
 					Move_slider = 0;
 					Position_p = (Px - H - Slider_length)*(Max - Min) / (W - 2 * H - 2 * Slider_length) + Min;
 					result.Name = Name;
-					result.Event = uiglChanged;
+					result.Event = UIGL::uiglEvents::uiglChanged;
 				}
 			}
 			else { Move_slider = 0; }
@@ -83,13 +83,13 @@ namespace UIGL {
 			{
 				Mouse_in_button = true;
 				result.Name = Name;
-				result.Event = uiglMouseOver;
+				result.Event = UIGL::uiglEvents::uiglMouseOver;
 				return result;
 			}
 			else {
 
 				result.Name = Name;
-				result.Event = uiglMousemove;
+				result.Event = UIGL::uiglEvents::uiglMousemove;
 				return result;
 			}
 		}
@@ -99,7 +99,7 @@ namespace UIGL {
 			if (Mouse_in_button)
 			{
 				result.Name = Name;
-				result.Event = uiglMouseOut;
+				result.Event = UIGL::uiglEvents::uiglMouseOut;
 				Mouse_in_button = false;
 				return result;
 			}
@@ -129,7 +129,7 @@ namespace UIGL {
 				Px = W - H - Slider_length;
 			Position_p = (Px - H - Slider_length)*(Max - Min) / (W - 2 * H - 2 * Slider_length) + Min;
 			result.Name = Name;
-			result.Event = uiglChanged;
+			result.Event = UIGL::uiglEvents::uiglChanged;
 		}
 		return result;
 	}
@@ -150,7 +150,7 @@ namespace UIGL {
 
 			Position_p = (Px - H - Slider_length)*(Max - Min) / (W - 2 * H - 2 * Slider_length) + Min;
 			result.Name = Name;
-			result.Event = uiglChanged;
+			result.Event = UIGL::uiglEvents::uiglChanged;
 		}
 		return result;
 	}
