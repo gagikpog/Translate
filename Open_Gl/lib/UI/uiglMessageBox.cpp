@@ -40,8 +40,9 @@ namespace UIGL {
 			if (exit.MouseFunc(button, state, ax, ay).Event == UIGL::uiglEvents::uiglMouseLeftDown)
 			{
 				Visible = 0;
-				result.Event = UIGL::uiglEvents::uiglMsgCancel;
+				result.Event = UIGL::uiglEvents::uiglMsgCancel | UIGL::uiglEvents::uiglEraseMsg;
 				result.Name = Name;
+				return result;
 			}
 			panel.MouseFunc(button, state, ax, ay);
 
@@ -50,7 +51,7 @@ namespace UIGL {
 			{
 				Visible = 0;
 				result.Name = Name;
-				result.Event = UIGL::uiglEvents::uiglMsgYes;
+				result.Event = UIGL::uiglEvents::uiglMsgYes | UIGL::uiglEvents::uiglEraseMsg;
 				return result;
 			}
 			result = B_no.MouseFunc(button, state, ax, ay);
@@ -58,7 +59,7 @@ namespace UIGL {
 			{
 				Visible = 0;
 				result.Name = Name;
-				result.Event = UIGL::uiglEvents::uiglMsgNo;
+				result.Event = UIGL::uiglEvents::uiglMsgNo | UIGL::uiglEvents::uiglEraseMsg;
 				return result;
 			}
 			result = B_cancel.MouseFunc(button, state, ax, ay);
@@ -66,7 +67,7 @@ namespace UIGL {
 			{
 				Visible = 0;
 				result.Name = Name;
-				result.Event = UIGL::uiglEvents::uiglMsgCancel;
+				result.Event = UIGL::uiglEvents::uiglMsgCancel | UIGL::uiglEvents::uiglEraseMsg;
 				return result;
 			}
 		}
@@ -133,7 +134,7 @@ namespace UIGL {
 		if (key == 27)
 		{
 			Visible = false;
-			result.Event = UIGL::uiglEvents::uiglMsgCancel;
+			result.Event = UIGL::uiglEvents::uiglMsgCancel | UIGL::uiglEvents::uiglEraseMsg;
 			result.Name = Name;
 		}
 		return result;

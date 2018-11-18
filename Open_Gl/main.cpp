@@ -9,6 +9,7 @@
 
 #include "src/readFromFile.h"
 #include "FormTranslate.h"
+#include "SerringsStruct.h"
 
 #include "resource.h"
 
@@ -73,13 +74,8 @@ const string MsgString[2][8]{	"Справка",	"Это слово уже существует",	"Заполните 
 								"Reference","This word already exists",	"Fill in the fields","Word not found"	,"Are you sure you want to delete this word?",	"","","" };
 
 //menu setings
-UiglColor text_col = Black;
-UiglColor backgr_col = Green;
-UiglColor line_col = Black;
-UiglColor button_col = White;
-UiglColor select_col = White;
 UiglColor Alpha_anim(0,255,0,0);
-///menu setings
+//menu setings
 
 vector<Sentence>ArrSentence;
 vector<string_int> My_data;
@@ -143,7 +139,7 @@ void Animation1(int p)
 	if (p > 0 && p %2 == 1)
 		p -= 10;
 	if (p > 0 && p < 255) {
-		Alpha_anim = backgr_col;
+		Alpha_anim = Parameters.BackgroundColor;
 		Alpha_anim.setAlpha(p);
 	}
 	glutPostRedisplay();
@@ -218,23 +214,23 @@ void Wnd_proc(uiglEvents ev,string name)
 		{
 		case '0':
 			FormSetting.Focus_push_back(&Jora::ColDial);
-			Jora::ColDial.Diolog(&backgr_col, Text_en_ru[(int)Jora::Language][4]);
+			Jora::ColDial.Diolog(&Parameters.BackgroundColor, Text_en_ru[(int)Jora::Language][4]);
 			break;
 		case '1':
 			FormSetting.Focus_push_back(&Jora::ColDial);
-			Jora::ColDial.Diolog(&text_col, Text_en_ru[(int)Jora::Language][5]);
+			Jora::ColDial.Diolog(&Parameters.TextsColor, Text_en_ru[(int)Jora::Language][5]);
 			break;
 		case '2':
 			FormSetting.Focus_push_back(&Jora::ColDial);
-			Jora::ColDial.Diolog(&line_col, Text_en_ru[(int)Jora::Language][6]);
+			Jora::ColDial.Diolog(&Parameters.LinesColor, Text_en_ru[(int)Jora::Language][6]);
 			break;
 		case '3':
 			FormSetting.Focus_push_back(&Jora::ColDial);
-			Jora::ColDial.Diolog(&button_col, Text_en_ru[(int)Jora::Language][7]);
+			Jora::ColDial.Diolog(&Parameters.ButtonsColor, Text_en_ru[(int)Jora::Language][7]);
 			break;
 		case '4':
 			FormSetting.Focus_push_back(&Jora::ColDial);
-			Jora::ColDial.Diolog(& select_col, Text_en_ru[(int)Jora::Language][8]);
+			Jora::ColDial.Diolog(&Parameters.SelectedColor, Text_en_ru[(int)Jora::Language][8]);
 			break;
 		case '5':
 			if (Jora::Language == uiglLanguageRU)
@@ -463,11 +459,11 @@ int main(int argc, char**argv)
 	{
 	conf.Get_count("WndH", Jora::WndH);
 	conf.Get_count("WndW", Jora::WndW);
-	conf.Get_color("textcol", text_col);
-	conf.Get_color("backgrcol", backgr_col);
-	conf.Get_color("linecol", line_col);
-	conf.Get_color("buttrcol", button_col);
-	conf.Get_color("selectcol", select_col);
+	conf.Get_color("textcol", Parameters.TextsColor);
+	conf.Get_color("backgrcol", Parameters.BackgroundColor);
+	conf.Get_color("linecol", Parameters.LinesColor);
+	conf.Get_color("buttrcol", Parameters.ButtonsColor);
+	conf.Get_color("selectcol", Parameters.SelectedColor);
 	conf.Get_count("word_count", word_count);
 	conf.Get_count("WndX", Jora::WndX);
 	conf.Get_count("WndY", Jora::WndY);
@@ -526,13 +522,6 @@ int main(int argc, char**argv)
 	glutDisplayFunc(Display);
 	///////////////////////////////////////////////////////////////////
 	formT2.Wnd_proc = formT2_proc;
-	//uiglEvents a;
-	//a =  uiglEvents::uiglEventEmpty | uiglEvents::uiglChanged;
-	//if(a == uiglEvents::uiglEventEmpty )
-	//	cout << "eeeeeeeeee\n";
-//	uiglEvents_t a = uiglEvents::uiglChanged | uiglEvents::uiglEventEmpty;
-//	if (a == uiglEvents::uiglChanged)
-//		cout << "eeeeeeeeee\n";
 	///////////////////////////////////////////////////////////////////
 	Bild_Window();
 	Wnd_init();
@@ -547,17 +536,17 @@ void Bild_Window()
 		conf.Set_count("word_count", word_count);
 		conf.Set_count("WndH", Jora::WndH);
 		conf.Set_count("WndW", Jora::WndW);
-		conf.setColor("textcol", text_col);
-		conf.setColor("backgrcol", backgr_col);
-		conf.setColor("linecol", line_col);
-		conf.setColor("buttrcol", button_col);
-		conf.setColor("selectcol", select_col);
+		conf.setColor("textcol", Parameters.TextsColor);
+		conf.setColor("backgrcol", Parameters.BackgroundColor);
+		conf.setColor("linecol", Parameters.LinesColor);
+		conf.setColor("buttrcol", Parameters.ButtonsColor);
+		conf.setColor("selectcol", Parameters.SelectedColor);
 	}
-	FormTraining.Background_color = backgr_col;
-	FormSetting.Background_color = backgr_col;
-	FormMain.Background_color = backgr_col;
-	FormTranslate.Background_color = backgr_col;
-	Form5.Background_color = backgr_col;
+	FormTraining.Background_color = Parameters.BackgroundColor;
+	FormSetting.Background_color = Parameters.BackgroundColor;
+	FormMain.Background_color = Parameters.BackgroundColor;
+	FormTranslate.Background_color = Parameters.BackgroundColor;
+	Form5.Background_color = Parameters.BackgroundColor;
 	//////////////////////////////////////////////////////FormTraining
 	
 	//list1
@@ -566,10 +555,10 @@ void Bild_Window()
 		list1.Position.setPosition(0,0);
 		list1.Name = "list1";
 		list1.Set_text_size(25);
-		list1.Color = button_col;
-		list1.Outline_color = line_col;
-		list1.Select_color = select_col; 
-		list1.Text_color = text_col;
+		list1.Color = Parameters.ButtonsColor;
+		list1.Outline_color = Parameters.LinesColor;
+		list1.Select_color = Parameters.SelectedColor;
+		list1.Text_color = Parameters.TextsColor;
 	}
 	//list2
 	{
@@ -577,10 +566,10 @@ void Bild_Window()
 		list2.Position.setPosition(Jora::WndW / 2, 0);
 		list2.Name = "list2";
 		list2.Set_text_size(25);
-		list2.Color = button_col;
-		list2.Outline_color = line_col;
-		list2.Select_color = select_col;
-		list2.Text_color = text_col;
+		list2.Color = Parameters.ButtonsColor;
+		list2.Outline_color = Parameters.LinesColor;
+		list2.Select_color = Parameters.SelectedColor;
+		list2.Text_color = Parameters.TextsColor;
 	}
 	//butt
 	{
@@ -589,9 +578,9 @@ void Bild_Window()
 		butt.Name = "enter";
 		butt.Set_text_size(butt.Size.getSizeH() - 5);
 		butt.Text = Text_en_ru[(int)Jora::Language][0];
-		butt.Color = button_col;
-		butt.Outline_color = line_col;
-		butt.Text_color = text_col;
+		butt.Color = Parameters.ButtonsColor;
+		butt.Outline_color = Parameters.LinesColor;
+		butt.Text_color = Parameters.TextsColor;
 	}
 	//butt1
 	{
@@ -600,9 +589,9 @@ void Bild_Window()
 		butt1.Name = "next";
 		butt1.Set_text_size(butt.Size.getSizeH() - 5);
 		butt1.Text = Text_en_ru[(int)Jora::Language][1];
-		butt1.Color = button_col;
-		butt1.Outline_color = line_col;
-		butt1.Text_color = text_col;
+		butt1.Color = Parameters.ButtonsColor;
+		butt1.Outline_color = Parameters.LinesColor;
+		butt1.Text_color = Parameters.TextsColor;
 	}
 	//butt2
 	{
@@ -611,9 +600,9 @@ void Bild_Window()
 		butt2.Name = "setting";
 		butt2.Set_text_size(butt.Size.getSizeH() - 5);
 		butt2.Text = Text_en_ru[(int)Jora::Language][2];
-		butt2.Color = button_col;
-		butt2.Outline_color = line_col;
-		butt2.Text_color = text_col;
+		butt2.Color = Parameters.ButtonsColor;
+		butt2.Outline_color = Parameters.LinesColor;
+		butt2.Text_color = Parameters.TextsColor;
 	}
 	//butt3
 	{
@@ -624,9 +613,9 @@ void Bild_Window()
 		butt3.Set_text_size(butt.Size.getSizeH() - 5);
 		butt3.Text = to_string(word_count) + "/ " + Text_en_ru[(int)Jora::Language][11] + ":" + to_string(ans_correct) + " " +
 			Text_en_ru[(int)Jora::Language][12] + ":" + to_string(ans_wrong);
-		butt3.Color = button_col;
-		butt3.Outline_color = line_col;
-		butt3.Text_color = text_col;
+		butt3.Color = Parameters.ButtonsColor;
+		butt3.Outline_color = Parameters.LinesColor;
+		butt3.Text_color = Parameters.TextsColor;
 	}
 	
 	//////////////////////////////////////////////////////FormSetting
@@ -642,19 +631,19 @@ void Bild_Window()
 		inp.SetMin(5);
 		inp.SetMax(99);
 		inp.Text_max_length = 2;
-		inp.Color = button_col;
-		inp.Outline_color = line_col;
-		inp.Text_color = text_col;
+		inp.Color = Parameters.ButtonsColor;
+		inp.Outline_color = Parameters.LinesColor;
+		inp.Text_color = Parameters.TextsColor;
 	}
 	//sett_col
 	{
-		sett_col[0].Color = backgr_col;
-		sett_col[1].Color = text_col;
-		sett_col[2].Color = line_col;
-		sett_col[3].Color = button_col;
-		sett_col[4].Color = select_col;
-		sett_col[5].Color = button_col;
-		sett_col[6].Color = button_col;
+		sett_col[0].Color = Parameters.BackgroundColor;
+		sett_col[1].Color = Parameters.TextsColor;
+		sett_col[2].Color = Parameters.LinesColor;
+		sett_col[3].Color = Parameters.ButtonsColor;
+		sett_col[4].Color = Parameters.SelectedColor;
+		sett_col[5].Color = Parameters.ButtonsColor;
+		sett_col[6].Color = Parameters.ButtonsColor;
 
 
 		for (int i = 0; i < 7; i++)
@@ -663,9 +652,9 @@ void Bild_Window()
 			sett_col[i].Position.setPosition(Vector2f(10, Jora::WndH - 40 * (i + 2)));
 			sett_col[i].Set_text_size(24);
 			sett_col[i].Name = "setcol" + to_string(i);
-			sett_col[i].Text_color = text_col;
+			sett_col[i].Text_color = Parameters.TextsColor;
 			sett_col[i].Text = Text_en_ru[(int)Jora::Language][i + 4];
-			sett_col[i].Outline_color = line_col;
+			sett_col[i].Outline_color = Parameters.LinesColor;
 			sett_col[i].IsHover = false;
 		}
 		sett_col[5].IsHover = true;
@@ -681,9 +670,9 @@ void Bild_Window()
 		Head_menu[i].Name = "head" + to_string(i);
 		Head_menu[i].Set_text_size(35);
 		Head_menu[i].Text = Head_en_ru[(int)Jora::Language][i];
-		Head_menu[i].Color = button_col;
-		Head_menu[i].Outline_color = line_col;
-		Head_menu[i].Text_color = text_col;
+		Head_menu[i].Color = Parameters.ButtonsColor;
+		Head_menu[i].Outline_color = Parameters.LinesColor;
+		Head_menu[i].Text_color = Parameters.TextsColor;
 		Head_menu[i].Text_align = uiglMiddleCenter;
 	}
 	//////////////////////////////////////////////////////FormTranslate
@@ -694,10 +683,10 @@ void Bild_Window()
 		list_l.Position.setPosition(0, 0);
 		list_l.Name = "list_l";
 		list_l.Set_text_size(25);
-		list_l.Color = button_col;
-		list_l.Outline_color = line_col;
-		list_l.Select_color = select_col;
-		list_l.Text_color = text_col;
+		list_l.Color = Parameters.ButtonsColor;
+		list_l.Outline_color = Parameters.LinesColor;
+		list_l.Select_color = Parameters.SelectedColor;
+		list_l.Text_color = Parameters.TextsColor;
 	}
 	//inp2
 	{
@@ -705,9 +694,9 @@ void Bild_Window()
 		inp2.Set_text_size(inp.Size.getSizeH() - 6);
 		inp2.Name = "inp2";
 		inp2.Position.setPosition(10, Jora::WndH - 80 );
-		inp2.Color = button_col;
-		inp2.Outline_color = line_col;
-		inp2.Text_color = text_col;
+		inp2.Color = Parameters.ButtonsColor;
+		inp2.Outline_color = Parameters.LinesColor;
+		inp2.Text_color = Parameters.TextsColor;
 		inp2.Text_align = uiglBottomCenter;
 	}
 	//favor
@@ -717,9 +706,9 @@ void Bild_Window()
 		favor.Name = "favor";
 		favor.Set_text_size(butt.Size.getSizeH() - 5);
 		favor.Text = Head_en_ru[(int)Jora::Language][6];
-		favor.Color = button_col;
-		favor.Outline_color = line_col;
-		favor.Text_color = text_col;
+		favor.Color = Parameters.ButtonsColor;
+		favor.Outline_color = Parameters.LinesColor;
+		favor.Text_color = Parameters.TextsColor;
 	}
 	//cutword
 	{
@@ -728,9 +717,9 @@ void Bild_Window()
 		cutword.Name = "cutword";
 		cutword.Set_text_size(butt.Size.getSizeH() - 5);
 		cutword.Text = Head_en_ru[(int)Jora::Language][7];
-		cutword.Color = button_col;
-		cutword.Outline_color = line_col;
-		cutword.Text_color = text_col;
+		cutword.Color = Parameters.ButtonsColor;
+		cutword.Outline_color = Parameters.LinesColor;
+		cutword.Text_color = Parameters.TextsColor;
 	}
 	//out2
 	{
@@ -738,9 +727,9 @@ void Bild_Window()
 		out2.Position.setPosition(Jora::WndW*0.5f+25, Jora::WndH - 80);
 		out2.Name = "out2";
 		out2.Set_text_size(butt.Size.getSizeH() - 5);
-		out2.Color = button_col;
-		out2.Outline_color = line_col;
-		out2.Text_color = text_col;
+		out2.Color = Parameters.ButtonsColor;
+		out2.Outline_color = Parameters.LinesColor;
+		out2.Text_color = Parameters.TextsColor;
 		out2.Text_align = uiglBottomCenter;
 	}
 	//swap1
@@ -749,8 +738,8 @@ void Bild_Window()
 		swap1.Position.setPosition(Jora::WndW*0.5f - 20, Jora::WndH - 85);	
 //		swap1.Position.setPosition(Jora::WndW, Jora::WndH);		
 		swap1.Name = "swap1";
-		swap1.Color = button_col;
-		swap1.Outline_color = line_col;
+		swap1.Color = Parameters.ButtonsColor;
+		swap1.Outline_color = Parameters.LinesColor;
 	}
 	if (!Translate_to) 
 	{
@@ -763,14 +752,14 @@ void Bild_Window()
 	////////////////////////////////////////////////Form5
 	for (int i = 0; i < words.size(); i++)
 	{
-		words[i].Color = button_col;
-		words[i].Outline_color = line_col;
-		words[i].Text_color = text_col;
+		words[i].Color = Parameters.ButtonsColor;
+		words[i].Outline_color = Parameters.LinesColor;
+		words[i].Text_color = Parameters.TextsColor;
 	}
 	panel1.Position.setPosition(Jora::WndMinX, Jora::WndMinY);
 	panel1.Size.setSize(Jora::WndW, Jora::WndH*0.8f);
-	panel1.Color = select_col;
-	panel1.Outline_color = line_col;
+	panel1.Color = Parameters.SelectedColor;
+	panel1.Outline_color = Parameters.LinesColor;
 	
 	///AddLineTranslation
 	{
@@ -778,9 +767,9 @@ void Bild_Window()
 		AddLineTranslation.Position.setPosition(10, Jora::WndH*0.8 + 10 + butt3.Size.getSizeH());
 		AddLineTranslation.Set_text_size(butt.Size.getSizeH() - 5);
 		AddLineTranslation.Text = Text_Form5[(int)Jora::Language][0];
-		AddLineTranslation.Color = button_col;
-		AddLineTranslation.Outline_color = line_col;
-		AddLineTranslation.Text_color = text_col;
+		AddLineTranslation.Color = Parameters.ButtonsColor;
+		AddLineTranslation.Outline_color = Parameters.LinesColor;
+		AddLineTranslation.Text_color = Parameters.TextsColor;
 		AddLineTranslation.Name = "Translation";
 	}
 	///TestTranslation
@@ -1105,3 +1094,12 @@ std::string  MakeSentencr()
 	}
 	return text;
 }
+
+
+/////////////
+
+UIGL::UiglColor SettingsStruct::ButtonsColor;
+UIGL::UiglColor SettingsStruct::LinesColor;
+UIGL::UiglColor SettingsStruct::SelectedColor;
+UIGL::UiglColor SettingsStruct::TextsColor;
+UIGL::UiglColor SettingsStruct::BackgroundColor;

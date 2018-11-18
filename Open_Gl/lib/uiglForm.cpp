@@ -2,7 +2,6 @@
 
 #include "uiglForm.h"
 #include "uiglFunc.h"
-//#include "EasyOpengl.h"
 #include "UI/uiglMessageBox.h"
 #include "uiglMainForm.h"
 
