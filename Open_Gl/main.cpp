@@ -9,6 +9,7 @@
 
 #include "src/readFromFile.h"
 #include "FormTranslate.h"
+#include "FormTraining.h"
 #include "SerringsStruct.h"
 
 #include "resource.h"
@@ -24,7 +25,8 @@ struct Mytext
 };
 //////////////////////////////////////////////////
 
-FormTranslateNew formT2;
+FormTranslateNew formTranslateNew;
+FormTrainingNew formTrainingNew;
 
 int word_count(20), ans_wrong(0), ans_correct(0), sentence_selection = 0;
 int state_wnd(2);
@@ -82,7 +84,7 @@ vector<string_int> My_data;
 vector<string_int*> My_sub_data;
 vector<WordObj> words(30);
 
-UiglForms FormTraining, FormSetting, FormMain, FormTranslate, Form5;
+UiglForms FormTraining, FormSetting, FormMain, Form5;//FormTranslate
 doubleListbox list_l;
 UiglListbox list1,list2;
 textbox inp2,out2;
@@ -254,6 +256,7 @@ void Wnd_proc(uiglEvents ev,string name)
 		Animation1(0);		 
 	}
 }
+
 void Wnd_proc1(uiglEvents ev, string name)
 {
 	cout << "Wnd_proc1  "<< ev << "  " << name << endl;
@@ -448,9 +451,14 @@ void Wnd_proc_Form5(uiglEvents ev, string name)
 	}
 }
 
-void formT2_proc(uiglEvents ev, string name) 
+void formTranslate_proc(uiglEvents ev, string name) 
 {
-	formT2.Proc(ev, name);
+	formTranslateNew.Proc(ev, name);
+}
+
+void formTraining_proc(uiglEvents ev, string name) 
+{
+	formTrainingNew.Proc(ev, name);
 }
 
 int main(int argc, char**argv)
@@ -521,7 +529,8 @@ int main(int argc, char**argv)
 	glutTimerFunc(50, timer, 0);
 	glutDisplayFunc(Display);
 	///////////////////////////////////////////////////////////////////
-	formT2.Wnd_proc = formT2_proc;
+	formTranslateNew.Wnd_proc = formTranslate_proc;
+	formTrainingNew.Wnd_proc = formTraining_proc;
 	///////////////////////////////////////////////////////////////////
 	Bild_Window();
 	Wnd_init();
@@ -545,7 +554,7 @@ void Bild_Window()
 	FormTraining.Background_color = Parameters.BackgroundColor;
 	FormSetting.Background_color = Parameters.BackgroundColor;
 	FormMain.Background_color = Parameters.BackgroundColor;
-	FormTranslate.Background_color = Parameters.BackgroundColor;
+	//FormTranslate.Background_color = Parameters.BackgroundColor;
 	Form5.Background_color = Parameters.BackgroundColor;
 	//////////////////////////////////////////////////////FormTraining
 	
@@ -791,9 +800,10 @@ void Bild_Window()
 		FormTraining.Enabled = 1;
 		FormSetting.Enabled = 0;
 		FormMain.Enabled = 0;
-		FormTranslate.Enabled = 0;
+		//FormTranslate.Enabled = 0;
+		formTranslateNew.Enabled = 0;
 		Form5.Enabled = 0;
-		formT2.Enabled = 0;
+		formTrainingNew.Enabled = 0;
 		resetlist();
 		break;
 	case 1:
@@ -801,45 +811,50 @@ void Bild_Window()
 		FormTraining.Enabled = 0;
 		FormSetting.Enabled = 1;
 		FormMain.Enabled = 0;
-		FormTranslate.Enabled = 0;
+		//FormTranslate.Enabled = 0;
+		formTranslateNew.Enabled = 0;
+		formTrainingNew.Enabled = 0;
 		Form5.Enabled = 0;
-		formT2.Enabled = 0;
 		break;
 	case 2:
 		cout << "FormMain\n";
 		FormTraining.Enabled = 0;
 		FormSetting.Enabled = 0;
 		FormMain.Enabled = 1;
-		FormTranslate.Enabled = 0;
+		//FormTranslate.Enabled = 0;
+		formTranslateNew.Enabled = 0;
+		formTrainingNew.Enabled = 0;
 		Form5.Enabled = 0;
-		formT2.Enabled = 0;
 		break;
 	case 3:
 		cout << "FormTranslate\n";
 		FormTraining.Enabled = 0;
 		FormSetting.Enabled = 0;
 		FormMain.Enabled = 0;
-		FormTranslate.Enabled = 1;
+		//FormTranslate.Enabled = 1;
+		formTranslateNew.Enabled = 1;
+		formTrainingNew.Enabled = 0;
 		Form5.Enabled = 0;
-		formT2.Enabled = 0;
 		break;
 	case 4:
 		cout << "Form5\n";
 		FormTraining.Enabled = 0;
 		FormSetting.Enabled = 0;
 		FormMain.Enabled = 0;
-		FormTranslate.Enabled = 0;
+		//FormTranslate.Enabled = 0;
+		formTranslateNew.Enabled = 0;
+		formTrainingNew.Enabled = 0;
 		Form5.Enabled = 1;
-		formT2.Enabled = 0;
 		break;	
 	case 5:
 		cout << "FormT2\n";
 		FormTraining.Enabled = 0;
 		FormSetting.Enabled = 0;
 		FormMain.Enabled = 0;
-		FormTranslate.Enabled = 0;
+		//FormTranslate.Enabled = 0;
+		formTranslateNew.Enabled = 0;
+		formTrainingNew.Enabled = 1;
 		Form5.Enabled = 0;
-		formT2.Enabled = 1;
 		break;
 	}
 	conf.Save();
@@ -850,7 +865,7 @@ void Wnd_init()
 	FormTraining.Wnd_proc = Wnd_proc;
 	FormSetting.Wnd_proc = Wnd_proc;
 	FormMain.Wnd_proc = Wnd_proc1;
-	FormTranslate.Wnd_proc = Wnd_proc1;
+	//FormTranslate.Wnd_proc = Wnd_proc1;
 	Form5.Wnd_proc = Wnd_proc_Form5;
 
 	//////////////////////////////////////////////FormTraining
@@ -875,14 +890,14 @@ void Wnd_init()
 	FormMain.Stec_push_back(&Head_menu[3]);
 	FormMain.Stec_push_back(&Head_menu[4]);
 	/////////////////////////////////////////////////FormTranslate
-	FormTranslate.Stec_push_back(&butt2);
-	FormTranslate.Stec_push_back(&list_l);
-	FormTranslate.Stec_push_back(&inp2);
-	FormTranslate.Stec_push_back(&out2);
-	FormTranslate.Stec_push_back(&swap1);
-	FormTranslate.Stec_push_back(&favor);
-	FormTranslate.Stec_push_back(&cutword);
-	swap1.Open("swap.ggp");
+	//FormTranslate.Stec_push_back(&butt2);
+	//FormTranslate.Stec_push_back(&list_l);
+	//FormTranslate.Stec_push_back(&inp2);
+	//FormTranslate.Stec_push_back(&out2);
+	//FormTranslate.Stec_push_back(&swap1);
+	//FormTranslate.Stec_push_back(&favor);
+	//FormTranslate.Stec_push_back(&cutword);
+	//swap1.Open("swap.ggp");
 	/////////////////////////////////////////////////Form5
 	Form5.Stec_push_back(&butt2);
 	for (int i = 0; i < words.size(); i++)

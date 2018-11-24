@@ -42,12 +42,6 @@ namespace UIGL
 		uiglMsgYes = 131072, uiglMsgNo = 262144, uiglMsgCancel = 524288
 	};
 
-	//bool uiglEvents::eqal(UIGL::uiglEvents a, UIGL::uiglEvents b)
-	//{
-//		return false;
-//	}
-
-
 	class uiglEvents
 	{
 	public:

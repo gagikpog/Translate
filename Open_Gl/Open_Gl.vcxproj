@@ -183,6 +183,7 @@
     <ClCompile Include="src\WordObj.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FormTraining.h" />
     <ClInclude Include="FormTranslate.h" />
     <ClInclude Include="lib\Config.h" />
     <ClInclude Include="lib\freeuigl.h" />
