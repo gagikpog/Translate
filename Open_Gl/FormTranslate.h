@@ -8,7 +8,7 @@
 #include "src/textbox.h"
 #include "src/numbox.h"
 #include "src/readFromFile.h"
-#include "SerringsStruct.h"
+#include "SettingsStruct.h"
 
 
 class FormTranslateNew:public UIGL::UiglForms

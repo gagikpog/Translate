@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FormTraining.cpp" />
     <ClCompile Include="FormTranslate.cpp" />
     <ClCompile Include="lib\Config.cpp" />
     <ClCompile Include="lib\uiglColor.cpp" />
@@ -185,6 +186,7 @@
   <ItemGroup>
     <ClInclude Include="FormTraining.h" />
     <ClInclude Include="FormTranslate.h" />
+    <ClInclude Include="FormSettings.h" />
     <ClInclude Include="lib\Config.h" />
     <ClInclude Include="lib\freeuigl.h" />
     <ClInclude Include="lib\math\Vector2.h" />
@@ -214,7 +216,7 @@
     <ClInclude Include="lib\UI\uiglSkrollbar.h" />
     <ClInclude Include="lib\UI\uiglTextbox.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="SerringsStruct.h" />
+    <ClInclude Include="SettingsStruct.h" />
     <ClInclude Include="src\doubleListbox.h" />
     <ClInclude Include="src\numbox.h" />
     <ClInclude Include="src\Panel.h" />

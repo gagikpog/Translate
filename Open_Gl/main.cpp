@@ -10,7 +10,8 @@
 #include "src/readFromFile.h"
 #include "FormTranslate.h"
 #include "FormTraining.h"
-#include "SerringsStruct.h"
+#include "FormSettings.h"
+#include "SettingsStruct.h"
 
 #include "resource.h"
 
@@ -27,6 +28,7 @@ struct Mytext
 
 FormTranslateNew formTranslateNew;
 FormTrainingNew formTrainingNew;
+FormSettingsNew formSettingsNew;
 
 int word_count(20), ans_wrong(0), ans_correct(0), sentence_selection = 0;
 int state_wnd(2);
@@ -84,7 +86,7 @@ vector<string_int> My_data;
 vector<string_int*> My_sub_data;
 vector<WordObj> words(30);
 
-UiglForms FormTraining, FormSetting, FormMain, Form5;//FormTranslate
+UiglForms FormSetting, FormMain, Form5;//FormTranslate,FormTraining
 doubleListbox list_l;
 UiglListbox list1,list2;
 textbox inp2,out2;
@@ -151,7 +153,7 @@ void Animation1(int p)
 
 void Wnd_proc(uiglEvents ev,string name)
 {
-	cout << "Wnd_proc1  " << ev << "  " << name << endl;
+	cout << "Wnd_proc  " << ev << "  " << name << endl;
 	
 	if (ev == uiglEvents::uiglMsgYes && name == "del")
 	{
@@ -461,6 +463,11 @@ void formTraining_proc(uiglEvents ev, string name)
 	formTrainingNew.Proc(ev, name);
 }
 
+void formSettings_proc(uiglEvents ev, string name) 
+{
+	formSettingsNew.Proc(ev, name);
+}
+
 int main(int argc, char**argv)
 {
 	//config
@@ -531,6 +538,7 @@ int main(int argc, char**argv)
 	///////////////////////////////////////////////////////////////////
 	formTranslateNew.Wnd_proc = formTranslate_proc;
 	formTrainingNew.Wnd_proc = formTraining_proc;
+	formSettingsNew.Wnd_proc = formSettings_proc;
 	///////////////////////////////////////////////////////////////////
 	Bild_Window();
 	Wnd_init();
@@ -551,7 +559,7 @@ void Bild_Window()
 		conf.setColor("buttrcol", Parameters.ButtonsColor);
 		conf.setColor("selectcol", Parameters.SelectedColor);
 	}
-	FormTraining.Background_color = Parameters.BackgroundColor;
+	//FormTraining.Background_color = Parameters.BackgroundColor;
 	FormSetting.Background_color = Parameters.BackgroundColor;
 	FormMain.Background_color = Parameters.BackgroundColor;
 	//FormTranslate.Background_color = Parameters.BackgroundColor;
@@ -797,63 +805,95 @@ void Bild_Window()
 	{
 	case 0:
 		cout << "FormTraining\n";
-		FormTraining.Enabled = 1;
-		FormSetting.Enabled = 0;
+
+		//FormTraining.Enabled = 1;
+		formTrainingNew.Enabled = 1;
+
+		FormSetting.Enabled = 0; 
+		formSettingsNew.Enabled = 0;
+
 		FormMain.Enabled = 0;
+
 		//FormTranslate.Enabled = 0;
 		formTranslateNew.Enabled = 0;
+
 		Form5.Enabled = 0;
-		formTrainingNew.Enabled = 0;
+
 		resetlist();
 		break;
 	case 1:
 		cout << "FormSetting\n";
-		FormTraining.Enabled = 0;
+		//FormTraining.Enabled = 0;
+		formTrainingNew.Enabled = 0;
+
 		FormSetting.Enabled = 1;
+		formSettingsNew.Enabled = 0;
+
 		FormMain.Enabled = 0;
+
 		//FormTranslate.Enabled = 0;
 		formTranslateNew.Enabled = 0;
-		formTrainingNew.Enabled = 0;
+
 		Form5.Enabled = 0;
 		break;
 	case 2:
 		cout << "FormMain\n";
-		FormTraining.Enabled = 0;
+		//FormTraining.Enabled = 0;
+		formTrainingNew.Enabled = 0;
+
 		FormSetting.Enabled = 0;
+		formSettingsNew.Enabled = 0;
+
 		FormMain.Enabled = 1;
+
 		//FormTranslate.Enabled = 0;
 		formTranslateNew.Enabled = 0;
-		formTrainingNew.Enabled = 0;
+
 		Form5.Enabled = 0;
 		break;
 	case 3:
 		cout << "FormTranslate\n";
-		FormTraining.Enabled = 0;
+		//FormTraining.Enabled = 0;
+		formTrainingNew.Enabled = 0;
+
 		FormSetting.Enabled = 0;
+		formSettingsNew.Enabled = 0;
+
 		FormMain.Enabled = 0;
+
 		//FormTranslate.Enabled = 1;
 		formTranslateNew.Enabled = 1;
-		formTrainingNew.Enabled = 0;
+
 		Form5.Enabled = 0;
 		break;
 	case 4:
 		cout << "Form5\n";
-		FormTraining.Enabled = 0;
+		//FormTraining.Enabled = 0;
+		formTrainingNew.Enabled = 0;
+
 		FormSetting.Enabled = 0;
+		formSettingsNew.Enabled = 0;
+
 		FormMain.Enabled = 0;
+
 		//FormTranslate.Enabled = 0;
 		formTranslateNew.Enabled = 0;
-		formTrainingNew.Enabled = 0;
+
 		Form5.Enabled = 1;
 		break;	
 	case 5:
-		cout << "FormT2\n";
-		FormTraining.Enabled = 0;
+		cout << "Testing\n";
+		//FormTraining.Enabled = 0;
+		formTrainingNew.Enabled = 0;
+
 		FormSetting.Enabled = 0;
+		formSettingsNew.Enabled = 1;
+
 		FormMain.Enabled = 0;
+
 		//FormTranslate.Enabled = 0;
 		formTranslateNew.Enabled = 0;
-		formTrainingNew.Enabled = 1;
+
 		Form5.Enabled = 0;
 		break;
 	}
@@ -862,19 +902,19 @@ void Bild_Window()
 
 void Wnd_init()
 {
-	FormTraining.Wnd_proc = Wnd_proc;
+	//FormTraining.Wnd_proc = Wnd_proc;
 	FormSetting.Wnd_proc = Wnd_proc;
 	FormMain.Wnd_proc = Wnd_proc1;
 	//FormTranslate.Wnd_proc = Wnd_proc1;
 	Form5.Wnd_proc = Wnd_proc_Form5;
 
 	//////////////////////////////////////////////FormTraining
-	FormTraining.Stec_push_back(&list1);
-	FormTraining.Stec_push_back(&list2);
-	FormTraining.Stec_push_back(&butt);
-	FormTraining.Stec_push_back(&butt1);
-	FormTraining.Stec_push_back(&butt2);
-	FormTraining.Stec_push_back(&butt3);
+	//FormTraining.Stec_push_back(&list1);
+	//FormTraining.Stec_push_back(&list2);
+	//FormTraining.Stec_push_back(&butt);
+	//FormTraining.Stec_push_back(&butt1);
+	//FormTraining.Stec_push_back(&butt2);
+	//FormTraining.Stec_push_back(&butt3);
 
 	//////////////////////////////////////////////FormSetting
 	FormSetting.Stec_push_back(&inp);
@@ -1118,3 +1158,4 @@ UIGL::UiglColor SettingsStruct::LinesColor;
 UIGL::UiglColor SettingsStruct::SelectedColor;
 UIGL::UiglColor SettingsStruct::TextsColor;
 UIGL::UiglColor SettingsStruct::BackgroundColor;
+int SettingsStruct::TestWordsCount = 15;

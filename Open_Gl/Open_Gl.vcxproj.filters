@@ -126,6 +126,9 @@
     <ClCompile Include="FormTranslate.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
+    <ClCompile Include="FormTraining.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -239,10 +242,13 @@
     <ClInclude Include="FormTranslate.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="SerringsStruct.h">
+    <ClInclude Include="FormTraining.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="FormTraining.h">
+    <ClInclude Include="FormSettings.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsStruct.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>

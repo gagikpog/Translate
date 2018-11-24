@@ -10,6 +10,7 @@ struct SettingsStruct
 	static UIGL::UiglColor SelectedColor;
 	static UIGL::UiglColor TextsColor;
 	static UIGL::UiglColor BackgroundColor;
+	static int TestWordsCount;
 };
 static SettingsStruct Parameters;
 
